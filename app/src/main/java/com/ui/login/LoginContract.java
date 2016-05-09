@@ -25,7 +25,6 @@ public interface LoginContract {
 
     abstract class Presenter extends BasePresenter<Model, View> {
         public abstract void login(String name, String pass);
-
         public abstract void sign(String name, String pass);
         @Override
         public void onStart() {}

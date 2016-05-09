@@ -17,6 +17,7 @@ import com.C;
 import com.base.BaseViewHolder;
 import com.base.RxManage;
 import com.base.util.LogUtil;
+import com.base.util.TUtil;
 import com.data.Data;
 import com.base.BaseEntity;
 import com.ui.main.R;
@@ -170,9 +171,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             BaseViewHolder mIVH = ((BaseViewHolder) (cla.getConstructor(View.class)
                     .newInstance(new View(context))));
             int mType = mIVH.getType();
-            this.model = ((Class<T>) ((ParameterizedType) (cla
-                    .getGenericSuperclass())).getActualTypeArguments()[0])
-                    .newInstance();// 根据类的泛型类型获得model的实例
+            this.model = TUtil.getT(cla,0);
             this.mCommAdapter.setViewType(mType, cla);
         } catch (Exception e) {
             e.printStackTrace();
