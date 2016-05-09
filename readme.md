@@ -1,7 +1,7 @@
 关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
 简书：http://www.jianshu.com/p/b49958e1889d
 weibo：http://weibo.com/1917320262
-github地址：https://github.com/north2014/T-MVP
+Github：https://github.com/north2014/T-MVP
 ####导语
 删繁就简三秋树，领异标新二月花
 >传统MVP给人的第一感觉通常是接口和类的暴涨，将Activity中除V之外的繁杂操作搬到P之后依然臃肿不堪。MVP从来都不是救命稻草，只能锦上添花，不能雪中送炭。也许在权衡利弊之后，很多人会对MVP望而却步。 现在  我们换一个思路，取其精华，去其糟粕，完成T-MVP大变身。
@@ -81,3 +81,18 @@ T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代
  * 3文章详情 文章评论列表
  * 4用户中心 用户评论列表 
  * 5更换头像
+
+项目截图：
+
+
+![7247fc46jw1f3p5r5tsynj20u01hcwl0.jpg](http://upload-images.jianshu.io/upload_images/751860-a76fb610afd96fac.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+![7247fc46jw1f3p5r8cjjhj20u01hc47t.jpg](http://upload-images.jianshu.io/upload_images/751860-55c37ef159f474ec.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+![7247fc46jw1f3p5r35jqnj20u01hcdt4.jpg](http://upload-images.jianshu.io/upload_images/751860-67d564d3254f6e89.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+![7247fc46jw1f3p5rceufqj20u01hcnaz.jpg](http://upload-images.jianshu.io/upload_images/751860-836f500152f280bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
