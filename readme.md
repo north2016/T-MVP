@@ -1,4 +1,4 @@
-关键词             MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
+关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
 简书：http://www.jianshu.com/p/b49958e1889d
 weibo：http://weibo.com/1917320262
 github地址：https://github.com/north2014/T-MVP
