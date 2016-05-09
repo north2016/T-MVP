@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="music"
+        android:summary="开"
+        android:title="主题" />
+    <CheckBoxPreference
+        android:key="hints"
+        android:summary="开"
+        android:title="推送" />
+    <SwitchPreference
+        android:key="isNight"
+        android:summary="开"
+        android:title="夜间"
+        />
+</PreferenceScreen>
