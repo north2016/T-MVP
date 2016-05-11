@@ -28,7 +28,9 @@ Github：https://github.com/north2014/T-MVP
 
 RxManage用于管理订阅者、观察者、以及事件。（详见代码）
 例如：
+
 发送事件： `mRxManage.post(C.EVENT_LOGIN, user);`
+
 接收事件：`mRxManage.on(C.EVENT_LOGIN, arg ->mView.initUserInfo((_User) arg)); `
 
 LoginModel的全部代码：
@@ -59,6 +61,7 @@ ViewHolder也是相当简洁的写法：
 
 ##3、项目结构
 利用泛型封装的一些Base类，总代码不超过1000行，也是T-MVP的核心：
+
 ![T-MVP项目结构])X{FRT]K9SMSZ}CY.jpg](http://upload-images.jianshu.io/upload_images/751860-281b2b0198b49042.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代码量大大精简，架构的代码量也是精简至极：
