@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.base.BaseActivity;
+import com.view.layout.TRecyclerView;
+import com.view.viewholder.UserItemVH;
 
 import butterknife.Bind;
 
@@ -18,6 +20,8 @@ public class AboutActivity extends BaseActivity {
     FloatingActionButton fab;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.lv_user)
+    TRecyclerView lv_user;
 
     @Override
     public int getLayoutId() {
@@ -30,8 +34,8 @@ public class AboutActivity extends BaseActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("");
-        fab.setOnClickListener(v -> {
-        });
+        fab.setOnClickListener(v -> {});
+        lv_user.setView(UserItemVH.class).fetch();
     }
 
     @Override

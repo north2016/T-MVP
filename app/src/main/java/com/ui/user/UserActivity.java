@@ -63,7 +63,7 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
                 .setIsRefreshable(false)
                 .fetch();
 
-        if (TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
+        if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             fab.setImageResource(R.drawable.ic_menu_camera);
             fab.setOnClickListener(v -> getPhoto());
         } else fab.setOnClickListener(v -> ToastUtil.show("ok"));

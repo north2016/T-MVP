@@ -41,6 +41,9 @@ public interface ApiService {
     Observable<CreatedResult> createUser(@Body _User user);
 
 
+    @GET("users")
+    Observable<Data<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
+
     @GET("classes/Image")
     Observable<Data<Image>> getAllImages(@Query("where") String where, @Query("order") String order, @Query("skip") int skip, @Query("limit") int limit);
 
