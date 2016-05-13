@@ -6,7 +6,7 @@ weibo：http://weibo.com/1917320262
 
 Github：https://github.com/north2014/T-MVP
 
-QQ群：AndroidMVP   555343041
+QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=451d3b823aac0b73e326fda4fd23036f11370678d690250ce1074d5799916c8c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="ionic移动应用开发交流" title="ionic移动应用开发交流"></a>
 
 ####导语
 删繁就简三秋树，领异标新二月花
