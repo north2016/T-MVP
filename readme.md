@@ -6,6 +6,8 @@ weibo：http://weibo.com/1917320262
 
 Github：https://github.com/north2014/T-MVP
 
+QQ群：AndroidMVP   555343041
+
 ####导语
 删繁就简三秋树，领异标新二月花
 >传统MVP给人的第一感觉通常是接口和类的暴涨，将Activity中除V之外的繁杂操作搬到P之后依然臃肿不堪。MVP从来都不是救命稻草，只能锦上添花，不能雪中送炭。也许在权衡利弊之后，很多人会对MVP望而却步。 现在  我们换一个思路，取其精华，去其糟粕，完成T-MVP大变身。
