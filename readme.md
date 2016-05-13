@@ -81,7 +81,7 @@ T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代
     //TODO
   * 1 整理Base类，吸纳意见之后，继续优化封装，将简洁进行到底。让MVP不再背负繁杂的名声。
   * 2 发布到github
-  * 3 争取发布到center
+  * 3 争取发布到jcenter
 
 
 #三、进度
@@ -90,6 +90,7 @@ T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代
  * 3文章详情 文章评论列表
  * 4用户中心 用户评论列表 
  * 5更换头像
+ * 6用户列表
 
 项目截图：
 
@@ -105,3 +106,11 @@ T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代
 
 
 ![7247fc46jw1f3p5rceufqj20u01hcnaz.jpg](http://upload-images.jianshu.io/upload_images/751860-836f500152f280bc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+
+## License
+
+```
+ No Fucking License.  
+```
