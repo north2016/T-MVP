@@ -82,6 +82,21 @@ T-MVP利用泛型解藕和高度抽象封装之后，相较于传统MVC和MVP代
   * 1 整理Base类，吸纳意见之后，继续优化封装，将简洁进行到底。让MVP不再背负繁杂的名声。
   * 2 发布到github
   * 3 争取发布到jcenter
+  
+  
+  正在做：
+  * 1 添加持久层数据存储realm
+  
+  * 2 recyclerview支持多种LayoutManager （GridLayoutManager StaggeredGridLayoutManager）,支持多头部，多列表类型，多底部。
+  
+  * 3 添加fragment的MVP,同时也解决了一个页面需要多个P的问题
+  
+  * 4 尽量把反射去掉，免得有人抓住把柄说性能不好
+  
+  * 5 把框架部分隔离出来，单独做成Library
+  
+  * 6 用apt自动帮我们生成一些黑科技代码，达到事半功倍的效果
+
 
 
 #三、进度
