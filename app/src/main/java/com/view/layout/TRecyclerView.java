@@ -14,15 +14,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.C;
+import com.base.BaseEntity;
 import com.base.BaseViewHolder;
-import com.base.RxManage;
+import com.base.RxManager;
 import com.base.util.LogUtil;
 import com.data.Data;
-import com.base.BaseEntity;
 import com.ui.main.R;
 import com.view.viewholder.CommFooterVH;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     private int begin = 0;
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false;
     private T model;
-    public RxManage mRxManage = new RxManage();
+    public RxManager mRxManager = new RxManager();
     private Map<String, String> param = new HashMap<>();
 
     public TRecyclerView(Context context) {
@@ -66,7 +64,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mRxManage.clear();
+        mRxManager.clear();
     }
 
     public void init(Context context) {
@@ -109,8 +107,8 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         });
-        mRxManage.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
-        mRxManage.on(C.EVENT_UPDATE_ITEM, (arg0) -> mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj));
+        mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
+        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj));
         ll_emptyview.setOnClickListener((view -> reFetch()));
     }
 
@@ -211,13 +209,15 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             return;
         }
         model.setParam(param);
-        mRxManage.add(model.getPageAt(begin)
+        mRxManager.add(model.getPageAt(begin)
                 .subscribe(
                         new Action1<Data<T>>() {
                             @Override
                             public void call(Data<T> subjects) {
                                 swiperefresh.setRefreshing(false);
                                 mCommAdapter.setBeans(subjects.results, begin);
+                                if (begin == 1 && (subjects.results == null || subjects.results.size() == 0))
+                                    setEmpty();
                             }
                         }, new Action1<Throwable>() {
                             @Override

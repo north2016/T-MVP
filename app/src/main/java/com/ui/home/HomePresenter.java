@@ -25,6 +25,6 @@ public class HomePresenter extends HomeContract.Presenter {
     public void onStart() {
         getTabList();
         getUserInfo();
-        mRxManage.on(C.EVENT_LOGIN, arg -> mView.initUserInfo((_User) arg));
+        mRxManager.on(C.EVENT_LOGIN, arg -> mView.initUserInfo((_User) arg));
     }
 }

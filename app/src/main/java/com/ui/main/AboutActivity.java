@@ -44,8 +44,8 @@ public class AboutActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+   /* @Override
     public void initPresenter() {
 
-    }
+    }*/
 }

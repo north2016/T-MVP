@@ -13,10 +13,10 @@ import rx.subscriptions.CompositeSubscription;
  * 用于管理RxBus的事件和Rxjava相关代码的生命周期处理
  * Created by baixiaokang on 16/4/28.
  */
-public class RxManage {
+public class RxManager {
 
     public RxBus mRxBus = RxBus.$();
-    private Map<String, Observable<?>> mObservables = new HashMap<>();// 管理观察者
+    private Map<String, Observable<?>> mObservables = new HashMap<>();// 管理观察源
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();// 管理订阅者者
 
 
@@ -33,9 +33,8 @@ public class RxManage {
 
     public void clear() {
         mCompositeSubscription.unsubscribe();// 取消订阅
-        for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet()) {
+        for (Map.Entry<String, Observable<?>> entry : mObservables.entrySet())
             mRxBus.unregister(entry.getKey(), entry.getValue());// 移除观察
-        }
     }
 
     public void post(Object tag, Object content) {

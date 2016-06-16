@@ -40,23 +40,20 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         this.initView();
-        this.initPresenter();
+        if (this instanceof BaseView) mPresenter.setVM(this, mModel);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.onDestroy();
+        if (mPresenter != null) mPresenter.onDestroy();
         ButterKnife.unbind(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (isNight != SpUtil.isNight()) {
-            reload();
-        }
+        if (isNight != SpUtil.isNight()) reload();
     }
 
     public void reload() {
@@ -97,10 +94,4 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     public abstract int getLayoutId();
 
     public abstract void initView();
-
-    /**
-     * 简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
-     */
-    public abstract void initPresenter();
-
 }

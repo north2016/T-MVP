@@ -28,7 +28,7 @@ public class CommFooterVH extends BaseViewHolder<Object> {
 
     @Override
     public void onBindViewHolder(View view, Object o) {
-        boolean isHasMore = (o == null ? false : true);
+        boolean isHasMore = (null == o ? false : true);
         progressbar.setVisibility(isHasMore ? View.VISIBLE : View.GONE);
         tv_state.setText(isHasMore ? "正在加载" : "已经到底");
     }

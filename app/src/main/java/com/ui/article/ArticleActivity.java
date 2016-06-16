@@ -61,23 +61,24 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel
         setTitle(mSubject.title);
         ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
         bt_comment.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(et_comment.getText().toString())) {
+            if (TextUtils.isEmpty(et_comment.getText().toString()))
                 Snackbar.make(fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
-            } else
+            else
                 mPresenter.createComment(et_comment.getText().toString(), mSubject, SpUtil.getUser());
         });
+        String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mSubject.objectId));
         lv_comment.setHeadView(ArticleHeaderVH.class)
                 .setView(CommentItemVH.class)
                 .setParam("include", "creater")
-                .setParam("article", new Gson().toJson(new Pointer(Image.class.getSimpleName(), mSubject.objectId)))
+                .setParam("article", article)
                 .setIsRefreshable(false)
                 .fetch();
     }
-
+/*
     @Override
     public void initPresenter() {
         mPresenter.setVM(this, mModel);
-    }
+    }*/
 
 
     public void checkin(View view) {
@@ -101,6 +102,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel
         lv_comment.reFetch();
         Snackbar.make(fab, "评论成功!", Snackbar.LENGTH_LONG).show();
         ViewUtil.hideKeyboard(this);
+        et_comment.setText("");
     }
 
     @Override

@@ -9,7 +9,7 @@ public abstract class BasePresenter<E, T> {
     public Context context;
     public E mModel;
     public T mView;
-    public RxManage mRxManage = new RxManage();
+    public RxManager mRxManager = new RxManager();
 
     public void setVM(T v, E m) {
         this.mView = v;
@@ -20,6 +20,6 @@ public abstract class BasePresenter<E, T> {
     public abstract void onStart();
 
     public void onDestroy() {
-        mRxManage.clear();
+        mRxManager.clear();
     }
 }
