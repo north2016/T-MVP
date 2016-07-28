@@ -18,7 +18,6 @@ import com.C;
 import com.base.BaseActivity;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
-import com.base.util.ToastUtil;
 import com.base.util.ViewUtil;
 import com.data.Pointer;
 import com.data.entity.Image;
@@ -74,12 +73,6 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel
                 .setIsRefreshable(false)
                 .fetch();
     }
-/*
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
-    }*/
-
 
     public void checkin(View view) {
         Snackbar.make(view, "没啥卵用", Snackbar.LENGTH_SHORT).show();

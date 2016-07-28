@@ -11,16 +11,20 @@ import android.widget.TextView;
 import com.C;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
-import com.data.entity._User;
+import com.data.repository._UserRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 import com.ui.user.UserActivity;
 
+import butterknife.Bind;
+
 /**
  * Created by baixiaokang on 16/5/4.
  */
-public class UserItemVH extends BaseViewHolder<_User> {
+public class UserItemVH extends BaseViewHolder<_UserRepository> {
+    @Bind(R.id.tv_content)
     TextView tv_content;
+    @Bind(R.id.im_user)
     ImageView im_user;
 
     public UserItemVH(View v) {
@@ -33,11 +37,11 @@ public class UserItemVH extends BaseViewHolder<_User> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final _User user) {
-        tv_content.setText(user.username);
-        ImageUtil.loadRoundImg(im_user,user.face);
+    public void onBindViewHolder(View view, final _UserRepository user) {
+        tv_content.setText(user.data.username);
+        ImageUtil.loadRoundImg(im_user,user.data.face);
         im_user.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user.data)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }

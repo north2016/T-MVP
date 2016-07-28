@@ -119,11 +119,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
             return true;
         });
     }
-/*
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
-    }*/
 
     @Override
     public void showTabList(String[] mTabs) {

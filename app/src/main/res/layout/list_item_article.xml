@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_article"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:lineSpacingExtra="10dp"
-    android:layout_marginTop="20dp"
-    android:padding="10dp">
+    android:background="#fff"
+    android:orientation="vertical">
 
-</TextView>
+    <TextView
+        android:id="@+id/tv_article"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:lineSpacingExtra="10dp"
+        android:padding="10dp"></TextView>
+</LinearLayout>

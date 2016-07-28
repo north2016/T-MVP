@@ -11,17 +11,26 @@ import android.widget.TextView;
 import com.C;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
-import com.data.entity.Image;
+import com.data.repository.ImageRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
+
+import butterknife.Bind;
 
 /**
  * Created by baixiaokang on 16/4/23.
  */
-public class ArticleItemVH extends BaseViewHolder<Image> {
-
+public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
+    @Bind(R.id.image)
     ImageView image;
-    TextView tv_title, tv_des, tv_info, tv_time;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
+    @Bind(R.id.tv_des)
+    TextView tv_des;
+    @Bind(R.id.tv_info)
+    TextView tv_info;
+    @Bind(R.id.tv_time)
+    TextView tv_time;
 
     public ArticleItemVH(View v) {
         super(v);
@@ -33,14 +42,14 @@ public class ArticleItemVH extends BaseViewHolder<Image> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final Image mSubject) {
-        ImageUtil.loadImg(image, mSubject.image);
-        tv_title.setText(mSubject.title);
-        tv_des.setText(mSubject.author);
-        tv_info.setText(mSubject.type);
-        tv_time.setText(mSubject.createdAt);
+    public void onBindViewHolder(View view, final ImageRepository mSubject) {
+        ImageUtil.loadImg(image, mSubject.data.image);
+        tv_title.setText(mSubject.data.title);
+        tv_des.setText(mSubject.data.author);
+        tv_info.setText(mSubject.data.type);
+        tv_time.setText(mSubject.data.createdAt);
         view.setOnClickListener((v) ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, mSubject)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, mSubject.data)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }

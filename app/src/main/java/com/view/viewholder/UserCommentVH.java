@@ -11,15 +11,21 @@ import android.widget.TextView;
 import com.C;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
-import com.data.entity.CommentInfo;
+import com.data.repository.CommentInfoRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
+
+import butterknife.Bind;
 
 /**
  * Created by baixiaokang on 16/5/4.
  */
-public class UserCommentVH extends BaseViewHolder<CommentInfo> {
-    TextView tv_content,tv_title;
+public class UserCommentVH extends BaseViewHolder<CommentInfoRepository> {
+    @Bind(R.id.tv_content)
+    TextView tv_content;
+    @Bind(R.id.tv_title)
+    TextView tv_title;
+    @Bind(R.id.im_article)
     ImageView im_article;
 
     public UserCommentVH(View v) {
@@ -32,12 +38,12 @@ public class UserCommentVH extends BaseViewHolder<CommentInfo> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final CommentInfo mSubject) {
-        tv_content.setText(mSubject.content);
-        tv_title.setText(mSubject.article.title);
-        ImageUtil.loadImg(im_article,mSubject.article.image);
+    public void onBindViewHolder(View view, final CommentInfoRepository mSubject) {
+        tv_content.setText(mSubject.data.content);
+        tv_title.setText(mSubject.data.article.title);
+        ImageUtil.loadImg(im_article,mSubject.data.article.image);
         view.setOnClickListener((v) ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, mSubject.article)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, mSubject.data.article)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }

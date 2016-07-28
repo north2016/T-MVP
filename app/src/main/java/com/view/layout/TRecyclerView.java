@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.C;
-import com.base.BaseEntity;
 import com.base.BaseViewHolder;
-import com.base.RxManager;
 import com.base.util.LogUtil;
+import com.data.Repository;
+import com.base.RxManager;
 import com.data.Data;
 import com.ui.main.R;
 import com.view.viewholder.CommFooterVH;
@@ -35,7 +35,9 @@ import rx.functions.Action1;
 /**
  * @author Administrator
  */
-public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
+public class TRecyclerView<T extends Repository> extends LinearLayout {
+    private T model;
+
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
@@ -44,10 +46,10 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     LinearLayout ll_emptyview;
     private LinearLayoutManager mLayoutManager;
     private Context context;
-    private CoreAdapter<T> mCommAdapter = new CoreAdapter<>();
+    public CoreAdapter mCommAdapter = new CoreAdapter();
     private int begin = 0;
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false;
-    private T model;
+
     public RxManager mRxManager = new RxManager();
     private Map<String, String> param = new HashMap<>();
 
@@ -108,8 +110,18 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             }
         });
         mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
-        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj));
-        ll_emptyview.setOnClickListener((view -> reFetch()));
+        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
+                    if (model.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
+                        mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
+                    }
+                }
+        );
+        ll_emptyview.setOnClickListener((view -> {
+            isEmpty = false;
+            ll_emptyview.setVisibility(View.GONE);
+            swiperefresh.setVisibility(View.VISIBLE);
+            reFetch();
+        }));
     }
 
     public CoreAdapter getAdapter() {
@@ -134,7 +146,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             try {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
                 int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                        .newInstance(new View(context)))).getType();
+                        .newInstance(new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
                 isHasHeadView = true;
             } catch (Exception e) {
@@ -147,7 +159,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
         this.begin = 0;
         try {
             int mFooterViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new View(context)))).getType();
+                    .newInstance(new LinearLayout(context)))).getType();
             this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -166,7 +178,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
         try {
             BaseViewHolder mIVH = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new View(context))));
+                    .newInstance(new LinearLayout(context))));
             int mType = mIVH.getType();
             this.model = ((Class<T>) ((ParameterizedType) (cla
                     .getGenericSuperclass())).getActualTypeArguments()[0])
@@ -208,14 +220,20 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             Log.e("model", "null");
             return;
         }
-        model.setParam(param);
+        model.param = param;
         mRxManager.add(model.getPageAt(begin)
                 .subscribe(
-                        new Action1<Data<T>>() {
+                        new Action1<Data>() {
                             @Override
-                            public void call(Data<T> subjects) {
+                            public void call(Data subjects) {
                                 swiperefresh.setRefreshing(false);
-                                mCommAdapter.setBeans(subjects.results, begin);
+                                List<T> mList = new ArrayList<T>();
+                                for (Object o : subjects.results) {
+                                    T d = (T) model.clone();
+                                    d.data = o;
+                                    mList.add(d);
+                                }
+                                mCommAdapter.setBeans(mList, begin);
                                 if (begin == 1 && (subjects.results == null || subjects.results.size() == 0))
                                     setEmpty();
                             }
@@ -239,7 +257,6 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             this.oj = oj;
         }
     }
-
 
     public class CoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         protected List<T> mItemList = new ArrayList<>();
@@ -335,6 +352,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
         public void removeItem(int position) {
             mItemList.remove(position);
             notifyItemRemoved(position);
+            if (mItemList.size() == 0) reFetch();
         }
 
         public void upDateItem(int position, T item) {
@@ -343,4 +361,5 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             notifyItemChanged(position);
         }
     }
+
 }

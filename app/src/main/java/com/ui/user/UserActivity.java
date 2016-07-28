@@ -1,11 +1,6 @@
 package com.ui.user;
 
-import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -72,13 +67,6 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
         } else fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 
-/*
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
-    }*/
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent mdata) {
         if (mdata != null && requestCode == IMAGE_REQUEST_CODE) {
@@ -110,6 +98,5 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
     public void initUser(_User user) {
         ImageUtil.loadRoundAndBgImg(image, user.face, im_header);
         setTitle(user.username);
-
     }
 }

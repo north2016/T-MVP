@@ -8,10 +8,13 @@ import com.base.BaseViewHolder;
 import com.data.entity.Image;
 import com.ui.main.R;
 
+import butterknife.Bind;
+
 /**
  * Created by baixiaokang on 16/5/4.
  */
 public class ArticleHeaderVH extends BaseViewHolder<Image> {
+    @Bind(R.id.tv_article)
     TextView tv_article;
 
     public ArticleHeaderVH(View v) {

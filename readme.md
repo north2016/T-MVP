@@ -1,3 +1,6 @@
+进度有点慢,在很多人的建议和帮助下,逐步在完善
+
+
 关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
 
 简书：http://www.jianshu.com/p/b49958e1889d

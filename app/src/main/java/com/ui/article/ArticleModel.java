@@ -16,7 +16,7 @@ public class ArticleModel implements ArticleContract.Model {
 
     @Override
     public Observable<CreatedResult> createComment(String content, Pointer article, Pointer user) {
-        return Api.getInstance().movieService
+        return Api.getInstance().service
                 .createComment(new Comment(article, content, user))
                 .compose(RxSchedulers.io_main());
     }

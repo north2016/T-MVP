@@ -60,11 +60,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginModel> impl
         }
     }
 
-/*
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
-    }*/
 
     @Override
     public void loginSuccess() {

@@ -35,7 +35,7 @@ public class Api {
     public static final int DEFAULT_TIMEOUT = 5;
 
     public Retrofit retrofit;
-    public ApiService movieService;
+    public ApiService service;
 
     Interceptor mInterceptor = (chain) -> chain.proceed(chain.request().newBuilder()
             .addHeader("X-LC-Id", X_LC_Id)
@@ -70,7 +70,7 @@ public class Api {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
-        movieService = retrofit.create(ApiService.class);
+        service = retrofit.create(ApiService.class);
     }
 
     //在访问HttpMethods时创建单例
