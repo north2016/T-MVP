@@ -14,10 +14,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.C;
+import com.app.aop.utils.LogUtils;
 import com.base.BaseViewHolder;
 import com.base.RxManager;
-import com.base.util.LogUtil;
-import com.base.util.TUtil;
+import com.base.util.InstanceUtil;
 import com.data.Data;
 import com.data.Repository;
 import com.ui.main.R;
@@ -147,7 +147,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
 //                int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
 //                        .newInstance(new LinearLayout(context)))).getType();
-                int mHeadViewType = ((BaseViewHolder) (TUtil.getInstance(cla, new LinearLayout(context)))).getType();
+                int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
                 isHasHeadView = true;
             } catch (Exception e) {
@@ -159,7 +159,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla) {
         this.begin = 0;
         try {
-            int mFooterViewType = ((BaseViewHolder) (TUtil.getInstance(cla, new LinearLayout(context)))).getType();
+            int mFooterViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
             this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,9 +177,9 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
         try {
-            BaseViewHolder BVH = TUtil.getInstance(cla, new LinearLayout(context));
+            BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
             int mType = BVH.getType();
-            this.model = TUtil.getT(BVH, 0);// 根据类的泛型类型获得model的实例
+            this.model = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得model的实例
             this.mCommAdapter.setViewType(mType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -320,13 +320,13 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             try {
                 if (viewType == mHeadViewType) {
-                    return (RecyclerView.ViewHolder) TUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             mHeadViewType, parent, false));
                 } else if (viewType == mFooterViewType) {
-                    return (RecyclerView.ViewHolder) TUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             mFooterViewType, parent, false));
                 } else {
-                    return (RecyclerView.ViewHolder) TUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             viewtype, parent, false));
                 }
 //                boolean isFoot = viewType == mFooterViewType;
@@ -342,7 +342,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 //                                                        : viewtype, parent,
 //                                                false)));
             } catch (Exception e) {
-                LogUtil.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
+                LogUtils.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
                 e.printStackTrace();
                 return null;
             }

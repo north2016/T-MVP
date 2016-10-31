@@ -9,9 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.base.util.LogUtil;
 import com.base.util.SpUtil;
-import com.base.util.TUtil;
+import com.base.util.InstanceUtil;
 import com.ui.main.R;
 import com.view.layout.SwipeBackLayout;
 
@@ -20,10 +19,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity {
     public boolean isNight;
-    public T mPresenter;
-    public E mModel;
+    public P mPresenter;
     public Context mContext;
 
     private SwipeBackLayout swipeBackLayout;
@@ -37,10 +35,9 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
         mContext = this;
-        mPresenter = TUtil.getT(this, 0);
-        mModel = TUtil.getT(this, 1);
+        mPresenter = InstanceUtil.getInstance(this, 0);
         this.initView();
-        if (this instanceof BaseView) mPresenter.setVM(this, mModel);
+        if (this instanceof BaseView) mPresenter.setVM(this, InstanceUtil.getInstance(this, 1));
     }
 
     @Override

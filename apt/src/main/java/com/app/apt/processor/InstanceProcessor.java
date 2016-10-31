@@ -47,7 +47,7 @@ public class InstanceProcessor implements IProcessor {
 
         MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("create")
                 .addJavadoc("@此方法由apt自动生成")
-                .returns(Object.class).addModifiers(PUBLIC, STATIC).addException(IllegalAccessException.class).addException(InstantiationException.class)
+                .returns(Object.class).addModifiers(PUBLIC, STATIC)
                 .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
 
         List<ClassName> mList = new ArrayList<>();

@@ -11,7 +11,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by baixiaokang on 16/4/30.
  */
-public class TUtil {
+public class InstanceUtil {
     /**
      * 通过实例工厂去实例化相应类
      *
@@ -21,7 +21,7 @@ public class TUtil {
      * @return
      */
     @TimeLog
-    public static <T> T getT(Object o, int i) {
+    public static <T> T getInstance(Object o, int i) {
         if (o.getClass().getGenericSuperclass() instanceof ParameterizedType) {
             Class mClass = (Class<T>) ((ParameterizedType) (o.getClass()
                     .getGenericSuperclass())).getActualTypeArguments()[i];
@@ -58,14 +58,7 @@ public class TUtil {
      */
     @TimeLog
     public static <T> T getInstance(Class clazz, View view) {
-        try {
-            return (T) InstanceFactory.create(clazz,view);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return (T) InstanceFactory.create(clazz, view);
     }
 
     @MemoryCache
