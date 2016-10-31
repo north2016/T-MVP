@@ -15,14 +15,14 @@ import android.widget.LinearLayout;
 
 import com.C;
 import com.base.BaseViewHolder;
-import com.base.util.LogUtil;
-import com.data.Repository;
 import com.base.RxManager;
+import com.base.util.LogUtil;
+import com.base.util.TUtil;
 import com.data.Data;
+import com.data.Repository;
 import com.ui.main.R;
 import com.view.viewholder.CommFooterVH;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -145,8 +145,9 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         } else
             try {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
-                int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                        .newInstance(new LinearLayout(context)))).getType();
+//                int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
+//                        .newInstance(new LinearLayout(context)))).getType();
+                int mHeadViewType = ((BaseViewHolder) (TUtil.getInstance(cla, new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
                 isHasHeadView = true;
             } catch (Exception e) {
@@ -158,8 +159,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla) {
         this.begin = 0;
         try {
-            int mFooterViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new LinearLayout(context)))).getType();
+            int mFooterViewType = ((BaseViewHolder) (TUtil.getInstance(cla, new LinearLayout(context)))).getType();
             this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,12 +177,9 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
         try {
-            BaseViewHolder mIVH = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new LinearLayout(context))));
-            int mType = mIVH.getType();
-            this.model = ((Class<T>) ((ParameterizedType) (cla
-                    .getGenericSuperclass())).getActualTypeArguments()[0])
-                    .newInstance();// 根据类的泛型类型获得model的实例
+            BaseViewHolder BVH = TUtil.getInstance(cla, new LinearLayout(context));
+            int mType = BVH.getType();
+            this.model = TUtil.getT(BVH, 0);// 根据类的泛型类型获得model的实例
             this.mCommAdapter.setViewType(mType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -322,18 +319,28 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             try {
-                boolean isFoot = viewType == mFooterViewType;
-                return (RecyclerView.ViewHolder) (viewType == mHeadViewType ? mHeadViewClass
-                        .getConstructor(View.class).newInstance(
-                                LayoutInflater.from(parent.getContext()).inflate(
-                                        mHeadViewType, parent, false))
-                        : (RecyclerView.ViewHolder) (isFoot ? mFooterViewClass : mItemViewClass)
-                        .getConstructor(View.class).newInstance(
-                                LayoutInflater.from(parent.getContext())
-                                        .inflate(
-                                                isFoot ? mFooterViewType
-                                                        : viewtype, parent,
-                                                false)));
+                if (viewType == mHeadViewType) {
+                    return (RecyclerView.ViewHolder) TUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            mHeadViewType, parent, false));
+                } else if (viewType == mFooterViewType) {
+                    return (RecyclerView.ViewHolder) TUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            mFooterViewType, parent, false));
+                } else {
+                    return (RecyclerView.ViewHolder) TUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            viewtype, parent, false));
+                }
+//                boolean isFoot = viewType == mFooterViewType;
+//                return (RecyclerView.ViewHolder) (viewType == mHeadViewType ? mHeadViewClass
+//                        .getConstructor(View.class).newInstance(
+//                                LayoutInflater.from(parent.getContext()).inflate(
+//                                        mHeadViewType, parent, false))
+//                        : (RecyclerView.ViewHolder) (isFoot ? mFooterViewClass : mItemViewClass)
+//                        .getConstructor(View.class).newInstance(
+//                                LayoutInflater.from(parent.getContext())
+//                                        .inflate(
+//                                                isFoot ? mFooterViewType
+//                                                        : viewtype, parent,
+//                                                false)));
             } catch (Exception e) {
                 LogUtil.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
                 e.printStackTrace();

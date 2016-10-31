@@ -1,7 +1,10 @@
 package com.base.util;
 
+import android.view.View;
+
+import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
-import com.ui.article.InstanceFactory;
+import com.data.repository.InstanceFactory;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -19,20 +22,53 @@ public class TUtil {
      */
     @TimeLog
     public static <T> T getT(Object o, int i) {
-        if(o.getClass().getGenericSuperclass() instanceof  ParameterizedType){
+        if (o.getClass().getGenericSuperclass() instanceof ParameterizedType) {
             Class mClass = (Class<T>) ((ParameterizedType) (o.getClass()
                     .getGenericSuperclass())).getActualTypeArguments()[i];
-            try {
-                return (T) InstanceFactory.create(mClass);
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            return getInstance(mClass);
         }
         return null;
     }
 
+    /**
+     * 通过实例工厂去实例化相应类
+     *
+     * @param <T> 返回实例的泛型类型
+     * @return
+     */
+    @TimeLog
+    public static <T> T getInstance(Class clazz) {
+        try {
+            return (T) InstanceFactory.create(clazz);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 通过实例工厂去实例化相应类
+     *
+     * @param <T> 返回实例的泛型类型
+     * @return
+     */
+    @TimeLog
+    public static <T> T getInstance(Class clazz, View view) {
+        try {
+            return (T) InstanceFactory.create(clazz,view);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @MemoryCache
     public static Class<?> forName(String className) {
         try {
             return Class.forName(className);

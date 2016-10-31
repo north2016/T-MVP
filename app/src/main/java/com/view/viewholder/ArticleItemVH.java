@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.C;
+import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.repository.ImageRepository;
@@ -20,6 +21,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/4/23.
  */
+@Instance(type = Instance.typeVH)
 public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
     @Bind(R.id.image)
     ImageView image;

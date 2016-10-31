@@ -33,7 +33,14 @@ public class TimeLogAspect {
         String methodName = methodSignature.getName();
         long startTime = System.nanoTime();
         Object result = joinPoint.proceed();//执行原方法
-        LogUtils.showLog("TimeLog", (className + "." + methodName + joinPoint.getArgs().toString() + " --->:" + "[" + (TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime)) + "ms]"));// 打印时间差
+        StringBuilder keyBuilder = new StringBuilder();
+        keyBuilder.append(methodName+":");
+        for (Object obj : joinPoint.getArgs()) {
+            if (obj instanceof String) keyBuilder.append((String) obj);
+            else if (obj instanceof Class) keyBuilder.append(((Class) obj).getSimpleName());
+        }
+        String key = keyBuilder.toString();
+        LogUtils.showLog("TimeLog", (className + "." + key + joinPoint.getArgs().toString() + " --->:" + "[" + (TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime)) + "ms]"));// 打印时间差
         return result;
     }
 }

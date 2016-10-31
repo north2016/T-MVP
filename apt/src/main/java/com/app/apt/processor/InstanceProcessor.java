@@ -40,13 +40,21 @@ public class InstanceProcessor implements IProcessor {
         TypeElement mElement = null;
         String CLASS_NAME = "InstanceFactory"; // 设置你要生成的代码class名字
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 实例化工厂 此类由apt自动生成");
-        MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("create").addAnnotation(MemoryCache.class)
+        MethodSpec.Builder methodBuilder1 = MethodSpec.methodBuilder("create").addAnnotation(MemoryCache.class)
                 .addJavadoc("@此方法由apt自动生成")
                 .returns(Object.class).addModifiers(PUBLIC, STATIC).addException(IllegalAccessException.class).addException(InstantiationException.class)
                 .addParameter(Class.class, "mClass");
+
+        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("create")
+                .addJavadoc("@此方法由apt自动生成")
+                .returns(Object.class).addModifiers(PUBLIC, STATIC).addException(IllegalAccessException.class).addException(InstantiationException.class)
+                .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
+
         List<ClassName> mList = new ArrayList<>();
-        CodeBlock.Builder blockBuilder = CodeBlock.builder();
-        blockBuilder.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
+        CodeBlock.Builder blockBuilder1 = CodeBlock.builder();
+        CodeBlock.Builder blockBuilder2 = CodeBlock.builder();
+        blockBuilder1.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
+        blockBuilder2.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
         try {
             for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(Instance.class))) {
                 mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
@@ -55,12 +63,21 @@ public class InstanceProcessor implements IProcessor {
                 ClassName currentType = ClassName.get(element);
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
-                blockBuilder.addStatement("case $S: return new $T()", currentType.simpleName(), currentType);
+                if (element.getAnnotation(Instance.class).type() == Instance.typeDefault)
+                    blockBuilder1.addStatement("case $S: return new $T()", currentType.simpleName(), currentType);
+                else if (element.getAnnotation(Instance.class).type() == Instance.typeVH) {
+                    blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
+                }
             }
-            blockBuilder.addStatement("default: return mClass.newInstance()");
-            blockBuilder.endControlFlow();
-            methodBuilder.addCode(blockBuilder.build());
-            tb.addMethod(methodBuilder.build());
+            blockBuilder1.addStatement("default: return mClass.newInstance()");
+            blockBuilder1.endControlFlow();
+            methodBuilder1.addCode(blockBuilder1.build());
+            blockBuilder2.addStatement("default: return null");
+            blockBuilder2.endControlFlow();
+            methodBuilder2.addCode(blockBuilder2.build());
+
+            tb.addMethod(methodBuilder1.build());
+            tb.addMethod(methodBuilder2.build());
             if (mElement == null) {
                 // mMessager.printMessage(Diagnostic.Kind.ERROR, "apt处理失败!");
                 return;

@@ -16,6 +16,10 @@ import java.lang.annotation.Target;
  * 实例化注解,会被主动添加到实例化工厂,自动生成new来替换掉反射的newInstance代码
  */
 public @interface Instance {
+    int typeVH = 1;
+    int typeDefault = 0;
+
+    int type() default typeDefault;
 }
 
 

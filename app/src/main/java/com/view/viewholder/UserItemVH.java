@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.C;
+import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.repository._UserRepository;
@@ -21,6 +22,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/5/4.
  */
+@Instance(type = Instance.typeVH)
 public class UserItemVH extends BaseViewHolder<_UserRepository> {
     @Bind(R.id.tv_content)
     TextView tv_content;

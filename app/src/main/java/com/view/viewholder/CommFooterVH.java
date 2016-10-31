@@ -5,12 +5,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.ui.main.R;
 
 import butterknife.Bind;
 
-
+@Instance(type = Instance.typeVH)
 public class CommFooterVH extends BaseViewHolder<Object> {
     @Bind(R.id.progressbar)
     public ProgressBar progressbar;

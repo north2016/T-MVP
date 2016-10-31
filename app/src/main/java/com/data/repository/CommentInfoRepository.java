@@ -2,6 +2,7 @@ package com.data.repository;
 
 import com.C;
 import com.api.Api;
+import com.app.annotation.apt.Instance;
 import com.data.Repository;
 import com.base.util.ApiUtil;
 import com.base.util.helper.RxSchedulers;
@@ -12,6 +13,7 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/5/4.
  */
+@Instance
 public class CommentInfoRepository extends Repository<CommentInfo> {
 
     @Override
