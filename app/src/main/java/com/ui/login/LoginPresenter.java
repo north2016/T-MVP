@@ -16,6 +16,7 @@ public class LoginPresenter extends LoginContract.Presenter {
                     SpUtil.setUser(user);
                     mRxManager.post(C.EVENT_LOGIN, user);
                     mView.loginSuccess();
+                    mView.showMsg("登录成功!");
                 }, e -> mView.showMsg("登录失败!")
         ));
     }

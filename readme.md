@@ -1,8 +1,11 @@
 进度有点慢,在很多人的建议和帮助下,逐步在完善
 
 更新内容：
-1、新增apt初始化工厂，替换掉了dagger2。
-2、新增aop切片，处理缓存和日志
+1、去掉所有反射
+
+2、新增apt初始化工厂，替换掉了dagger2。
+
+3、新增aop切片，处理缓存和日志
 
 
 关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
