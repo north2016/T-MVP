@@ -2,6 +2,7 @@ package com.ui.article;
 
 
 import com.api.Api;
+import com.app.annotation.apt.Instance;
 import com.base.util.helper.RxSchedulers;
 import com.data.CreatedResult;
 import com.data.Pointer;
@@ -12,6 +13,7 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/5/4.
  */
+@Instance
 public class ArticleModel implements ArticleContract.Model {
 
     @Override

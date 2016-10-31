@@ -1,10 +1,7 @@
 package com.ui.user;
 
-import android.content.Intent;
-import android.os.SystemClock;
-
 import com.C;
-import com.base.util.ImageUtil;
+import com.app.annotation.apt.Instance;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 
@@ -13,6 +10,7 @@ import java.io.File;
 /**
  * Created by baixiaokang on 16/5/5.
  */
+@Instance
 public class UserPresenter extends UserContract.Presenter {
 
     @Override

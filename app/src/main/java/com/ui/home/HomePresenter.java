@@ -1,12 +1,14 @@
 package com.ui.home;
 
 import com.C;
+import com.app.annotation.apt.Instance;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 
 /**
  * Created by baixiaokang on 16/4/22.
  */
+@Instance
 public class HomePresenter extends HomeContract.Presenter {
 
     @Override

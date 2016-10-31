@@ -1,11 +1,13 @@
 package com.ui.login;
 
 import com.C;
+import com.app.annotation.apt.Instance;
 import com.base.util.SpUtil;
 
 /**
  * Created by baixiaokang on 16/4/29.
  */
+@Instance
 public class LoginPresenter extends LoginContract.Presenter {
 
     @Override

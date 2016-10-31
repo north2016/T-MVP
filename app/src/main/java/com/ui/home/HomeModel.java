@@ -1,8 +1,11 @@
 package com.ui.home;
 
+import com.app.annotation.apt.Instance;
+
 /**
  * Created by baixiaokang on 16/5/2.
  */
+@Instance
 public class HomeModel implements HomeContract.Model {
     @Override
     public String[] getTabs() {
