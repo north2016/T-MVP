@@ -25,7 +25,7 @@ android {
 
 dependencies {
     compile project(':lib')
-    compile 'org.aspectj:aspectjrt:1.8.1'
+    compile 'org.aspectj:aspectjrt:1.8.9'
 }
 
 
@@ -74,4 +74,5 @@ android.libraryVariants.all { variant ->
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
+
 

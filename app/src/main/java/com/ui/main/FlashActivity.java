@@ -2,22 +2,15 @@ package com.ui.main;
 
 import android.content.Intent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.Interpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
+import com.app.annotation.javassist.LogTime;
 import com.base.BaseActivity;
 import com.base.util.AnimationUtil;
 import com.base.util.StatusBarUtil;
 import com.ui.home.HomeActivity;
 import com.view.widget.FireView;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 
@@ -32,12 +25,14 @@ public class FlashActivity extends BaseActivity {
     View view;
 
 
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_flash;
     }
 
     @Override
+    @LogTime
     public void initView() {
         StatusBarUtil.setTranslucentBackground(this);
         FireView mFireView = new FireView(this);
@@ -54,8 +49,4 @@ public class FlashActivity extends BaseActivity {
             finish();
         });
     }
-
-   /* @Override
-    public void initPresenter() {
-    }*/
 }
