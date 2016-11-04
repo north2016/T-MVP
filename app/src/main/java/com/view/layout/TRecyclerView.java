@@ -36,7 +36,7 @@ import rx.functions.Action1;
  * @author Administrator
  */
 public class TRecyclerView<T extends Repository> extends LinearLayout {
-    private T model;
+    private T mRepository;//仓库
 
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
@@ -111,7 +111,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         });
         mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
         mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
-                    if (model.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
+                    if (mRepository.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
                         mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
                     }
                 }
@@ -145,8 +145,6 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         } else
             try {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
-//                int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-//                        .newInstance(new LinearLayout(context)))).getType();
                 int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
                 isHasHeadView = true;
@@ -179,7 +177,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         try {
             BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
             int mType = BVH.getType();
-            this.model = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得model的实例
+            this.mRepository = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得仓库的实例
             this.mCommAdapter.setViewType(mType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -213,25 +211,25 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
             ll_emptyview.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
         }
-        if (model == null) {
+        if (mRepository == null) {
             Log.e("model", "null");
             return;
         }
-        model.param = param;
-        mRxManager.add(model.getPageAt(begin)
+        mRepository.param = param;//设置仓库钥匙
+        mRxManager.add(mRepository.getPageAt(begin)//根据仓库货物来源取出货物
                 .subscribe(
                         new Action1<Data>() {
                             @Override
-                            public void call(Data subjects) {
+                            public void call(Data response) {
                                 swiperefresh.setRefreshing(false);
                                 List<T> mList = new ArrayList<T>();
-                                for (Object o : subjects.results) {
-                                    T d = (T) model.clone();
-                                    d.data = o;
+                                for (Object o : response.results) {
+                                    T d = (T) mRepository.clone();//复制一个集装箱，装货
+                                    d.data = o;//装货
                                     mList.add(d);
                                 }
                                 mCommAdapter.setBeans(mList, begin);
-                                if (begin == 1 && (subjects.results == null || subjects.results.size() == 0))
+                                if (begin == 1 && (response.results == null || response.results.size() == 0))
                                     setEmpty();
                             }
                         }, new Action1<Throwable>() {
@@ -329,18 +327,6 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                     return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             viewtype, parent, false));
                 }
-//                boolean isFoot = viewType == mFooterViewType;
-//                return (RecyclerView.ViewHolder) (viewType == mHeadViewType ? mHeadViewClass
-//                        .getConstructor(View.class).newInstance(
-//                                LayoutInflater.from(parent.getContext()).inflate(
-//                                        mHeadViewType, parent, false))
-//                        : (RecyclerView.ViewHolder) (isFoot ? mFooterViewClass : mItemViewClass)
-//                        .getConstructor(View.class).newInstance(
-//                                LayoutInflater.from(parent.getContext())
-//                                        .inflate(
-//                                                isFoot ? mFooterViewType
-//                                                        : viewtype, parent,
-//                                                false)));
             } catch (Exception e) {
                 LogUtils.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
                 e.printStackTrace();

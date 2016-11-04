@@ -12,6 +12,7 @@ import com.C;
 import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
+import com.data.entity.CommentInfo;
 import com.data.repository.CommentInfoRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
@@ -40,10 +41,11 @@ public class CommentItemVH extends BaseViewHolder<CommentInfoRepository> {
 
     @Override
     public void onBindViewHolder(View view, final CommentInfoRepository mSubject) {
-        tv_content.setText(mSubject.data.content);
-        ImageUtil.loadRoundImg(im_user,mSubject.data.creater.face);
+        CommentInfo data=mSubject.data;//拆箱，从集装箱中取货
+        tv_content.setText(data.content);
+        ImageUtil.loadRoundImg(im_user,data.creater.face);
         im_user.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, mSubject.data.creater)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data.creater)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }

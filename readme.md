@@ -1,5 +1,7 @@
 进度有点慢,在很多人的建议和帮助下,逐步在完善
 
+[安卓AOP三剑客:APT,AspectJ,Javassist](http://www.jianshu.com/p/dca3e2c8608a)
+
 更新内容：
 1、去掉所有反射
 

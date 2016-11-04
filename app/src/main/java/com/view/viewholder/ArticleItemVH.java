@@ -12,6 +12,7 @@ import com.C;
 import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
+import com.data.entity.Image;
 import com.data.repository.ImageRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
@@ -45,13 +46,14 @@ public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
 
     @Override
     public void onBindViewHolder(View view, final ImageRepository mSubject) {
-        ImageUtil.loadImg(image, mSubject.data.image);
-        tv_title.setText(mSubject.data.title);
-        tv_des.setText(mSubject.data.author);
-        tv_info.setText(mSubject.data.type);
-        tv_time.setText(mSubject.data.createdAt);
+        Image data=mSubject.data;//拆箱，从集装箱中取货
+        ImageUtil.loadImg(image, data.image);
+        tv_title.setText(data.title);
+        tv_des.setText(data.author);
+        tv_info.setText(data.type);
+        tv_time.setText(data.createdAt);
         view.setOnClickListener((v) ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, mSubject.data)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }

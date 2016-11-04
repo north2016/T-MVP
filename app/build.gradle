@@ -47,7 +47,7 @@ dependencies {
 }
 
 apply plugin:com.app.plugin.AspectjPlugin
-apply plugin:com.app.plugin.MyPlugin
+apply plugin:com.app.plugin.JavassistPlugin
 
 
 android.applicationVariants.all { variant->

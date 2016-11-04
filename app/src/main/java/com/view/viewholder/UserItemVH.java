@@ -12,6 +12,7 @@ import com.C;
 import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
+import com.data.entity._User;
 import com.data.repository._UserRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
@@ -40,10 +41,11 @@ public class UserItemVH extends BaseViewHolder<_UserRepository> {
 
     @Override
     public void onBindViewHolder(View view, final _UserRepository user) {
-        tv_content.setText(user.data.username);
-        ImageUtil.loadRoundImg(im_user,user.data.face);
+        _User data=user.data;//拆箱，从集装箱中取货
+        tv_content.setText(data.username);
+        ImageUtil.loadRoundImg(im_user,data.face);
         im_user.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user.data)
+                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
     }
