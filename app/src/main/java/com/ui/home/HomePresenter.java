@@ -5,6 +5,7 @@ import com.EventTags;
 import com.app.annotation.apt.Instance;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
+import com.app.annotation.javassist.BusUnRegister;
 import com.base.OkBus;
 import com.base.util.SpUtil;
 import com.data.entity._User;
@@ -46,7 +47,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    //@BusUnRegister
+    @BusUnRegister
     public void onDetached() {
         super.onDetached();
     }
