@@ -35,7 +35,7 @@ public class UserPresenter extends UserContract.Presenter {
     }
 
     @Override
-    public void onStart() {
+    public void onAttached() {
         mRxManager.on(C.EVENT_LOGIN, user -> mView.initUser((_User) user));
     }
 }

@@ -1,7 +1,11 @@
 package com.ui.home;
 
 import com.C;
+import com.EventTags;
 import com.app.annotation.apt.Instance;
+import com.app.annotation.javassist.Bus;
+import com.app.annotation.javassist.BusRegister;
+import com.base.OkBus;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 
@@ -11,10 +15,6 @@ import com.data.entity._User;
 @Instance
 public class HomePresenter extends HomeContract.Presenter {
 
-    @Override
-    public void getTabList() {
-        mView.showTabList(mModel.getTabs());
-    }
 
     @Override
     public void getUserInfo() {
@@ -24,9 +24,30 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void onStart() {
+    public void onAttached() {
+        initEvent();
         getTabList();
         getUserInfo();
         mRxManager.on(C.EVENT_LOGIN, arg -> mView.initUserInfo((_User) arg));
+    }
+
+    @Override
+    public void getTabList() {
+        OkBus.getInstance().onEvent(EventTags.SHOW_TAB_LIST, mModel.getTabs());
+    }
+
+    @Bus(tag = EventTags.SHOW_TAB_LIST)
+    public void showTabList(String[] tabs) {
+        mView.showTabList(tabs);
+    }
+
+    @BusRegister
+    private void initEvent() {
+    }
+
+    @Override
+    //@BusUnRegister
+    public void onDetached() {
+        super.onDetached();
     }
 }

@@ -212,7 +212,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
             swiperefresh.setVisibility(View.VISIBLE);
         }
         if (mRepository == null) {
-            Log.e("model", "null");
+            Log.e("mRepository", "null");
             return;
         }
         mRepository.param = param;//设置仓库钥匙
@@ -224,7 +224,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                                 swiperefresh.setRefreshing(false);
                                 List<T> mList = new ArrayList<T>();
                                 for (Object o : response.results) {
-                                    T d = (T) mRepository.clone();//复制一个集装箱，装货
+                                    T d = (T) mRepository.clone();//复制一个集装箱
                                     d.data = o;//装货
                                     mList.add(d);
                                 }
@@ -306,11 +306,8 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         public void setBeans(List<T> datas, int begin) {
             if (datas == null) datas = new ArrayList<>();
             this.isHasMore = datas.size() >= C.PAGE_COUNT;
-            if (begin > 1) {
-                this.mItemList.addAll(datas);
-            } else {
-                this.mItemList = datas;
-            }
+            if (begin > 1) this.mItemList.addAll(datas);
+            else this.mItemList = datas;
             notifyDataSetChanged();
         }
 

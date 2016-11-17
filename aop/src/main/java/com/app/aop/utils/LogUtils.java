@@ -1,5 +1,6 @@
 package com.app.aop.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 
@@ -145,12 +146,9 @@ public class LogUtils {
      * @param msg
      */
     public static void showLog(String tag, String msg) {
-        if (isDebug) {
-            if (tag == null || "".equalsIgnoreCase(tag.trim())) {
-                tag = mTag;
-            }
-            StackTraceElement[] stackTraceElement = Thread.currentThread()
-                    .getStackTrace();
+        if (isDebug&&!TextUtils.isEmpty(msg) ) {
+            if (TextUtils.isEmpty(tag)) tag = mTag;
+            StackTraceElement[] stackTraceElement = Thread.currentThread().getStackTrace();
             int currentIndex = -1;
             for (int i = 0; i < stackTraceElement.length; i++) {
                 if (stackTraceElement[i].getMethodName().compareTo("showLog") == 0) {
@@ -171,7 +169,6 @@ public class LogUtils {
             } else {
                 Log.i(tag, msg);
             }
-
         }
     }
 }

@@ -9,12 +9,12 @@ import com.data.Repository;
 public class BaseRepository implements Cloneable {
     @Override
     public Object clone() {
-        Repository stu = null;
+        Repository ins = null;
         try {
-            stu = (Repository) super.clone();
+            ins = (Repository) super.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        return stu;
+        return ins;
     }
 }

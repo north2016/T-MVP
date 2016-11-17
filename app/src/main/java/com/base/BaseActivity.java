@@ -43,7 +43,7 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();
+        if (mPresenter != null) mPresenter.onDetached();
         ButterKnife.unbind(this);
     }
 
