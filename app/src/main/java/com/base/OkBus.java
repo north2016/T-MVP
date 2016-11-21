@@ -1,21 +1,21 @@
 package com.base;
 
 import android.os.Message;
-import android.util.SparseArray;
 
 import com.app.aop.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by baixiaokang on 16/11/15.
  */
 
 public class OkBus<T> {
-    private SparseArray<List<Event>> mEventList = new SparseArray<>();//存储所有事件ID以及其回调
-    private SparseArray<Object> mStickyEventList = new SparseArray<>();//存储粘连事件ID以及其数据
-    private SparseArray<List<Event>> mStickyHasHandedEventList = new SparseArray<>();//存储所有粘连事件ID以及已经处理过的回调
+    private ConcurrentHashMap<Integer, List<Event>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
+    private ConcurrentHashMap<Integer, Object> mStickyEventList = new ConcurrentHashMap<>();//存储粘连事件ID以及其数据
+    private ConcurrentHashMap<Integer, List<Event>> mStickyHasHandedEventList = new ConcurrentHashMap<>();//存储所有粘连事件ID以及已经处理过的回调
 
     private OkBus() {
     }

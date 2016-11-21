@@ -10,6 +10,6 @@ public class JavassistPlugin implements Plugin<Project> {
         log.error "========================";
         log.error "Javassist开始修改Class!";
         log.error "========================";
-        project.android.registerTransform(new MyTransform(project))
+        project.android.registerTransform(new JavassistTransform(project))
     }
 }

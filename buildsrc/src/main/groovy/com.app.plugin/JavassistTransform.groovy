@@ -5,16 +5,16 @@ import org.gradle.api.Project
 import com.google.common.collect.Sets
 import org.apache.commons.io.FileUtils
 
-public class MyTransform extends Transform {
+public class JavassistTransform extends Transform {
     Project project
 
-    public MyTransform(Project project) {    // 构造函数，我们将Project保存下来备用
+    public JavassistTransform(Project project) {    // 构造函数，我们将Project保存下来备用
         this.project = project
     }
 
     @Override
     String getName() {// 设置我们自定义的Transform对应的Task名称
-        return "MyTrans"
+        return "JavassistTrans"
     }
 
 

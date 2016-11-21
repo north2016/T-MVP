@@ -42,10 +42,10 @@ public class BusHelper {
     static void intBus(BusInfo mBusInfo, String path) {
         if (mBusInfo.clazz.isFrozen()) mBusInfo.clazz.defrost()//解冻
         if (mBusInfo.BusRegisterMethod != null) {//有被BusRegister注解的方法
-            mBusInfo.project.logger.error "BusRegisterMethod not null" + mBusInfo.clazz
+            mBusInfo.project.logger.error "BusRegisterMethod not null" +
             mBusInfo.BusRegisterMethod.insertAfter(getRegisterEventMethodStr(mBusInfo));
         } else if (mBusInfo.getOnCreateMethod() == null) {//没有OnCreateMethod，创建并加上新代码
-            mBusInfo.project.logger.error "getOnCreateMethod  null" + mBusInfo.clazz + "\n" + mBusInfo.isActivity
+            mBusInfo.project.logger.error "getOnCreateMethod  null "  + mBusInfo.isActivity
             String pre_create_str = mBusInfo.isActivity ? Activity_OnCreate : Fragment_OnCreate;
             String m = pre_create_str + getRegisterEventMethodStr(mBusInfo) + "}"
             mBusInfo.project.logger.error m
