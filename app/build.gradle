@@ -45,6 +45,7 @@ dependencies {
     annotationProcessor project(':apt')
 }
 
+
 apply plugin:com.app.plugin.AspectjPlugin
 apply plugin:com.app.plugin.JavassistPlugin
 
