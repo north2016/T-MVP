@@ -66,20 +66,10 @@ public class OkBus<T> {
                 ev.call(msg);
                 break;
             case Bus.UI:
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        ev.call(msg);
-                    }
-                });
+                mHandler.post(() -> ev.call(msg));
                 break;
             case Bus.BG:
-                mScheduledPool.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        ev.call(msg);
-                    }
-                });
+                mScheduledPool.execute(() -> ev.call(msg));
                 break;
         }
     }
