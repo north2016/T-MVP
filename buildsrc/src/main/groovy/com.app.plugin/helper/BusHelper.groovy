@@ -89,8 +89,11 @@ public class BusHelper {
             javassist.bytecode.annotation.Annotation annotation = attribute.getAnnotation(mAnnotation.annotationType().canonicalName);
             //获取注解
             int id = ((IntegerMemberValue) annotation.getMemberValue("tag")).getValue();//获取注解的值
+            int thread = -1;
+            if (annotation.getMemberValue("thread") != null)
+                thread = ((IntegerMemberValue) annotation.getMemberValue("thread")).getValue();
             mBusInfo.eventIds.add(id)
-            CreateStr += "OkBus.getInstance().register(" + id + ",(Event)this );\n"
+            CreateStr += "OkBus.getInstance().register(" + id + ",(Event)this," + thread + ");\n"
         }
         initEventDispatch(mBusInfo)
         return CreateStr;

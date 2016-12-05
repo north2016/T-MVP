@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#22BB8D"
+    android:orientation="vertical" >
+
+    <com.view.widget.SlowScrollView
+        android:id="@+id/rl_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-18dp"
+        android:background="#22BB8D"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/ll_tabs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </com.view.widget.SlowScrollView>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_bottom"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="15dp"
+        android:persistentDrawingCache="animation" />
+
+</RelativeLayout>

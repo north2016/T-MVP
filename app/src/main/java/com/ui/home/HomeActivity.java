@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -26,7 +25,6 @@ import com.base.BaseActivity;
 import com.base.BaseListFragment;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
-import com.base.util.ToastUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.data.entity._User;
 import com.ui.article.ArticleActivity;
@@ -34,6 +32,7 @@ import com.ui.login.LoginActivity;
 import com.ui.main.AboutActivity;
 import com.ui.main.R;
 import com.ui.main.SettingsActivity;
+import com.ui.main.UserListActivity;
 import com.ui.user.UserActivity;
 import com.view.viewholder.ArticleItemVH;
 
@@ -96,8 +95,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
         dlMainDrawer.setDrawerListener(mDrawerToggle);
-
-        fab.setOnClickListener(v -> Snackbar.make(v, "Snackbar comes out", Snackbar.LENGTH_LONG).setAction("action", vi -> ToastUtil.show("ok")).show());
+        fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
         View headerView = nvMainNavigation.inflateHeaderView(R.layout.nav_header_main);
         im_face = (ImageView) headerView.findViewById(R.id.im_face);
         tv_name = (TextView) headerView.findViewById(R.id.tv_name);

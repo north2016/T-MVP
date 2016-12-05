@@ -24,6 +24,10 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -46,30 +50,30 @@ dependencies {
 }
 
 
-apply plugin:com.app.plugin.AspectjPlugin
-apply plugin:com.app.plugin.JavassistPlugin
+apply plugin: com.app.plugin.AspectjPlugin
+apply plugin: com.app.plugin.JavassistPlugin
 
 
-android.applicationVariants.all { variant->
+android.applicationVariants.all { variant ->
     def dexTask = project.tasks.findByName("transformClassesWithDexForDebug")
     def preDexTask = project.tasks.findByName("transformClassesWithPreDexForDebug")
-    if(preDexTask) {
+    if (preDexTask) {
         project.logger.error "======preDexTask======"
-        preDexTask.inputs.files.files.each {file ->
+        preDexTask.inputs.files.files.each { file ->
             project.logger.error "inputs =$file.absolutePath"
         }
 
-        preDexTask.outputs.files.files.each {file ->
+        preDexTask.outputs.files.files.each { file ->
             project.logger.error "outputs =$file.absolutePath"
         }
     }
-    if(dexTask) {
+    if (dexTask) {
         project.logger.error "======dexTask======"
-        dexTask.inputs.files.files.each {file ->
+        dexTask.inputs.files.files.each { file ->
             project.logger.error "inputs =$file.absolutePath"
         }
 
-        dexTask.outputs.files.files.each {file ->
+        dexTask.outputs.files.files.each { file ->
             project.logger.error "outputs =$file.absolutePath"
         }
     }

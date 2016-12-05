@@ -1,5 +1,6 @@
 package com.ui.main;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -34,7 +35,9 @@ public class AboutActivity extends BaseActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("");
-        fab.setOnClickListener(v -> {});
+        fab.setOnClickListener(v -> {
+            startActivity(new Intent(this, UserListActivity.class));
+        });
         lv_user.setView(UserItemVH.class).fetch();
     }
 

@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         jcenter()
@@ -11,6 +10,8 @@ buildscript {
     }
 }
 
+
+
 allprojects {
     repositories {
         jcenter()
@@ -19,6 +20,7 @@ allprojects {
 
 //不加这一句MakeProject会报错，其余都正常无影响
 task compileJava {}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

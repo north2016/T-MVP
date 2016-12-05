@@ -1,20 +1,27 @@
 package com.base;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.SparseArray;
 
+import com.app.annotation.javassist.Bus;
 import com.app.aop.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by baixiaokang on 16/11/15.
  */
 
 public class OkBus<T> {
-    private volatile SparseArray<List<Event>> mEventList = new SparseArray<>();//存储所有事件ID以及其回调
+    private volatile SparseArray<List<SparseArray<Event>>> mEventList = new SparseArray<>();//存储所有事件ID以及其回调
     private volatile SparseArray<Object> mStickyEventList = new SparseArray<>();//存储粘连事件ID以及其数据
+    private static ScheduledExecutorService mScheduledPool = Executors.newScheduledThreadPool(5);
+    public static Handler mHandler = new Handler(Looper.getMainLooper());
 
     private OkBus() {
     }
@@ -28,22 +35,53 @@ public class OkBus<T> {
     }
 
     public OkBus register(int tag, Event ev) {
+        register(tag, ev, Bus.DEFAULT);
+        return this;
+    }
+
+    public OkBus register(int tag, final Event ev, int thread) {
+        SparseArray<Event> mEvent = new SparseArray<>();
+        mEvent.put(thread, ev);
         if (mEventList.get(tag) != null) {
-            mEventList.get(tag).add(ev);
+            mEventList.get(tag).add(mEvent);
         } else {
-            List<Event> mList = new ArrayList<>();
-            mList.add(ev);
+            List<SparseArray<Event>> mList = new ArrayList<>();
+            mList.add(mEvent);
             mEventList.put(tag, mList);
         }
-        LogUtils.e("Bus register", tag + " :");
+        LogUtils.e("Bus register", tag + " :" + mEventList.get(tag).size());
         if (mStickyEventList.get(tag) != null) {//注册时分发粘连事件
-            Message msg = new Message();
+            final Message msg = new Message();
             msg.obj = mStickyEventList.get(tag);
             msg.what = tag;
-            ev.call(msg);
-            LogUtils.e("mStickyEvent register  and  onEvent", tag + " :");
+            callEvent(msg, ev, thread);
+            LogUtils.e("mStickyEvent register  and  onEvent", tag + " :" + mEventList.get(tag).size());
         }
         return this;
+    }
+
+    private void callEvent(final Message msg, final Event ev, int thread) {
+        switch (thread) {
+            case Bus.DEFAULT:
+                ev.call(msg);
+                break;
+            case Bus.UI:
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ev.call(msg);
+                    }
+                });
+                break;
+            case Bus.BG:
+                mScheduledPool.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ev.call(msg);
+                    }
+                });
+                break;
+        }
     }
 
     public OkBus unRegister(int tag) {
@@ -53,12 +91,14 @@ public class OkBus<T> {
     }
 
     public OkBus onEvent(int tag, T data) {
-        LogUtils.e("Bus onEvent", tag + " ");
         Message msg = new Message();
         msg.obj = data;
         msg.what = tag;
-        if (mEventList.get(tag) != null)
-            for (Event ev : mEventList.get(tag)) ev.call(msg);
+        if (mEventList.get(tag) != null) {
+            LogUtils.e("Bus onEvent", tag + " :" + mEventList.get(tag).size());
+            for (SparseArray<Event> ev : mEventList.get(tag))
+                callEvent(msg, ev.valueAt(0), ev.keyAt(0));
+        }
         return this;
     }
 

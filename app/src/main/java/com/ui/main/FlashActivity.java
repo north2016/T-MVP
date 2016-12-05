@@ -38,9 +38,7 @@ public class FlashActivity extends BaseActivity {
         AlphaAnimation anim = new AlphaAnimation(0.8f, 0.1f);
         anim.setDuration(5000);
         view.startAnimation(anim);
-        AnimationUtil.setAnimationListener(anim, () -> {
-            OkBus.getInstance().onEvent(EventTags.JUMP_TO_MAIN, null);
-        });
+        AnimationUtil.setAnimationListener(anim, () -> OkBus.getInstance().onEvent(EventTags.JUMP_TO_MAIN, null));
     }
 
     @Bus(tag = EventTags.JUMP_TO_MAIN)
