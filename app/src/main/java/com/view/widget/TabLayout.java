@@ -72,7 +72,7 @@ public class TabLayout extends LinearLayout {
                 oldwidth = oldwidth - speed;
                 if (oldwidth >= width) {
                     hsrcoll.smoothScrollTo(oldwidth, 0);
-                    handler.postDelayed(this, 10);// ¸üÐÂ
+                    handler.postDelayed(this, 10);
                 } else {
                     oldwidth = width;
                 }
@@ -114,8 +114,7 @@ public class TabLayout extends LinearLayout {
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenW = dm.widthPixels;
-
-        m_Users = new ArrayList<_User>();
+        m_Users = new ArrayList<>();
 
     }
 
@@ -127,15 +126,14 @@ public class TabLayout extends LinearLayout {
 
 
     private void InitTabViews() {
-        mTabViews = new ArrayList<TabView>();
-        mOldHeights = new ArrayList<Integer>();
-        mHeights = new ArrayList<Integer>();
+        mTabViews = new ArrayList<>();
+        mOldHeights = new ArrayList<>();
+        mHeights = new ArrayList<>();
         for (int i = 0; i < m_Users.size(); i++) {
             mTabViews.add(setTabView(i));
             ll_tabs.addView(mTabViews.get(i));
             mOldHeights.add(65);
             mHeights.add(65);
-            // ´¥ÃþÊÂ¼þ
             mTabViews.get(i).setOnTouchListener(new MyTouchListener(i));
         }
     }
@@ -143,7 +141,7 @@ public class TabLayout extends LinearLayout {
 
     public void Touched(int index) {
         currIndex = index;
-        mHeights = new ArrayList<Integer>();
+        mHeights = new ArrayList<>();
         for (int i = 0; i < mTabViews.size(); i++) {
             if (i == index) {
                 Animation translateAnimation = new TranslateAnimation(0, 0,
@@ -154,7 +152,6 @@ public class TabLayout extends LinearLayout {
                                 .loadInterpolator(
                                         context,
                                         android.R.anim.accelerate_decelerate_interpolator));
-                // ÉèÖÃ¶¯»­Ê±¼ä
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
                 mHeights.add(0);
@@ -166,7 +163,6 @@ public class TabLayout extends LinearLayout {
                 translateAnimation.setInterpolator(AnimationUtils
                         .loadInterpolator(context,
                                 android.R.anim.overshoot_interpolator));
-                // ÉèÖÃ¶¯»­Ê±¼ä
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
             } else {
@@ -176,7 +172,7 @@ public class TabLayout extends LinearLayout {
         mOldHeights = mHeights;
     }
 
-    public void Selected(int index) {// ÉèÖÃµ±Ç°tab
+    public void Selected(int index) {
         ImageView image = (ImageView) views.get(index).findViewById(R.id.image);
         ImageUtil.loadImg(image, m_Users.get(index).face);
         currIndex = index;
@@ -191,7 +187,6 @@ public class TabLayout extends LinearLayout {
                                 .loadInterpolator(
                                         context,
                                         android.R.anim.accelerate_decelerate_interpolator));
-                // ÉèÖÃ¶¯»­Ê±¼ä
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
             } else if (Math.abs(i - currIndex) < 7) {
@@ -202,7 +197,6 @@ public class TabLayout extends LinearLayout {
                 translateAnimation.setInterpolator(AnimationUtils
                         .loadInterpolator(context,
                                 android.R.anim.overshoot_interpolator));
-                // ÉèÖÃ¶¯»­Ê±¼ä
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
                 mHeights.add(65);
@@ -215,9 +209,6 @@ public class TabLayout extends LinearLayout {
 
     }
 
-    /**
-     * ¿ªÊ¼¹ö¶¯
-     */
     private void scrollTo() {
         width = (screenW / 7) * (currIndex - 3);
         if (width > oldposition) {
@@ -232,12 +223,6 @@ public class TabLayout extends LinearLayout {
         handler.post(runnable);
     }
 
-
-    /**
-     * ÉèÖÃ±êÇ©
-     *
-     * @param i
-     */
     private TabView setTabView(int i) {
         TabView mTabView = new TabView(context, null);
         LinearLayout.LayoutParams lp;
@@ -248,9 +233,6 @@ public class TabLayout extends LinearLayout {
         return mTabView;
     }
 
-    /**
-     * ³õÊ¼»¯ViewPager
-     */
     public void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.viewpager);
         views = new ArrayList<View>();
@@ -265,18 +247,13 @@ public class TabLayout extends LinearLayout {
             );
         }
 
-        // ¸øViewPagerÉèÖÃÊÊÅäÆ÷
         mPager.setAdapter(new ViewPagerAdapter(views));
-        mPager.setCurrentItem(0);// ÉèÖÃµ±Ç°ÏÔÊ¾±êÇ©Ò³ÎªµÚÒ»Ò³
+        mPager.setCurrentItem(0);
         Selected(0);
-        mPager.setOnPageChangeListener(new MyOnPageChangeListener());// Ò³Ãæ±ä»¯Ê±µÄ¼àÌýÆ÷
+        mPager.setOnPageChangeListener(new MyOnPageChangeListener());
     }
 
-    /**
-     * ¹ö¶¯¼àÌý
-     *
-     * @author Administrator
-     */
+
     public class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         @Override
@@ -296,12 +273,6 @@ public class TabLayout extends LinearLayout {
         }
     }
 
-    /**
-     * ´¥ÃþÊÂ¼þ
-     *
-     * @author Administrator
-     */
-
     public class MyTouchListener implements OnTouchListener {
         private int index = 0;
 
@@ -314,7 +285,7 @@ public class TabLayout extends LinearLayout {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     oldx = event.getX();
-                    if (oldx % (screenW / 7) != (screenW / 7) / 2) {// ´¥ÃþÎ»ÖÃÆ«ÒÆµ÷Õû
+                    if (oldx % (screenW / 7) != (screenW / 7) / 2) {
                         oldx = oldx - oldx % (screenW / 7) + (screenW / 7) / 2;
                     }
                     currIndex = index;
@@ -329,9 +300,6 @@ public class TabLayout extends LinearLayout {
                 case MotionEvent.ACTION_CANCEL:
                 case MotionEvent.ACTION_UP:
                     Selected(currIndex);
-//
-//                    Vibrator mVibrator01 = (Vibrator) context.getSystemService(Service.VIBRATOR_SERVICE);
-//                    mVibrator01.vibrate(new long[]{10, 10}, -1);
                     return true;
                 default:
                     return false;
