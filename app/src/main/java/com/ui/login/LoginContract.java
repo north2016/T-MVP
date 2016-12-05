@@ -27,6 +27,6 @@ public interface LoginContract {
         public abstract void login(String name, String pass);
         public abstract void sign(String name, String pass);
         @Override
-        public void onStart() {}
+        public void onAttached() {}
     }
 }

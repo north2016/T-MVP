@@ -5,21 +5,21 @@ import android.content.Context;
 /**
  * Created by baixiaokang on 16/4/22.
  */
-public abstract class BasePresenter<E, T> {
+public abstract class BasePresenter<M, V> {
     public Context context;
-    public E mModel;
-    public T mView;
-    public RxManage mRxManage = new RxManage();
+    public M mModel;
+    public V mView;
+    public RxManager mRxManager = new RxManager();
 
-    public void setVM(T v, E m) {
+    public void setVM(V v, M m) {
         this.mView = v;
         this.mModel = m;
-        this.onStart();
+        this.onAttached();
     }
 
-    public abstract void onStart();
+    public abstract void onAttached();
 
-    public void onDestroy() {
-        mRxManage.clear();
+    public void onDetached() {
+        mRxManager.clear();
     }
 }

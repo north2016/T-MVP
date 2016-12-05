@@ -43,9 +43,4 @@ public class AboutActivity extends BaseActivity {
         if (item.getItemId() == android.R.id.home) onBackPressed();
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void initPresenter() {
-
-    }
 }

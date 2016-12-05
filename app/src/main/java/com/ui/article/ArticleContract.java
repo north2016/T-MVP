@@ -28,7 +28,7 @@ public interface ArticleContract {
     abstract class Presenter extends BasePresenter<Model, View> {
         public abstract void createComment(String content, Image article, _User user);
         @Override
-        public void onStart() {}
+        public void onAttached() {}
     }
 }
 

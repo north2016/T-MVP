@@ -4,14 +4,19 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.app.annotation.apt.Instance;
 import com.base.BaseViewHolder;
 import com.data.entity.Image;
 import com.ui.main.R;
 
+import butterknife.Bind;
+
 /**
  * Created by baixiaokang on 16/5/4.
  */
+@Instance(type = Instance.typeVH)
 public class ArticleHeaderVH extends BaseViewHolder<Image> {
+    @Bind(R.id.tv_article)
     TextView tv_article;
 
     public ArticleHeaderVH(View v) {

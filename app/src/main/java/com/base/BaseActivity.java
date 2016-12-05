@@ -9,9 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.base.util.LogUtil;
 import com.base.util.SpUtil;
-import com.base.util.TUtil;
+import com.base.util.InstanceUtil;
 import com.ui.main.R;
 import com.view.layout.SwipeBackLayout;
 
@@ -20,10 +19,9 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity {
     public boolean isNight;
-    public T mPresenter;
-    public E mModel;
+    public P mPresenter;
     public Context mContext;
 
     private SwipeBackLayout swipeBackLayout;
@@ -37,26 +35,22 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
         mContext = this;
-        mPresenter = TUtil.getT(this, 0);
-        mModel = TUtil.getT(this, 1);
+        mPresenter = InstanceUtil.getInstance(this, 0);
         this.initView();
-        this.initPresenter();
+        if (this instanceof BaseView) mPresenter.setVM(this, InstanceUtil.getInstance(this, 1));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
-            mPresenter.onDestroy();
+        if (mPresenter != null) mPresenter.onDetached();
         ButterKnife.unbind(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (isNight != SpUtil.isNight()) {
-            reload();
-        }
+        if (isNight != SpUtil.isNight()) reload();
     }
 
     public void reload() {
@@ -97,10 +91,4 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     public abstract int getLayoutId();
 
     public abstract void initView();
-
-    /**
-     * 简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
-     */
-    public abstract void initPresenter();
-
 }

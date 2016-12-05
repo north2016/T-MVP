@@ -1,5 +1,7 @@
 package com.ui.user;
 
+import android.content.Intent;
+
 import com.base.BaseModel;
 import com.base.BasePresenter;
 import com.base.BaseView;

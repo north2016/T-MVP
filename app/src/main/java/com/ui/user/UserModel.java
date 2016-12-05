@@ -1,6 +1,7 @@
 package com.ui.user;
 
 import com.api.Api;
+import com.app.annotation.apt.Instance;
 import com.base.util.helper.RxSchedulers;
 import com.data.CreatedResult;
 import com.data.entity._User;
@@ -14,6 +15,7 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/5/5.
  */
+@Instance
 public class UserModel implements UserContract.Model {
 
     public class Face {
@@ -27,14 +29,14 @@ public class UserModel implements UserContract.Model {
     @Override
     public Observable<CreatedResult> upFile(File file) {
         return Api.getInstance()
-                .movieService
+                .service
                 .upFile(file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
                 .compose(RxSchedulers.io_main());
     }
 
     @Override
     public Observable upUser(_User user) {
-        return Api.getInstance().movieService
+        return Api.getInstance().service
                 .upUser(user.sessionToken, user.objectId, new Face(user.face))
                 .compose(RxSchedulers.io_main());
     }

@@ -1,10 +1,6 @@
 package com.ui.user;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
@@ -33,7 +29,6 @@ import butterknife.Bind;
 public class UserActivity extends BaseActivity<UserPresenter, UserModel> implements UserContract.View {
     public static final String TRANSLATE_VIEW = "share_img";
     private static final int IMAGE_REQUEST_CODE = 100;
-    private static final int RESULT_REQUEST_CODE = 102;
     @Bind(R.id.image)
     ImageView image;
     @Bind(R.id.fab)
@@ -42,6 +37,8 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
     Toolbar toolbar;
     @Bind(R.id.lv_comment)
     TRecyclerView lv_comment;
+    @Bind(R.id.im_header)
+    ImageView im_header;
 
     @Override
     public int getLayoutId() {
@@ -65,67 +62,32 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
 
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             fab.setImageResource(R.drawable.ic_menu_camera);
-            fab.setOnClickListener(v -> getPhoto());
+            fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
+                    IMAGE_REQUEST_CODE));
         } else fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 
-    private void getPhoto() {
-        Intent intentFromGallery = new Intent();
-        intentFromGallery.setType("image/*");
-        intentFromGallery
-                .setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intentFromGallery,
-                IMAGE_REQUEST_CODE);
-    }
-
     @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
+    protected void onActivityResult(int requestCode, int resultCode, Intent mdata) {
+        if (mdata != null && requestCode == IMAGE_REQUEST_CODE) {
+            try {
+                File file = new File(ImageUtil.getUrlByIntent(mContext, mdata));
+                if (file.exists())
+                    mPresenter.upLoadFace(file);
+                else showMsg("照片无法打开");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showMsg("照片无法打开");
+            }
+        }
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data != null)
-            if (requestCode == IMAGE_REQUEST_CODE) startPhotoZoom(data.getData());
-            else if (requestCode == RESULT_REQUEST_CODE) getImageToView(data);
-    }
-
-    private void startPhotoZoom(Uri data) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(data, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 100);
-        intent.putExtra("outputY", 100);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, RESULT_REQUEST_CODE);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) onBackPressed();
         return super.onOptionsItemSelected(item);
     }
-
-    private void getImageToView(Intent data) {
-        String urlpath = "";
-        Bundle extras = data.getExtras();
-        if (extras != null) {
-            Bitmap photo = extras.getParcelable("data");
-            if (photo != null)
-                urlpath = ImageUtil.saveFile(photo, SystemClock.currentThreadTimeMillis() + "userface.png");
-        }
-        if (!TextUtils.isEmpty(urlpath)) {
-            File file = new File(urlpath);
-            if (file.exists()) mPresenter.upLoadFace(file);
-            else ToastUtil.show("照片无法打开");
-        } else {
-            ToastUtil.show("照片无法打开");
-        }
-    }
-
 
     @Override
     public void showMsg(String msg) {
@@ -134,7 +96,7 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
 
     @Override
     public void initUser(_User user) {
-        ImageUtil.loadRoundImg(image, user.face);
+        ImageUtil.loadRoundAndBgImg(image, user.face, im_header);
         setTitle(user.username);
     }
 }

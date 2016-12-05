@@ -11,6 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
     }
     buildTypes {
         release {
@@ -20,18 +21,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:cardview-v7:23.1.0'
     compile 'com.android.support:recyclerview-v7:23.1.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-
     compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
@@ -41,4 +41,36 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile project(':aop')
+    annotationProcessor project(':apt')
+}
+
+
+apply plugin:com.app.plugin.AspectjPlugin
+apply plugin:com.app.plugin.JavassistPlugin
+
+
+android.applicationVariants.all { variant->
+    def dexTask = project.tasks.findByName("transformClassesWithDexForDebug")
+    def preDexTask = project.tasks.findByName("transformClassesWithPreDexForDebug")
+    if(preDexTask) {
+        project.logger.error "======preDexTask======"
+        preDexTask.inputs.files.files.each {file ->
+            project.logger.error "inputs =$file.absolutePath"
+        }
+
+        preDexTask.outputs.files.files.each {file ->
+            project.logger.error "outputs =$file.absolutePath"
+        }
+    }
+    if(dexTask) {
+        project.logger.error "======dexTask======"
+        dexTask.inputs.files.files.each {file ->
+            project.logger.error "inputs =$file.absolutePath"
+        }
+
+        dexTask.outputs.files.files.each {file ->
+            project.logger.error "outputs =$file.absolutePath"
+        }
+    }
 }

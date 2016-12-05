@@ -3,8 +3,7 @@ package com.base;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.base.util.ViewUtil;
+import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 
@@ -14,7 +13,8 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     public BaseViewHolder(View v) {
         super(v);
         mContext = v.getContext();
-        ViewUtil.autoFind(this, v);//id与name一致
+        if (((ViewGroup) v).getChildCount() > 0)
+            ButterKnife.bind(this, v);
     }
 
     /**

@@ -75,11 +75,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public void onBackPressed() {
-        if (dlMainDrawer.isDrawerOpen(Gravity.LEFT)) {
-            dlMainDrawer.closeDrawers();
-            return;
-        }
-        super.onBackPressed();
+        if (dlMainDrawer.isDrawerOpen(Gravity.LEFT)) dlMainDrawer.closeDrawers();
+        else super.onBackPressed();
     }
 
     @Override
@@ -121,11 +118,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
             }
             return true;
         });
-    }
-
-    @Override
-    public void initPresenter() {
-        mPresenter.setVM(this, mModel);
     }
 
     @Override

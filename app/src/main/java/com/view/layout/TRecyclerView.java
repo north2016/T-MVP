@@ -14,17 +14,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.C;
+import com.app.aop.utils.LogUtils;
 import com.base.BaseViewHolder;
-import com.base.RxManage;
-import com.base.util.LogUtil;
+import com.base.RxManager;
+import com.base.util.InstanceUtil;
 import com.data.Data;
-import com.base.BaseEntity;
+import com.data.Repository;
 import com.ui.main.R;
 import com.view.viewholder.CommFooterVH;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +35,9 @@ import rx.functions.Action1;
 /**
  * @author Administrator
  */
-public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
+public class TRecyclerView<T extends Repository> extends LinearLayout {
+    private T mRepository;//仓库
+
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
@@ -46,11 +46,11 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     LinearLayout ll_emptyview;
     private LinearLayoutManager mLayoutManager;
     private Context context;
-    private CoreAdapter<T> mCommAdapter = new CoreAdapter<>();
+    public CoreAdapter mCommAdapter = new CoreAdapter();
     private int begin = 0;
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false;
-    private T model;
-    public RxManage mRxManage = new RxManage();
+
+    public RxManager mRxManager = new RxManager();
     private Map<String, String> param = new HashMap<>();
 
     public TRecyclerView(Context context) {
@@ -66,7 +66,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mRxManage.clear();
+        mRxManager.clear();
     }
 
     public void init(Context context) {
@@ -109,9 +109,19 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         });
-        mRxManage.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
-        mRxManage.on(C.EVENT_UPDATE_ITEM, (arg0) -> mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj));
-        ll_emptyview.setOnClickListener((view -> reFetch()));
+        mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
+        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
+                    if (mRepository.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
+                        mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
+                    }
+                }
+        );
+        ll_emptyview.setOnClickListener((view -> {
+            isEmpty = false;
+            ll_emptyview.setVisibility(View.GONE);
+            swiperefresh.setVisibility(View.VISIBLE);
+            reFetch();
+        }));
     }
 
     public CoreAdapter getAdapter() {
@@ -135,8 +145,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
         } else
             try {
                 Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
-                int mHeadViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                        .newInstance(new View(context)))).getType();
+                int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
                 this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
                 isHasHeadView = true;
             } catch (Exception e) {
@@ -148,8 +157,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
     public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla) {
         this.begin = 0;
         try {
-            int mFooterViewType = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new View(context)))).getType();
+            int mFooterViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
             this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -167,12 +175,9 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
 
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
         try {
-            BaseViewHolder mIVH = ((BaseViewHolder) (cla.getConstructor(View.class)
-                    .newInstance(new View(context))));
-            int mType = mIVH.getType();
-            this.model = ((Class<T>) ((ParameterizedType) (cla
-                    .getGenericSuperclass())).getActualTypeArguments()[0])
-                    .newInstance();// 根据类的泛型类型获得model的实例
+            BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
+            int mType = BVH.getType();
+            this.mRepository = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得仓库的实例
             this.mCommAdapter.setViewType(mType, cla);
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,18 +211,26 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             ll_emptyview.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
         }
-        if (model == null) {
-            Log.e("model", "null");
+        if (mRepository == null) {
+            Log.e("mRepository", "null");
             return;
         }
-        model.setParam(param);
-        mRxManage.add(model.getPageAt(begin)
+        mRepository.param = param;//设置仓库钥匙
+        mRxManager.add(mRepository.getPageAt(begin)//根据仓库货物来源取出货物
                 .subscribe(
-                        new Action1<Data<T>>() {
+                        new Action1<Data>() {
                             @Override
-                            public void call(Data<T> subjects) {
+                            public void call(Data response) {
                                 swiperefresh.setRefreshing(false);
-                                mCommAdapter.setBeans(subjects.results, begin);
+                                List<T> mList = new ArrayList<T>();
+                                for (Object o : response.results) {
+                                    T d = (T) mRepository.clone();//复制一个集装箱
+                                    d.data = o;//装货
+                                    mList.add(d);
+                                }
+                                mCommAdapter.setBeans(mList, begin);
+                                if (begin == 1 && (response.results == null || response.results.size() == 0))
+                                    setEmpty();
                             }
                         }, new Action1<Throwable>() {
                             @Override
@@ -239,7 +252,6 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             this.oj = oj;
         }
     }
-
 
     public class CoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         protected List<T> mItemList = new ArrayList<>();
@@ -294,31 +306,26 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
         public void setBeans(List<T> datas, int begin) {
             if (datas == null) datas = new ArrayList<>();
             this.isHasMore = datas.size() >= C.PAGE_COUNT;
-            if (begin > 1) {
-                this.mItemList.addAll(datas);
-            } else {
-                this.mItemList = datas;
-            }
+            if (begin > 1) this.mItemList.addAll(datas);
+            else this.mItemList = datas;
             notifyDataSetChanged();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             try {
-                boolean isFoot = viewType == mFooterViewType;
-                return (RecyclerView.ViewHolder) (viewType == mHeadViewType ? mHeadViewClass
-                        .getConstructor(View.class).newInstance(
-                                LayoutInflater.from(parent.getContext()).inflate(
-                                        mHeadViewType, parent, false))
-                        : (RecyclerView.ViewHolder) (isFoot ? mFooterViewClass : mItemViewClass)
-                        .getConstructor(View.class).newInstance(
-                                LayoutInflater.from(parent.getContext())
-                                        .inflate(
-                                                isFoot ? mFooterViewType
-                                                        : viewtype, parent,
-                                                false)));
+                if (viewType == mHeadViewType) {
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            mHeadViewType, parent, false));
+                } else if (viewType == mFooterViewType) {
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            mFooterViewType, parent, false));
+                } else {
+                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                            viewtype, parent, false));
+                }
             } catch (Exception e) {
-                LogUtil.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
+                LogUtils.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
                 e.printStackTrace();
                 return null;
             }
@@ -335,6 +342,7 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
         public void removeItem(int position) {
             mItemList.remove(position);
             notifyItemRemoved(position);
+            if (mItemList.size() == 0) reFetch();
         }
 
         public void upDateItem(int position, T item) {
@@ -343,4 +351,5 @@ public class TRecyclerView<T extends BaseEntity.ListBean> extends LinearLayout {
             notifyItemChanged(position);
         }
     }
+
 }

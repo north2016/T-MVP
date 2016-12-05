@@ -1,0 +1,9 @@
+apply plugin: 'java'
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
+// 解决build警告：编码GBK的不可映射字符
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}

@@ -1,6 +1,5 @@
 package com.api;
 
-import com.base.util.SpUtil;
 import com.data.CreatedResult;
 import com.data.Data;
 import com.data.entity.Comment;
@@ -9,23 +8,13 @@ import com.data.entity.Image;
 import com.data.entity._User;
 import com.ui.user.UserModel;
 
-import org.json.JSONObject;
-
-import java.util.Map;
-
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
-import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -62,5 +51,5 @@ public interface ApiService {
 
 
     @PUT("users/{uid}")
-    Observable<CreatedResult> upUser(@Header("X-LC-Session") String sesssion, @Path("uid") String uid, @Body UserModel.Face face);
+    Observable<CreatedResult> upUser(@Header("X-LC-Session") String session, @Path("uid") String uid, @Body UserModel.Face face);
 }

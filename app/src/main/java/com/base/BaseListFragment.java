@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
-import com.base.util.TUtil;
+import com.base.util.InstanceUtil;
 import com.view.layout.TRecyclerView;
 
 
@@ -30,7 +30,7 @@ public class BaseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mXRecyclerView = new TRecyclerView(getContext()).setParam("type",getArguments().getString("type"))
-                .setView(TUtil.forName(getArguments().getString(C.VH_CLASS)));
+                .setView(InstanceUtil.forName(getArguments().getString(C.VH_CLASS)));
         return mXRecyclerView;
     }
 
