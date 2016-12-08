@@ -20,6 +20,7 @@ import rx.subjects.Subject;
  *
  * @author baixiaokang
  */
+@Deprecated
 public class RxBus {
     private static RxBus instance;
     public ConcurrentHashMap<Object, Object> mStickyEventList = new ConcurrentHashMap<>();

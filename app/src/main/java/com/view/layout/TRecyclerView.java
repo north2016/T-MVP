@@ -109,13 +109,13 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         });
-        mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
-        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
-                    if (mRepository.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
-                        mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
-                    }
-                }
-        );
+//        mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
+//        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
+//                    if (mRepository.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
+//                        mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
+//                    }
+//                }
+//        );
         ll_emptyview.setOnClickListener((view -> {
             isEmpty = false;
             ll_emptyview.setVisibility(View.GONE);

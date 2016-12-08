@@ -1,7 +1,8 @@
 package com.ui.login;
 
-import com.C;
+import com.EventTags;
 import com.app.annotation.apt.Instance;
+import com.base.OkBus;
 import com.base.util.SpUtil;
 
 /**
@@ -14,7 +15,8 @@ public class LoginPresenter extends LoginContract.Presenter {
     public void login(String name, String pass) {
         mRxManager.add(mModel.login(name, pass).subscribe(user -> {
                     SpUtil.setUser(user);
-                    mRxManager.post(C.EVENT_LOGIN, user);
+                    OkBus.getInstance().onEvent(EventTags.ON_USER_LOGIN, user);
+                    //mRxManager.post(C.EVENT_LOGIN, user);
                     mView.loginSuccess();
                     mView.showMsg("登录成功!");
                 }, e -> mView.showMsg("登录失败!")

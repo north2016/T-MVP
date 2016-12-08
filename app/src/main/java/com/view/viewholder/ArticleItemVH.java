@@ -46,13 +46,13 @@ public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
 
     @Override
     public void onBindViewHolder(View view, final ImageRepository mSubject) {
-        Image data=mSubject.data;//拆箱，从集装箱中取货
+        Image data = mSubject.data;//拆箱，从集装箱中取货
         ImageUtil.loadImg(image, data.image);
         tv_title.setText(data.title);
         tv_des.setText(data.author);
         tv_info.setText(data.type);
         tv_time.setText(data.createdAt);
-        view.setOnClickListener((v) ->
+        view.setOnClickListener(v ->
                 ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );

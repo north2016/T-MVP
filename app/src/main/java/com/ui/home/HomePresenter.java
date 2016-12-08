@@ -1,6 +1,5 @@
 package com.ui.home;
 
-import com.C;
 import com.EventTags;
 import com.app.annotation.apt.Instance;
 import com.app.annotation.javassist.Bus;
@@ -29,8 +28,9 @@ public class HomePresenter extends HomeContract.Presenter {
         initEvent();
         getTabList();
         getUserInfo();
-        mRxManager.on(C.EVENT_LOGIN, arg -> mView.initUserInfo((_User) arg));
+        // mRxManager.on(C.EVENT_LOGIN, arg -> mView.initUserInfo((_User) arg));
     }
+
 
     @Override
     public void getTabList() {
@@ -44,6 +44,11 @@ public class HomePresenter extends HomeContract.Presenter {
 
     @BusRegister
     private void initEvent() {
+    }
+
+    @Bus(tag = EventTags.ON_USER_LOGIN)
+    public void OnLogin(_User user) {
+        mView.initUserInfo(user);
     }
 
     @Override
