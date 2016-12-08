@@ -40,7 +40,7 @@ public interface ApiService {
     @GET("classes/Comment")
     Observable<Data<CommentInfo>> getCommentList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit);
 
-
+    @Headers("Content-Type: application/json")
     @POST("classes/Comment")
     Observable<CreatedResult> createComment(@Body Comment mComment);
 

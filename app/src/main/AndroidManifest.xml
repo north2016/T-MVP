@@ -11,12 +11,11 @@
     <application
         android:name="com.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/a"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name="com.ui.home.HomeActivity"
-            android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
 

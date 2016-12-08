@@ -57,11 +57,13 @@ public class MyInject {
                         if (((mBusInfo.BusRegisterMethod != null && mBusInfo.BusUnRegisterMethod == null
                                 || mBusInfo.BusRegisterMethod == null && mBusInfo.BusUnRegisterMethod != null)))
                             assert false: Utils.getBusErr()
-                        if (mBusInfo != null && isAnnotationByBus)
+                        if (mBusInfo != null && isAnnotationByBus) {
                             try {
                                 BusHelper.intBus(mBusInfo, path)
                             } catch (DuplicateMemberException e) {
                             }
+                        }
+                        c.detach()//用完一定记得要卸载，否则pool里的永远是旧的代码
                     }
                 }
             }

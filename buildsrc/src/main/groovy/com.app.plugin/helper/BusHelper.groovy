@@ -70,7 +70,6 @@ public class BusHelper {
         }
 
         mBusInfo.clazz.writeFile(path)
-        mBusInfo.clazz.detach()//用完一定记得要卸载，否则pool里的永远是旧的代码，草这个问题折磨我半天
     }
 
     /**

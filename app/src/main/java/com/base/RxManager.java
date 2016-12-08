@@ -7,6 +7,7 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.subjects.Subject;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -25,6 +26,8 @@ public class RxManager {
         mObservables.put(eventName, mObservable);
         mCompositeSubscription.add(mObservable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(action1, (e) -> e.printStackTrace()));
+        if (mRxBus.mStickyEventList.containsKey(eventName))
+            ((Subject) mObservable).onNext(mRxBus.mStickyEventList.get(eventName));
     }
 
     public void add(Subscription m) {

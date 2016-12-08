@@ -22,6 +22,7 @@ import rx.subjects.Subject;
  */
 public class RxBus {
     private static RxBus instance;
+    public ConcurrentHashMap<Object, Object> mStickyEventList = new ConcurrentHashMap<>();
 
     public static synchronized RxBus $() {
         if (null == instance) {
@@ -96,6 +97,19 @@ public class RxBus {
             }
         }
         return $();
+    }
+
+    /**
+     * 发送粘连事件
+     *
+     * @param tag
+     * @param data
+     * @return
+     */
+    public void postStickyEvent(Object tag, Object data) {
+        LogUtils.e("Bus onStickyEvent", tag + " ");
+        mStickyEventList.put(tag, (data == null ? tag : data));
+        post(tag, data);
     }
 
     public void post(@NonNull Object content) {
