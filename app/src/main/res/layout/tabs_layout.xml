@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22BB8D"
-    android:orientation="vertical" >
+    android:background="?attr/colorPrimary"
+    android:orientation="vertical">
 
     <com.view.widget.SlowScrollView
         android:id="@+id/rl_bottom"
@@ -12,18 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="-18dp"
-        android:background="#22BB8D"
+        android:background="?attr/colorPrimary"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:scrollbars="none" >
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/ll_tabs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:orientation="horizontal" >
-        </LinearLayout>
+            android:orientation="horizontal"/>
     </com.view.widget.SlowScrollView>
 
     <android.support.v4.view.ViewPager

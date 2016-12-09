@@ -1,6 +1,7 @@
 package com.view.widget;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
@@ -24,7 +25,9 @@ public class TabView extends FrameLayout {
     }
 
     public void setImage(String url) {
+        if (image.getTag(R.id.im_face) != null && TextUtils.equals((String) image.getTag(R.id.im_face), url))
+            return;
+        image.setTag(R.id.im_face, url);
         ImageUtil.loadRoundImg(image, url);
     }
-
 }

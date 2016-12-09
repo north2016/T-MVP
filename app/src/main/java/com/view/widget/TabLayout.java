@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.C;
+import com.base.util.DensityUtil;
 import com.base.util.ImageUtil;
 import com.base.util.helper.ViewPagerAdapter;
 import com.data.entity._User;
@@ -56,6 +57,8 @@ public class TabLayout extends LinearLayout {
     int speed = 1;
     float oldx = 0;
 
+    int defaultH = DensityUtil.dip2px(33);
+
     private Handler handler = new Handler();
     private Runnable runnable = new Runnable() {
         public void run() {
@@ -77,16 +80,19 @@ public class TabLayout extends LinearLayout {
                     oldwidth = width;
                 }
             }
-
         }
-
     };
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        handler.removeCallbacksAndMessages(null);
+    }
 
     public TabLayout(Context context) {
         super(context);
         initView(context);
     }
-
 
     public TabLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -118,8 +124,8 @@ public class TabLayout extends LinearLayout {
 
     }
 
-    public void setM_Users(List<_User> users){
-        m_Users=users;
+    public void setM_Users(List<_User> users) {
+        m_Users = users;
         InitTabViews();
         InitViewPager();
     }
@@ -132,8 +138,8 @@ public class TabLayout extends LinearLayout {
         for (int i = 0; i < m_Users.size(); i++) {
             mTabViews.add(setTabView(i));
             ll_tabs.addView(mTabViews.get(i));
-            mOldHeights.add(65);
-            mHeights.add(65);
+            mOldHeights.add(defaultH);
+            mHeights.add(defaultH);
             mTabViews.get(i).setOnTouchListener(new MyTouchListener(i));
         }
     }
@@ -166,7 +172,7 @@ public class TabLayout extends LinearLayout {
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
             } else {
-                mHeights.add(65);
+                mHeights.add(defaultH);
             }
         }
         mOldHeights = mHeights;
@@ -189,19 +195,20 @@ public class TabLayout extends LinearLayout {
                                         android.R.anim.accelerate_decelerate_interpolator));
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
+                mTabViews.get(i).setImage(m_Users.get(i).face);
             } else if (Math.abs(i - currIndex) < 7) {
-
+                mTabViews.get(i).setImage(m_Users.get(i).face);
                 Animation translateAnimation = new TranslateAnimation(0, 0,
-                        mOldHeights.get(i), 65);
+                        mOldHeights.get(i), defaultH);
                 translateAnimation.setFillAfter(true);
                 translateAnimation.setInterpolator(AnimationUtils
                         .loadInterpolator(context,
                                 android.R.anim.overshoot_interpolator));
                 translateAnimation.setDuration(150);
                 mTabViews.get(i).startAnimation(translateAnimation);
-                mHeights.add(65);
+                mHeights.add(defaultH);
             } else {
-                mHeights.add(65);
+                mHeights.add(defaultH);
             }
         }
 
@@ -229,7 +236,6 @@ public class TabLayout extends LinearLayout {
         lp = new LinearLayout.LayoutParams(screenW / 7, screenW * 3 / 7);
         lp.setMargins(0, 0, 0, -screenW / 7);
         mTabView.setLayoutParams(lp);
-        mTabView.setImage(m_Users.get(i).face);
         return mTabView;
     }
 
@@ -241,7 +247,7 @@ public class TabLayout extends LinearLayout {
             views.add(v);
             ImageView image = (ImageView) v.findViewById(R.id.image);
             int finalI = i;
-            image.setOnClickListener(m->
+            image.setOnClickListener(m ->
                     ActivityCompat.startActivity((Activity) context, new Intent(context, UserActivity.class).putExtra(C.HEAD_DATA, m_Users.get(finalI))
                             , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
             );
