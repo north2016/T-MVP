@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.C;
 import com.app.annotation.apt.Instance;
+import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity.CommentInfo;
@@ -42,13 +43,18 @@ public class UserCommentVH extends BaseViewHolder<CommentInfoRepository> {
 
     @Override
     public void onBindViewHolder(View view, final CommentInfoRepository mSubject) {
-        CommentInfo data=mSubject.data;//拆箱，从集装箱中取货
+        CommentInfo data = mSubject.data;//拆箱，从集装箱中取货
         tv_content.setText(data.content);
         tv_title.setText(data.article.title);
-        ImageUtil.loadImg(im_article,data.article.image);
-        view.setOnClickListener((v) ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data.article)
-                        , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle())
+        ImageUtil.loadImg(im_article, data.article.image);
+        view.setOnClickListener(
+                new View.OnClickListener() {
+                    @SingleClick
+                    public void onClick(View view) {
+                        ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data.article)
+                                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle());
+                    }
+                }
         );
     }
 }

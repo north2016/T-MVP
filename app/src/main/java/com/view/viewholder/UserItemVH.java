@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.C;
 import com.app.annotation.apt.Instance;
+import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity._User;
@@ -41,12 +42,17 @@ public class UserItemVH extends BaseViewHolder<_UserRepository> {
 
     @Override
     public void onBindViewHolder(View view, final _UserRepository user) {
-        _User data=user.data;//拆箱，从集装箱中取货
+        _User data = user.data;//拆箱，从集装箱中取货
         tv_content.setText(data.username);
-        ImageUtil.loadRoundImg(im_user,data.face);
-        im_user.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data)
-                        , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle())
+        ImageUtil.loadRoundImg(im_user, data.face);
+        im_user.setOnClickListener(
+                new View.OnClickListener() {
+                    @SingleClick
+                    public void onClick(View view) {
+                        ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data)
+                                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle());
+                    }
+                }
         );
     }
 }

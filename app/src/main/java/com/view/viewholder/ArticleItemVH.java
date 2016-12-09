@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.C;
 import com.app.annotation.apt.Instance;
+import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity.Image;
@@ -52,9 +53,17 @@ public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
         tv_des.setText(data.author);
         tv_info.setText(data.type);
         tv_time.setText(data.createdAt);
-        view.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
-                        , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
+        view.setOnClickListener(
+                new View.OnClickListener() {
+                    @SingleClick
+                    public void onClick(View view) {
+                        ActivityCompat.startActivity(
+                                (Activity) mContext,
+                                new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
+                                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,
+                                        ArticleActivity.TRANSLATE_VIEW).toBundle());
+                    }
+                }
         );
     }
 }
