@@ -19,7 +19,11 @@ public class CommentInfoRepository extends Repository<CommentInfo> {
     @Override
     public Observable getPageAt(int page) {
         return Api.getInstance().service
-                .getCommentList(ApiUtil.getInclude(param), ApiUtil.getWhere(param), C.PAGE_COUNT * (page - 1), C.PAGE_COUNT)
+                .getCommentList(
+                        ApiUtil.getInclude(param),
+                        ApiUtil.getWhere(param),
+                        C.PAGE_COUNT * (page - 1),
+                        C.PAGE_COUNT)
                 .compose(RxSchedulers.io_main());
     }
 }

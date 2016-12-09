@@ -16,6 +16,10 @@ import rx.Observable;
 public class _UserRepository extends Repository<_User> {
     @Override
     public Observable getPageAt(int page) {
-        return Api.getInstance().service.getAllUser(C.PAGE_COUNT * (page - 1), C.PAGE_COUNT).compose(RxSchedulers.io_main());
+        return Api.getInstance().service
+                .getAllUser(
+                        C.PAGE_COUNT * (page - 1),
+                        C.PAGE_COUNT)
+                .compose(RxSchedulers.io_main());
     }
 }

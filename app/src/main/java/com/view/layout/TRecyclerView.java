@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.C;
-import com.app.aop.utils.LogUtils;
 import com.base.BaseViewHolder;
 import com.base.RxManager;
 import com.base.util.InstanceUtil;
@@ -142,26 +141,19 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         if (cla == null) {
             isHasHeadView = false;
             this.mCommAdapter.setHeadViewType(0, cla, null);
-        } else
-            try {
-                Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
-                int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
-                this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
-                isHasHeadView = true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } else {
+            Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
+            int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
+            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
+            isHasHeadView = true;
+        }
         return this;
     }
 
     public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla) {
         this.begin = 0;
-        try {
-            int mFooterViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
-            this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int mFooterViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
+        this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
         return this;
     }
 
@@ -174,14 +166,10 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
     public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
-        try {
             BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
             int mType = BVH.getType();
             this.mRepository = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得仓库的实例
             this.mCommAdapter.setViewType(mType, cla);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return this;
     }
 
@@ -243,15 +231,15 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
 
-    public class UpDateData {
-        public int i;
-        public T oj;
-
-        public UpDateData(int i, T oj) {
-            this.i = i;
-            this.oj = oj;
-        }
-    }
+//    public class UpDateData {
+//        public int i;
+//        public T oj;
+//
+//        public UpDateData(int i, T oj) {
+//            this.i = i;
+//            this.oj = oj;
+//        }
+//    }
 
     public class CoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         protected List<T> mItemList = new ArrayList<>();
@@ -313,7 +301,6 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            try {
                 if (viewType == mHeadViewType) {
                     return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             mHeadViewType, parent, false));
@@ -324,11 +311,6 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                     return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
                             viewtype, parent, false));
                 }
-            } catch (Exception e) {
-                LogUtils.d("ViewHolderException", "onCreateViewHolder十有八九是xml写错了,哈哈");
-                e.printStackTrace();
-                return null;
-            }
         }
 
         @Override
@@ -339,17 +321,17 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                             : mItemList.get(position - isHasHader));
         }
 
-        public void removeItem(int position) {
-            mItemList.remove(position);
-            notifyItemRemoved(position);
-            if (mItemList.size() == 0) reFetch();
-        }
-
-        public void upDateItem(int position, T item) {
-            mItemList.remove(position);
-            mItemList.add(position, item);
-            notifyItemChanged(position);
-        }
+//        public void removeItem(int position) {
+//            mItemList.remove(position);
+//            notifyItemRemoved(position);
+//            if (mItemList.size() == 0) reFetch();
+//        }
+//
+//        public void upDateItem(int position, T item) {
+//            mItemList.remove(position);
+//            mItemList.add(position, item);
+//            notifyItemChanged(position);
+//        }
     }
 
 }
