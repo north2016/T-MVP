@@ -10,6 +10,7 @@ import com.app.aop.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -18,10 +19,10 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 
 public class OkBus<T> {
-    private volatile SparseArray<List<SparseArray<Event>>> mEventList = new SparseArray<>();//存储所有事件ID以及其回调
-    private volatile SparseArray<Object> mStickyEventList = new SparseArray<>();//存储粘连事件ID以及其数据
-    private static ScheduledExecutorService mScheduledPool = Executors.newScheduledThreadPool(5);
-    public static Handler mHandler = new Handler(Looper.getMainLooper());
+    private ConcurrentHashMap<Integer, List<SparseArray<Event>>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
+    private ConcurrentHashMap<Integer, Object> mStickyEventList = new ConcurrentHashMap<>();//存储粘连事件ID以及其数据
+    private ScheduledExecutorService mPool = Executors.newScheduledThreadPool(5);
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private OkBus() {
     }
@@ -69,7 +70,7 @@ public class OkBus<T> {
                 mHandler.post(() -> ev.call(msg));
                 break;
             case Bus.BG:
-                mScheduledPool.execute(() -> ev.call(msg));
+                mPool.execute(() -> ev.call(msg));
                 break;
         }
     }
