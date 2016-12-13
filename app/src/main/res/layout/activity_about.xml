@@ -25,11 +25,12 @@
             app:expandedTitleMarginStart="16dp"
             app:layout_scrollFlags="exitUntilCollapsed">
 
-            <com.view.widget.FireView
-                android:id="@+id/image"
+            <LinearLayout
+                android:id="@+id/ll_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
+                android:orientation="vertical"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7" />
 
@@ -46,26 +47,11 @@
     </android.support.design.widget.AppBarLayout>
 
 
-
-
     <com.view.layout.TRecyclerView
         android:id="@+id/lv_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"
-        android:onClick="checkin"
-        android:src="@drawable/ic_whilte_send"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>
