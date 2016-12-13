@@ -1,6 +1,7 @@
 package com.view.widget;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -29,5 +30,27 @@ public class TabView extends FrameLayout {
             return;
         image.setTag(R.id.im_face, url);
         ImageUtil.loadRoundImg(image, url);
+    }
+
+    public void releaseImage() {
+        try {
+            // 释放图片
+            BitmapDrawable drawableRel = (BitmapDrawable) image.getBackground();
+            if (drawableRel != null) {
+                System.gc();
+                drawableRel.setCallback(null);
+                drawableRel.getBitmap().recycle();
+                drawableRel = null;
+                image.setBackgroundResource(0);
+                image.setBackground(null);
+                if (image instanceof ImageView) {
+                    ((ImageView) image).setImageResource(0);
+                    image.setTag(R.id.im_face, null);
+                }
+                System.gc();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

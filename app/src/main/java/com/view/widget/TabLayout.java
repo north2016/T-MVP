@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -21,7 +23,6 @@ import android.widget.LinearLayout;
 import com.C;
 import com.base.util.DensityUtil;
 import com.base.util.ImageUtil;
-import com.base.util.helper.ViewPagerAdapter;
 import com.data.entity._User;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
@@ -36,7 +37,6 @@ import java.util.List;
 
 public class TabLayout extends LinearLayout {
     public static ViewPager mPager;
-    private ArrayList<View> views;
     View view;
     Context context;
     public int currIndex;
@@ -179,8 +179,7 @@ public class TabLayout extends LinearLayout {
     }
 
     public void Selected(int index) {
-        ImageView image = (ImageView) views.get(index).findViewById(R.id.image);
-        ImageUtil.loadImg(image, m_Users.get(index).face);
+
         currIndex = index;
         mPager.setCurrentItem(index, true);
         for (int i = 0; i < mTabViews.size(); i++) {
@@ -208,12 +207,11 @@ public class TabLayout extends LinearLayout {
                 mTabViews.get(i).startAnimation(translateAnimation);
                 mHeights.add(defaultH);
             } else {
+                mTabViews.get(i).releaseImage();
                 mHeights.add(defaultH);
             }
         }
-
         scrollTo();
-
     }
 
     private void scrollTo() {
@@ -241,22 +239,43 @@ public class TabLayout extends LinearLayout {
 
     public void InitViewPager() {
         mPager = (ViewPager) findViewById(R.id.viewpager);
-        views = new ArrayList<View>();
-        for (int i = 0; i < m_Users.size(); i++) {
-            View v = LayoutInflater.from(context).inflate(R.layout.viewpager_item, null);
-            views.add(v);
-            ImageView image = (ImageView) v.findViewById(R.id.image);
-            int finalI = i;
-            image.setOnClickListener(m ->
-                    ActivityCompat.startActivity((Activity) context, new Intent(context, UserActivity.class).putExtra(C.HEAD_DATA, m_Users.get(finalI))
-                            , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
-            );
-        }
-
-        mPager.setAdapter(new ViewPagerAdapter(views));
+        mPager.setAdapter(new ViewPagerAdapter());
         mPager.setCurrentItem(0);
         Selected(0);
         mPager.setOnPageChangeListener(new MyOnPageChangeListener());
+    }
+
+    public class ViewPagerAdapter extends PagerAdapter {
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View v = LayoutInflater.from(context).inflate(R.layout.viewpager_item, null);
+            ImageView image = (ImageView) v.findViewById(R.id.image);
+            ImageUtil.loadImg(image, m_Users.get(position).face);
+            image.setOnClickListener(m ->
+                    ActivityCompat.startActivity((Activity) context, new Intent(context, UserActivity.class).putExtra(C.HEAD_DATA, m_Users.get(position))
+                            , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
+            );
+            container.addView(v);
+            return v;
+        }
+
+        @Override
+        public int getCount() {
+            return m_Users.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
+        }
+
+
     }
 
 
