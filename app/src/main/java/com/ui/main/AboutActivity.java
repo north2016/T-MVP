@@ -24,10 +24,9 @@ public class AboutActivity extends BaseActivity {
     @Bind(R.id.ll_header)
     LinearLayout llHeader;
 
-
-    public static String[] pricesLines = {"0", "100", "200", "300", "400", "500"};
-    public static String[] prices0 = {"80", "220", "350", "450", "210", "100", "350", "500"};
-    public static String[] prices10 = {"90", "290", "450", "250", "310", "200", "150", "400"};
+    public static Double[] Lines = {0.0, 100.0, 200.0, 300.0, 400.0, 500.0};
+    public static Double[] num0 = {90.0, 220.0, 100.0, 350.0, 210.0, 190.0, 350.0, 200.0};
+    public static Double[] num1 = {400.0, 290.0, 400.0, 450.0, 310.0, 500.0, 450.0, 400.0};
 
     @Override
     public int getLayoutId() {
@@ -39,9 +38,9 @@ public class AboutActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle("");
-        lv_user.setView(UserItemVH.class).fetch();
-        llHeader.addView(new ChartView(this, pricesLines, prices0, prices10));
+        ab.setTitle("用户列表");
+        lv_user.setView(UserItemVH.class).setIsRefreshable(false).fetch();
+        llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 
     @Override

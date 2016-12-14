@@ -49,12 +49,14 @@ public class UserListActivity extends BaseActivity {
 
         Api.getInstance().service
                 .getAllUser(0, 1000)
-                //.compose(RxSchedulers.io_main())
-                .subscribeOn(Schedulers.io())//.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                //.observeOn(AndroidSchedulers.mainThread())
                 .flatMap(userData -> Observable.from(userData.results))
                 .filter(user -> !TextUtils.isEmpty(user.face))
                 .buffer(1000)
-                .subscribe(users -> OkBus.getInstance().onEvent(EventTags.ABOUT_INIT_USERS, users));//使用OkBus替换Rxjava的线程切换
+                .subscribe(
+                        users -> OkBus.getInstance().onEvent(EventTags.ABOUT_INIT_USERS, users)//使用OkBus替换Rxjava的线程切换
+                        , e -> e.printStackTrace());
     }
 
     @Bus(tag = EventTags.ABOUT_INIT_USERS, thread = Bus.UI)
