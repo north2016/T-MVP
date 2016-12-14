@@ -8,7 +8,13 @@ import rx.schedulers.Schedulers;
  * Created by baixiaokang on 16/5/6.
  */
 public class RxSchedulers {
+    public static final Observable.Transformer<?, ?> mTransformer
+            = observable -> observable
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+
+    @SuppressWarnings("unchecked")
     public static <T> Observable.Transformer<T, T> io_main() {
-        return tObservable -> tObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return (Observable.Transformer<T, T>) mTransformer;
     }
 }
