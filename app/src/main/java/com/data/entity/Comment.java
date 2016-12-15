@@ -6,6 +6,7 @@ import com.data.Pointer;
 /**
  * Created by baixiaokang on 16/5/4.
  */
+
 public class Comment extends BaseEntity.BaseBean {
 
     public Pointer article;

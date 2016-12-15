@@ -14,7 +14,6 @@ import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity.Image;
-import com.data.repository.ImageRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 
@@ -24,7 +23,7 @@ import butterknife.Bind;
  * Created by baixiaokang on 16/4/23.
  */
 @Instance(type = Instance.typeVH)
-public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
+public class ArticleItemVH extends BaseViewHolder<Image> {
     @Bind(R.id.image)
     ImageView image;
     @Bind(R.id.tv_title)
@@ -46,8 +45,7 @@ public class ArticleItemVH extends BaseViewHolder<ImageRepository> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final ImageRepository mSubject) {
-        Image data = mSubject.data;//拆箱，从集装箱中取货
+    public void onBindViewHolder(View view, final Image data) {
         ImageUtil.loadImg(image, data.image);
         tv_title.setText(data.title);
         tv_des.setText(data.author);

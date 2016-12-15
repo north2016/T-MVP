@@ -2,7 +2,6 @@ package com.data.repository;
 
 import com.C;
 import com.api.Api;
-import com.app.annotation.apt.Instance;
 import com.base.util.ApiUtil;
 import com.base.util.helper.RxSchedulers;
 import com.data.Repository;
@@ -13,7 +12,6 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/7/19.
  */
-@Instance
 public class ImageRepository extends Repository<Image> {
 
     @Override

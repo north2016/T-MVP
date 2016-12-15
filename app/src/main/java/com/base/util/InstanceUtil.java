@@ -4,9 +4,11 @@ import android.view.View;
 
 import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
-import com.data.repository.InstanceFactory;
+import com.ui.article.InstanceFactory;
 
 import java.lang.reflect.ParameterizedType;
+
+import static com.data.entity.RepositoryFactory.create;
 
 /**
  * Created by baixiaokang on 16/4/30.
@@ -70,4 +72,15 @@ public class InstanceUtil {
         }
         return null;
     }
+
+    public static  <T> T getRepositoryInstance(Class cla) {
+        try {
+            return (T) create((Class) ((ParameterizedType) (cla
+                    .getGenericSuperclass())).getActualTypeArguments()[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

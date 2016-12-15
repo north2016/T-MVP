@@ -2,9 +2,8 @@ package com.data.repository;
 
 import com.C;
 import com.api.Api;
-import com.app.annotation.apt.Instance;
-import com.data.Repository;
 import com.base.util.helper.RxSchedulers;
+import com.data.Repository;
 import com.data.entity._User;
 
 import rx.Observable;
@@ -12,7 +11,6 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/4/29.
  */
-@Instance
 public class _UserRepository extends Repository<_User> {
     @Override
     public Observable getPageAt(int page) {

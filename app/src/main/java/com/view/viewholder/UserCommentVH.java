@@ -14,7 +14,6 @@ import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity.CommentInfo;
-import com.data.repository.CommentInfoRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 
@@ -24,7 +23,7 @@ import butterknife.Bind;
  * Created by baixiaokang on 16/5/4.
  */
 @Instance(type = Instance.typeVH)
-public class UserCommentVH extends BaseViewHolder<CommentInfoRepository> {
+public class UserCommentVH extends BaseViewHolder<CommentInfo> {
     @Bind(R.id.tv_content)
     TextView tv_content;
     @Bind(R.id.tv_title)
@@ -42,8 +41,7 @@ public class UserCommentVH extends BaseViewHolder<CommentInfoRepository> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final CommentInfoRepository mSubject) {
-        CommentInfo data = mSubject.data;//拆箱，从集装箱中取货
+    public void onBindViewHolder(View view, final CommentInfo data) {
         tv_content.setText(data.content);
         tv_title.setText(data.article.title);
         ImageUtil.loadImg(im_article, data.article.image);

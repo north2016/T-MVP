@@ -14,7 +14,6 @@ import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity._User;
-import com.data.repository._UserRepository;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 import com.ui.user.UserActivity;
@@ -25,7 +24,7 @@ import butterknife.Bind;
  * Created by baixiaokang on 16/5/4.
  */
 @Instance(type = Instance.typeVH)
-public class UserItemVH extends BaseViewHolder<_UserRepository> {
+public class UserItemVH extends BaseViewHolder<_User> {
     @Bind(R.id.tv_content)
     TextView tv_content;
     @Bind(R.id.im_user)
@@ -41,8 +40,7 @@ public class UserItemVH extends BaseViewHolder<_UserRepository> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final _UserRepository user) {
-        _User data = user.data;//拆箱，从集装箱中取货
+    public void onBindViewHolder(View view, final _User data) {
         tv_content.setText(data.username);
         ImageUtil.loadRoundImg(im_user, data.face);
         im_user.setOnClickListener(

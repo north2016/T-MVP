@@ -11,7 +11,7 @@ import rx.Observable;
  * 仓库类，定义仓库货物(数据)，钥匙，来源
  */
 public abstract class Repository<T> extends BaseRepository {
-    public T data;//货物
+    public T data ;//货物
 
     public Map<String, String> param;//钥匙
 

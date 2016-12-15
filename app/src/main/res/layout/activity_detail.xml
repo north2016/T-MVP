@@ -48,8 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
 
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
                     app:popupTheme="@style/AppTheme.PopupOverlay" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -92,25 +92,42 @@
             app:layout_anchorGravity="bottom|right|end" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/colorPrimary"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_behavior="com.view.behavior.MyCommentBehavior">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.0">
+
+                <EditText
+                    android:id="@+id/et_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/bt_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/button_ripple_blue"
+                android:text="评论"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
     </android.support.design.widget.CoordinatorLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/et_comment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0" />
-
-        <Button
-            android:id="@+id/bt_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="评论" />
-
-    </LinearLayout>
 
 </LinearLayout>

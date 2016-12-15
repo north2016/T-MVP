@@ -36,7 +36,6 @@ import rx.functions.Action1;
  */
 public class TRecyclerView<T extends Repository> extends LinearLayout {
     private T mRepository;//仓库
-
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
@@ -165,11 +164,11 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         }
     }
 
-    public TRecyclerView setView(Class<? extends BaseViewHolder<T>> cla) {
-            BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
-            int mType = BVH.getType();
-            this.mRepository = InstanceUtil.getInstance(BVH, 0);// 根据类的泛型类型获得仓库的实例
-            this.mCommAdapter.setViewType(mType, cla);
+    public TRecyclerView setView(Class<? extends BaseViewHolder> cla) {
+        BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
+        int mType = BVH.getType();
+        this.mRepository = InstanceUtil.getRepositoryInstance(cla);
+        this.mCommAdapter.setViewType(mType, cla);
         return this;
     }
 
@@ -210,13 +209,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                             @Override
                             public void call(Data response) {
                                 swiperefresh.setRefreshing(false);
-                                List<T> mList = new ArrayList<T>();
-                                for (Object o : response.results) {
-                                    T d = (T) mRepository.clone();//复制一个集装箱
-                                    d.data = o;//装货
-                                    mList.add(d);
-                                }
-                                mCommAdapter.setBeans(mList, begin);
+                                mCommAdapter.setBeans(response.results, begin);
                                 if (begin == 1 && (response.results == null || response.results.size() == 0))
                                     setEmpty();
                             }
@@ -241,8 +234,8 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 //        }
 //    }
 
-    public class CoreAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        protected List<T> mItemList = new ArrayList<>();
+    public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        protected List<M> mItemList = new ArrayList<>();
         public boolean isHasMore = true;
         public int viewtype, isHasFooter = 1, isHasHader = 0, mHeadViewType;
         public Object mHeadData;
@@ -291,7 +284,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
             return mItemList.size() + isHasFooter + isHasHader;
         }
 
-        public void setBeans(List<T> datas, int begin) {
+        public void setBeans(List<M> datas, int begin) {
             if (datas == null) datas = new ArrayList<>();
             this.isHasMore = datas.size() >= C.PAGE_COUNT;
             if (begin > 1) this.mItemList.addAll(datas);
@@ -301,16 +294,16 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                if (viewType == mHeadViewType) {
-                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                            mHeadViewType, parent, false));
-                } else if (viewType == mFooterViewType) {
-                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                            mFooterViewType, parent, false));
-                } else {
-                    return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                            viewtype, parent, false));
-                }
+            if (viewType == mHeadViewType) {
+                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                        mHeadViewType, parent, false));
+            } else if (viewType == mFooterViewType) {
+                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                        mFooterViewType, parent, false));
+            } else {
+                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
+                        viewtype, parent, false));
+            }
         }
 
         @Override
