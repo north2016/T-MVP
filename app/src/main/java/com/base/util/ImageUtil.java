@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.base.util.helper.BlurTransformation;
 import com.base.util.helper.GlideCircleTransform;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -115,11 +116,11 @@ public class ImageUtil {
                 .error(R.mipmap.ic_launcher)
                 .into(v);
 
-   /*     Glide.with(v.getContext())
-                .load(getFuckUrl(url))
+        Glide.with(v.getContext()).load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .transform(new LowPolyTransform(v.getContext()))
-                .into(im_header);*/
+                .transform(new BlurTransformation(v.getContext(), 100))
+                .crossFade()
+                .into(im_header);
     }
 
     public static String getUrlByIntent(Context mContext, Intent mdata) {

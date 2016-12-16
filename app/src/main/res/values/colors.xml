@@ -5,7 +5,8 @@
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorAccent">#E91E63</color>
 
-
+    <color name="alpha_white">#eeeeee</color>
+    <color name="white">#ffffff</color>
 
     <color name="theme_black_7f">#8f000000</color>
 </resources>

@@ -82,7 +82,6 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) onBackPressed();

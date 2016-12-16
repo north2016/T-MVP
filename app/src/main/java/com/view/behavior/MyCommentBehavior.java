@@ -54,6 +54,7 @@ public class MyCommentBehavior extends CoordinatorLayout.Behavior<View> {
     }
 
     float mFabTranslationY = 0;
+
     //用于响应从属布局的变化
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View snackbar) {
@@ -92,15 +93,19 @@ public class MyCommentBehavior extends CoordinatorLayout.Behavior<View> {
         return true;
     }
 
+    private boolean isHided = false;
+
     //在嵌套滑动开始前回调
     @Override
     public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-
+        if (!isHided) {
+            isHided = true;
+            ViewCompat.setTranslationY(child, child.getHeight());
+        }
         if (child.getVisibility() == View.VISIBLE && viewY == 0) {
             //获取控件距离父布局（coordinatorLayout）底部距离
             viewY = coordinatorLayout.getHeight() - child.getY();
         }
-
         return (nestedScrollAxes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;//判断是否竖直滚动
     }
 
@@ -108,9 +113,9 @@ public class MyCommentBehavior extends CoordinatorLayout.Behavior<View> {
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dx, int dy, int[] consumed) {
         //dy大于0是向上滚动 小于0是向下滚动
-        if (dy >= 0 && !isAnimate && child.getVisibility() == View.GONE) {
+        if (dy >= 10 && !isAnimate && child.getVisibility() == View.GONE) {
             show(child);
-        } else if (dy < 0 && !isAnimate && child.getVisibility() == View.VISIBLE) {
+        } else if (dy < -10 && !isAnimate && child.getVisibility() == View.VISIBLE) {
             hide(child);
         }
     }

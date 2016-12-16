@@ -57,22 +57,6 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical"-->
-        <!--android:paddingTop="24dp">-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/tv_article"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:lineSpacingExtra="10dp"-->
-        <!--android:padding="10dp"-->
-        <!--android:textColor="#000" />-->
-
-
-        <!--</LinearLayout>-->
         <com.view.layout.TRecyclerView
             android:id="@+id/lv_comment"
             android:layout_width="match_parent"
@@ -99,6 +83,7 @@
             android:background="?attr/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_behavior="com.view.behavior.MyCommentBehavior">
 
 
@@ -106,6 +91,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+
                 android:layout_marginRight="5dp"
                 android:layout_weight="1.0">
 

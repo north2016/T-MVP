@@ -8,6 +8,7 @@ import android.graphics.Paint.Style;
 import android.view.View;
 
 import com.base.util.BaseUtils;
+import com.ui.main.R;
 
 public class ChartView extends View {
     private Paint mTextPaint, mYellowTextPaint, mGreenTextPaint;// 画笔
@@ -30,11 +31,11 @@ public class ChartView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(getResources().getColor(R.color.colorPrimaryDark));
         itemWidth = getWidth() / 9;
         itemHeight = getHeight() / 8;
-        canvas.drawText("活跃用户", getWidth() / 4, itemHeight, mYellowTextPaint);
-        canvas.drawText("联网用户", getWidth() * 3 / 4, itemHeight, mGreenTextPaint);
+        canvas.drawText("活跃用户", getWidth() / 4, itemHeight*4/3, mYellowTextPaint);
+        canvas.drawText("联网用户", getWidth() * 3 / 4, itemHeight*4/3, mGreenTextPaint);
         max = Lines[Lines.length - 1];
         for (int i = 1; i < 9; i++) {
             if (i < 7) {
