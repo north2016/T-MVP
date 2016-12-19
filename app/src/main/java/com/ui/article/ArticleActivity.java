@@ -18,6 +18,7 @@ import com.C;
 import com.base.BaseActivity;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
+import com.base.util.StatusBarUtil;
 import com.base.util.ViewUtil;
 import com.data.Pointer;
 import com.data.entity.Image;
@@ -52,6 +53,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentBackground(this);
         Image mSubject = (Image) getIntent().getSerializableExtra(C.HEAD_DATA);
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();

@@ -14,6 +14,7 @@ import com.C;
 import com.base.BaseActivity;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
+import com.base.util.StatusBarUtil;
 import com.base.util.ToastUtil;
 import com.data.Pointer;
 import com.data.entity._User;
@@ -47,6 +48,7 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentBackground(this);
         _User user = (_User) getIntent().getSerializableExtra(C.HEAD_DATA);
         initUser(user);
         setSupportActionBar(toolbar);
