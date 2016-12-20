@@ -16,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,7 +71,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         return R.layout.activity_main;
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_overaction, menu);
@@ -94,7 +92,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void initView() {
         StatusBarUtil.setTranslucentBackground(this);
@@ -104,9 +101,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         mDrawerToggle.syncState();
         dlMainDrawer.addDrawerListener(mDrawerToggle);
         fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
-        View headerView = nvMainNavigation.inflateHeaderView(R.layout.nav_header_main);
-        im_face = (ImageView) headerView.findViewById(R.id.im_face);
-        tv_name = (TextView) headerView.findViewById(R.id.tv_name);
+        im_face = (ImageView) nvMainNavigation.getHeaderView(0).findViewById(R.id.im_face);
+        tv_name = (TextView) nvMainNavigation.getHeaderView(0).findViewById(R.id.tv_name);
         nvMainNavigation.setNavigationItemSelectedListener(this);
     }
 
@@ -145,8 +141,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
             startActivity(new Intent(mContext, SettingsActivity.class));
         else if (item.getItemId() == R.id.nav_share)
             startActivity(new Intent(mContext, LoginActivity.class));
-        else if (item.getItemId() == R.id.nav_send)
-            SpUtil.setNight(mContext, !SpUtil.isNight());
+        else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
     }
 }
