@@ -25,7 +25,9 @@ import com.base.BaseActivity;
 import com.base.BaseListFragment;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
+import com.base.util.StatusBarUtil;
 import com.base.util.helper.FragmentAdapter;
+import com.base.util.helper.PagerChangeListener;
 import com.data.entity._User;
 import com.ui.article.ArticleActivity;
 import com.ui.login.LoginActivity;
@@ -57,6 +59,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     NavigationView nvMainNavigation;
     @Bind(R.id.dl_main_drawer)
     DrawerLayout dlMainDrawer;
+    @Bind(R.id.toolbar_iv_outgoing)
+    ImageView mIvOutgoing;
+    @Bind(R.id.toolbar_iv_target)
+    ImageView mIvTarget;
     ImageView im_face;
     TextView tv_name;
 
@@ -90,6 +96,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public void initView() {
+        StatusBarUtil.setTranslucentBackground(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
@@ -99,7 +106,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         View headerView = nvMainNavigation.inflateHeaderView(R.layout.nav_header_main);
         im_face = (ImageView) headerView.findViewById(R.id.im_face);
         tv_name = (TextView) headerView.findViewById(R.id.tv_name);
-
+        //setTitle("");
         nvMainNavigation.setNavigationItemSelectedListener(item -> {
             item.setChecked(true);
             dlMainDrawer.closeDrawers();
@@ -122,7 +129,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     public void showTabList(String[] mTabs) {
         List<Fragment> fragments = new ArrayList<>();
         Observable.from(mTabs).subscribe(tab -> fragments.add(BaseListFragment.newInstance(ArticleItemVH.class, tab)));
-        viewpager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(mTabs)));
+        FragmentAdapter mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(mTabs));
+        viewpager.setAdapter(mFragmentAdapter);
+        viewpager.addOnPageChangeListener(PagerChangeListener.newInstance(mFragmentAdapter, mIvTarget, mIvOutgoing));
         tabs.setupWithViewPager(viewpager);
         tabs.setTabsFromPagerAdapter(viewpager.getAdapter());
     }

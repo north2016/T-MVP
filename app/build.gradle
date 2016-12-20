@@ -3,11 +3,11 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
         applicationId "cn.com.app"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -48,38 +48,12 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
+
+    compile 'com.android.support:percent:25.0.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile project(':aop')
     annotationProcessor project(':apt')
 }
 
-
 apply plugin: com.app.plugin.AspectjPlugin
 apply plugin: com.app.plugin.JavassistPlugin
-
-
-android.applicationVariants.all { variant ->
-    def dexTask = project.tasks.findByName("transformClassesWithDexForDebug")
-    def preDexTask = project.tasks.findByName("transformClassesWithPreDexForDebug")
-    if (preDexTask) {
-        project.logger.error "======preDexTask======"
-        preDexTask.inputs.files.files.each { file ->
-            project.logger.error "inputs =$file.absolutePath"
-        }
-
-        preDexTask.outputs.files.files.each { file ->
-            project.logger.error "outputs =$file.absolutePath"
-        }
-    }
-    if (dexTask) {
-        project.logger.error "======dexTask======"
-        dexTask.inputs.files.files.each { file ->
-            project.logger.error "inputs =$file.absolutePath"
-        }
-
-        dexTask.outputs.files.files.each { file ->
-            project.logger.error "outputs =$file.absolutePath"
-        }
-    }
-}

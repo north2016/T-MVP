@@ -2,6 +2,7 @@ package com.app.plugin
 
 import com.android.build.api.transform.*
 import com.google.common.collect.Sets
+import javassist.ClassPool
 import org.apache.commons.io.FileUtils
 import org.gradle.api.Project
 
@@ -68,5 +69,6 @@ public class JavassistTransform extends Transform {
                 FileUtils.copyDirectory(directoryInput.file, dest)
             }
         }
+        ClassPool.getDefault().clearImportedPackages();
     }
 }

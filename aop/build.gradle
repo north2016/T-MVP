@@ -6,12 +6,12 @@ import org.aspectj.tools.ajc.Main
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 23
+        minSdkVersion 19
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -26,11 +26,11 @@ android {
 dependencies {
     compile project(':lib')
     compile 'org.aspectj:aspectjrt:1.8.9'
+    compile 'com.android.support:design:25.0.0'
 }
 
-
 /**
- * @使用ajc编译java代码，同时织入切片代码
+ * @使用ajc编译java代码 ， 同 时 织 入 切 片 代 码
  * 使用 AspectJ 的编译器（ajc，一个java编译器的扩展）
  * 对所有受 aspect 影响的类进行织入。
  * 在 gradle 的编译 task 中增加额外配置，使之能正确编译运行。

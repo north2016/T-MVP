@@ -26,8 +26,8 @@ public class AboutActivity extends BaseActivity {
     LinearLayout llHeader;
 
     public static Double[] Lines = {0.0, 100.0, 200.0, 300.0, 400.0, 500.0};
-    public static Double[] num0 = {90.0, 220.0, 100.0, 350.0, 210.0, 190.0, 350.0, 200.0};
-    public static Double[] num1 = {400.0, 290.0, 400.0, 450.0, 310.0, 500.0, 450.0, 400.0};
+    public static Double[] num0 = {200.0, 400.0, 230.0, 350.0, 210.0, 310.0, 350.0, 200.0};
+    public static Double[] num1 = {400.0, 480.0, 300.0, 450.0, 310.0, 500.0, 450.0, 400.0};
 
     @Override
     public int getLayoutId() {

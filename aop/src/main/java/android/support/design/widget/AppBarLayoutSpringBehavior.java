@@ -13,10 +13,13 @@ import android.view.animation.Interpolator;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * 包名必须这样，放在app下不好看，暂时放这里
+ */
 public class AppBarLayoutSpringBehavior extends AppBarLayout.Behavior {
     private static final int MAX_OFFSET_ANIMATION_DURATION = 600; // ms
 
-    public interface SpringOffsetCallback{
+    public interface SpringOffsetCallback {
         void springCallback(int offset);
     }
 
@@ -84,7 +87,7 @@ public class AppBarLayoutSpringBehavior extends AppBarLayout.Behavior {
         } else {
             if (velocityY < 0) {
                 final int targetScroll =
-                        + child.getDownNestedPreScrollRange();
+                        +child.getDownNestedPreScrollRange();
                 animateOffsetTo(coordinatorLayout, child, targetScroll, velocityY);
                 flung = true;
             } else {
