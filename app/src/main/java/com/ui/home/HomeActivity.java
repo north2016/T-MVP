@@ -45,7 +45,7 @@ import java.util.List;
 import butterknife.Bind;
 import rx.Observable;
 
-public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> implements HomeContract.View {
+public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -65,6 +65,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     ImageView mIvTarget;
     ImageView im_face;
     TextView tv_name;
+    PagerChangeListener mPagerChangeListener;
 
     @Override
     public int getLayoutId() {
@@ -101,28 +102,12 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
-        dlMainDrawer.setDrawerListener(mDrawerToggle);
+        dlMainDrawer.addDrawerListener(mDrawerToggle);
         fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
         View headerView = nvMainNavigation.inflateHeaderView(R.layout.nav_header_main);
         im_face = (ImageView) headerView.findViewById(R.id.im_face);
         tv_name = (TextView) headerView.findViewById(R.id.tv_name);
-        //setTitle("");
-        nvMainNavigation.setNavigationItemSelectedListener(item -> {
-            item.setChecked(true);
-            dlMainDrawer.closeDrawers();
-            switch (item.getItemId()) {
-                case R.id.nav_manage:
-                    startActivity(new Intent(mContext, SettingsActivity.class));
-                    break;
-                case R.id.nav_share:
-                    startActivity(new Intent(mContext, LoginActivity.class));
-                    break;
-                case R.id.nav_send:
-                    SpUtil.setNight(mContext, !SpUtil.isNight());
-                    break;
-            }
-            return true;
-        });
+        nvMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -131,9 +116,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         Observable.from(mTabs).subscribe(tab -> fragments.add(BaseListFragment.newInstance(ArticleItemVH.class, tab)));
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(mTabs));
         viewpager.setAdapter(mFragmentAdapter);
-        viewpager.addOnPageChangeListener(PagerChangeListener.newInstance(mFragmentAdapter, mIvTarget, mIvOutgoing));
+        mPagerChangeListener = PagerChangeListener.newInstance(mFragmentAdapter, mIvTarget, mIvOutgoing);
+        viewpager.addOnPageChangeListener(mPagerChangeListener);
         tabs.setupWithViewPager(viewpager);
-        tabs.setTabsFromPagerAdapter(viewpager.getAdapter());
     }
 
     @Override
@@ -141,8 +126,27 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         ImageUtil.loadRoundImg(im_face, user.face);
         tv_name.setText(user.username);
         im_face.setOnClickListener(v ->
-                ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user)
+                ActivityCompat.startActivity(mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user)
                         , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_face, ArticleActivity.TRANSLATE_VIEW).toBundle())
         );
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewpager.removeOnPageChangeListener(mPagerChangeListener);
+        super.onDestroy();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        item.setChecked(true);
+        dlMainDrawer.closeDrawers();
+        if (item.getItemId() == R.id.nav_manage)
+            startActivity(new Intent(mContext, SettingsActivity.class));
+        else if (item.getItemId() == R.id.nav_share)
+            startActivity(new Intent(mContext, LoginActivity.class));
+        else if (item.getItemId() == R.id.nav_send)
+            SpUtil.setNight(mContext, !SpUtil.isNight());
+        return true;
     }
 }
