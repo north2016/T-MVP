@@ -34,7 +34,7 @@
         <activity
             android:name="com.ui.article.ArticleActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
 
 
         <activity
