@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_whilte_send"
-        app:layout_behavior="com.view.behavior.MyFabBehavior" />
+        app:layout_behavior="com.view.behavior.MyFabBehavior"
+        app:srcCompat="@drawable/ic_whilte_send" />
 
 </android.support.design.widget.CoordinatorLayout>
