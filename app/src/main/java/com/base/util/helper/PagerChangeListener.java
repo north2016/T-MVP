@@ -1,5 +1,6 @@
 package com.base.util.helper;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 
@@ -21,8 +22,8 @@ public class PagerChangeListener implements ViewPager.OnPageChangeListener {
         mImageAnimator = imageAnimator;
     }
 
-    public static PagerChangeListener newInstance(FragmentAdapter adapter, ImageView originImage, ImageView outgoingImage) {
-        ImageAnimator imageAnimator = new ImageAnimator(adapter, originImage, outgoingImage);
+    public static PagerChangeListener newInstance(CollapsingToolbarLayout collapsingToolbar, FragmentAdapter adapter, ImageView originImage, ImageView outgoingImage) {
+        ImageAnimator imageAnimator = new ImageAnimator(collapsingToolbar, originImage, outgoingImage);
         return new PagerChangeListener(imageAnimator);
     }
 
@@ -52,9 +53,9 @@ public class PagerChangeListener implements ViewPager.OnPageChangeListener {
 
         // 向后滚动
         if (isScrollingToNext(position, positionOffset)) {
-            mImageAnimator.forward(positionOffset);
+            mImageAnimator.forward(position, positionOffset);
         } else if (isScrollingToPrevious(position, positionOffset)) { // 向前滚动
-            mImageAnimator.backwards(positionOffset);
+            mImageAnimator.backwards(position, positionOffset);
         }
     }
 

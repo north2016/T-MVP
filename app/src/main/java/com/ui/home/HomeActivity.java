@@ -2,6 +2,7 @@ package com.ui.home;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -65,6 +66,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     ImageView im_face, im_bg;
     TextView tv_name;
     PagerChangeListener mPagerChangeListener;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
 
     @Override
     public int getLayoutId() {
@@ -113,7 +117,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         Observable.from(mTabs).subscribe(tab -> fragments.add(BaseListFragment.newInstance(ArticleItemVH.class, tab)));
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments, Arrays.asList(mTabs));
         viewpager.setAdapter(mFragmentAdapter);
-        mPagerChangeListener = PagerChangeListener.newInstance(mFragmentAdapter, mIvTarget, mIvOutgoing);
+        mPagerChangeListener = PagerChangeListener.newInstance(collapsingToolbar, mFragmentAdapter, mIvTarget, mIvOutgoing);
         viewpager.addOnPageChangeListener(mPagerChangeListener);
         tabs.setupWithViewPager(viewpager);
     }

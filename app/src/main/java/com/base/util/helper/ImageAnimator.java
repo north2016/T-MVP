@@ -1,13 +1,16 @@
 package com.base.util.helper;
 
+import android.graphics.Color;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.base.util.BaseUtils;
 import com.base.util.ImageUtil;
 
 /**
- * 渐变的动画效果  原作者by wangchenlong on 15/11/9.
+ * 渐变的动画效果  原作者by wangchenlong on 15/11/9.  已经被我大量修改
  */
 public class ImageAnimator {
     String[] mImages = {
@@ -22,9 +25,21 @@ public class ImageAnimator {
             "http://img-cdn.luoo.net/pics/vol/579255f04b1da.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/581b681b678f1.jpg?imageView2/1/w/640/h/452"};
 
+    int[] mColors = {
+            Color.parseColor("#F44336"),
+            Color.parseColor("#E91E63"),
+            Color.parseColor("#9C27B0"),
+            Color.parseColor("#673AB7"),
+            Color.parseColor("#3F51B5"),
+            Color.parseColor("#2196F3"),
+            Color.parseColor("#03A9F4"),
+            Color.parseColor("#00BCD4"),
+            Color.parseColor("#009688"),
+            Color.parseColor("#4CAF50"),
+    };
+
     private static final float FACTOR = 0.1f;
 
-    private final FragmentAdapter mAdapter; // 适配器
     private final ImageView mTargetImage; // 原始图片
     private final ImageView mOutgoingImage; // 渐变图片
 
@@ -34,12 +49,15 @@ public class ImageAnimator {
     private int mEnd;
 
     private boolean isSkip = false;//是否跳页
+    CollapsingToolbarLayout collapsingToolbar;
 
-    public ImageAnimator(FragmentAdapter adapter, ImageView targetImage, ImageView outgoingImage) {
-        mAdapter = adapter;
+    public ImageAnimator(CollapsingToolbarLayout collapsingToolbar, ImageView targetImage, ImageView outgoingImage) {
+        this.collapsingToolbar = collapsingToolbar;
         mTargetImage = targetImage;
         mOutgoingImage = outgoingImage;
         ImageUtil.loadImg(mTargetImage, mImages[0]);
+        collapsingToolbar.setContentScrimColor(mColors[0]);
+        collapsingToolbar.setStatusBarScrimColor(mColors[0]);
     }
 
     /**
@@ -90,6 +108,8 @@ public class ImageAnimator {
             mTargetImage.setImageDrawable(mOutgoingImage.getDrawable());
         } else {
             ImageUtil.loadImg(mTargetImage, mImages[endPosition]);
+            collapsingToolbar.setContentScrimColor(mColors[endPosition]);
+            collapsingToolbar.setStatusBarScrimColor(mColors[endPosition]);
             //mTargetImage.setImageResource(incomeId);
             mTargetImage.setAlpha(1f);
             mOutgoingImage.setVisibility(View.GONE);
@@ -97,24 +117,29 @@ public class ImageAnimator {
     }
 
     // 向前滚动, 比如0->1, offset滚动的距离(0->1), 目标渐渐淡出
-    public void forward(float positionOffset) {
+    public void forward(int position, float positionOffset) {
         if (isSkip) return;
         // Log.e("DEBUG-WCL", "forward-positionOffset: " + positionOffset);
         int width = mTargetImage.getWidth();
         mOutgoingImage.setTranslationX(-positionOffset * (FACTOR * width));
         mTargetImage.setTranslationX((1 - positionOffset) * (FACTOR * width));
-
+        int color = BaseUtils.evaluate(positionOffset, mColors[position], mColors[position + 1]);
+        collapsingToolbar.setContentScrimColor(color);
+        collapsingToolbar.setStatusBarScrimColor(color);
         mTargetImage.setAlpha(positionOffset);
     }
 
     // 向后滚动, 比如1->0, offset滚动的距离(1->0), 目标渐渐淡入
-    public void backwards(float positionOffset) {
+    public void backwards(int position, float positionOffset) {
         if (isSkip) return;
         // Log.e("DEBUG-WCL", "backwards-positionOffset: " + positionOffset);
         int width = mTargetImage.getWidth();
         mOutgoingImage.setTranslationX((1 - positionOffset) * (FACTOR * width));
         mTargetImage.setTranslationX(-(positionOffset) * (FACTOR * width));
 
+        int color = BaseUtils.evaluate(1 - positionOffset, mColors[position + 1], mColors[position]);
+        collapsingToolbar.setContentScrimColor(color);
+        collapsingToolbar.setStatusBarScrimColor(color);
         mTargetImage.setAlpha(1 - positionOffset);
     }
 

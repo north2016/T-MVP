@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.base.util.BaseUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,28 +127,6 @@ public class FireView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-    /**
-     * @param fraction
-     * @param startValue
-     * @param endValue
-     * @return
-     */
-    private Integer evaluate(float fraction, Object startValue, Object endValue) {
-        int startInt = (Integer) startValue;
-        int startA = (startInt >> 24) & 0xff;
-        int startR = (startInt >> 16) & 0xff;
-        int startG = (startInt >> 8) & 0xff;
-        int startB = startInt & 0xff;
-        int endInt = (Integer) endValue;
-        int endA = (endInt >> 24) & 0xff;
-        int endR = (endInt >> 16) & 0xff;
-        int endG = (endInt >> 8) & 0xff;
-        int endB = endInt & 0xff;
-        return (int) ((startA + (int) (fraction * (endA - startA))) << 24)
-                | (int) ((startR + (int) (fraction * (endR - startR))) << 16)
-                | (int) ((startG + (int) (fraction * (endG - startG))) << 8)
-                | (int) ((startB + (int) (fraction * (endB - startB))));
-    }
 
     /**
      * 火苗类
@@ -198,7 +178,7 @@ public class FireView extends SurfaceView implements SurfaceHolder.Callback {
         public void draw(Canvas mCanvas) {
             move();
             if (i < 2 * fireWidth && i > fireWidth / 5) {
-                mPaint.setColor(evaluate((float) (i * 1.0 / (2 * fireWidth)), startColor, endColor));
+                mPaint.setColor(BaseUtils.evaluate((float) (i * 1.0 / (2 * fireWidth)), startColor, endColor));
                 mCanvas.drawPath(mpath, mPaint);
             }
         }
