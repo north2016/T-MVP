@@ -62,7 +62,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
     ImageView mIvOutgoing;
     @Bind(R.id.toolbar_iv_target)
     ImageView mIvTarget;
-    ImageView im_face;
+    ImageView im_face, im_bg;
     TextView tv_name;
     PagerChangeListener mPagerChangeListener;
 
@@ -102,6 +102,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         dlMainDrawer.addDrawerListener(mDrawerToggle);
         fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
         im_face = (ImageView) nvMainNavigation.getHeaderView(0).findViewById(R.id.im_face);
+        im_bg = (ImageView) nvMainNavigation.getHeaderView(0).findViewById(R.id.im_bg);
         tv_name = (TextView) nvMainNavigation.getHeaderView(0).findViewById(R.id.tv_name);
         nvMainNavigation.setNavigationItemSelectedListener(this);
     }
@@ -119,7 +120,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public void initUserInfo(_User user) {
-        ImageUtil.loadRoundImg(im_face, user.face);
+        ImageUtil.loadRoundAndBgImg(im_face, user.face, im_bg);
         tv_name.setText(user.username);
         im_face.setOnClickListener(v ->
                 ActivityCompat.startActivity(mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user)
