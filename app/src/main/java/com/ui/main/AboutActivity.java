@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 import com.base.BaseActivity;
-import com.base.util.StatusBarUtil;
 import com.view.layout.TRecyclerView;
 import com.view.viewholder.UserItemVH;
 import com.view.widget.ChartView;
@@ -36,7 +35,6 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentBackground(this);
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);

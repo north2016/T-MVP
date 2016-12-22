@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.base.util.SpUtil;
-import com.base.util.StatusBarUtil;
 
 public class SettingsActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;
@@ -25,11 +24,8 @@ public class SettingsActivity extends PreferenceActivity {
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        StatusBarUtil.setTranslucentBackground(this);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         addPreferencesFromResource(R.xml.settings);
-
-
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar ab = mDelegate.getSupportActionBar();

@@ -14,7 +14,6 @@ import com.api.Api;
 import com.app.annotation.javassist.Bus;
 import com.base.BaseActivity;
 import com.base.OkBus;
-import com.base.util.StatusBarUtil;
 import com.data.entity._User;
 import com.view.widget.TabLayout;
 
@@ -43,11 +42,10 @@ public class UserListActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentBackground(this);
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
-        //ab.setTitle("");
+        ab.setTitle("用户一览");
         Api.getInstance().service
                 .getAllUser(0, 1000)
                 .subscribeOn(Schedulers.io())

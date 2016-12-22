@@ -25,7 +25,6 @@ import com.base.BaseActivity;
 import com.base.BaseListFragment;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
-import com.base.util.StatusBarUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.base.util.helper.PagerChangeListener;
 import com.data.entity._User;
@@ -98,7 +97,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
 
     @Override
     public void initView() {
-        StatusBarUtil.setTranslucentBackground(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
