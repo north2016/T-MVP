@@ -6,14 +6,11 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
 
-        <item name="android:textColorHint">@color/alpha_white</item>
-        <item name="colorControlNormal">@color/alpha_white</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <!--<item name="android:textColorHint">@color/alpha_white</item>-->
+        <!--<item name="colorControlNormal">@color/alpha_white</item>-->
+        <!--<item name="colorControlActivated">@color/white</item>-->
+        <!--<item name="colorControlHighlight">@color/white</item>-->
 
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!-- Base application theme. -->
@@ -22,6 +19,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="window_background">#2196F3</item>-->
     </style>
 
 
@@ -30,6 +28,7 @@
         <item name="colorPrimary">#E91E63</item>
         <item name="colorPrimaryDark">#E91E63</item>
         <item name="colorAccent">@color/colorPrimary</item>
+        <!--<item name="window_background">#2196F3</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">

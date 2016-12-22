@@ -69,7 +69,7 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
         } else {
             super.setContentView(getContainer());
             View view = LayoutInflater.from(this).inflate(layoutResID, null);
-            view.setBackgroundColor(getResources().getColor(R.color.window_background));
+            view.setBackgroundColor(getResources().getColor(R.color.alpha_white));
             swipeBackLayout.addView(view);
         }
     }

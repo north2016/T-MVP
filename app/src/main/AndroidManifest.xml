@@ -52,7 +52,8 @@
 
         <activity
             android:name="com.ui.main.SettingsActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <activity
