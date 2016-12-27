@@ -112,7 +112,7 @@ public class TRecyclerView<T extends Repository> extends FrameLayout implements 
         if (!isHasHeadView) {
             this.mCommAdapter.setHeadViewType(0, cla, null);
         } else {
-            int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
+            int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType();
             this.mCommAdapter.setHeadViewType(mHeadViewType, cla, ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA));
         }
         return this;
@@ -124,14 +124,14 @@ public class TRecyclerView<T extends Repository> extends FrameLayout implements 
             this.mCommAdapter.setFooterViewType(0, cla, data);
         } else {
             mCoreAdapterPresenter.setBegin(0);
-            this.mCommAdapter.setFooterViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType(), cla, data);
+            this.mCommAdapter.setFooterViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType(), cla, data);
         }
         return this;
     }
 
     public TRecyclerView setView(Class<? extends BaseViewHolder> cla) {
         mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(cla));
-        this.mCommAdapter.setViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType(), cla);
+        this.mCommAdapter.setViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType(), cla);
         return this;
     }
 

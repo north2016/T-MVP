@@ -41,11 +41,8 @@ public class FeedBackActivity extends BaseActivity {
         setTitle("用户反馈");
         _User user = SpUtil.getUser();
         lvMsg.setFooterView(MessageVH.class, C.getHeaderMessageInfo())
-                .setView(MessageVH.class)
-                .setReverse().setIsRefreshable(false)
-                .setParam(C.INCLUDE, C.CREATER)
-                .setParam(C.UID, user.objectId)
-                .fetch();
+                .setView(MessageVH.class).setReverse().setIsRefreshable(false)
+                .setParam(C.INCLUDE, C.CREATER).setParam(C.UID, user.objectId).fetch();
         btSend.setOnClickListener(v -> {
             String msg = etMessage.getText().toString();
             if (TextUtils.isEmpty(msg)) {

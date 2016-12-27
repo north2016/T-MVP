@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.C;
 import com.base.util.InstanceUtil;
@@ -31,7 +30,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return (RecyclerView.ViewHolder) InstanceUtil.getInstance(getVHClassByType(viewType), LayoutInflater.from(context).inflate(viewType, parent, false));
+        return (RecyclerView.ViewHolder) InstanceUtil.getViewHolder(getVHClassByType(viewType), LayoutInflater.from(context).inflate(viewType, parent, false));
     }
 
     @Override
@@ -68,7 +67,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public Object getItem(int position) {
         return isHasFooter == 1 && position + 1 == getItemCount()
-                ? (mFootData == null ? (isHasMore ? new Object() : null) : mFootData)
+                ? (mFootData == null ? (isHasMore ? true : false) : mFootData)
                 : isHasHeader == 1 && position == 0 ? mHeadData : mItemList.get(position - isHasHeader);
     }
 
@@ -81,7 +80,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public int getViewType(Class VHClass, int viewType, Object item) {
-        BaseViewHolder BVH = InstanceUtil.getInstance(VHClass, new LinearLayout(context));
+        BaseViewHolder BVH = InstanceUtil.getInstance(VHClass);
         return BVH instanceof BaseMultiVH ? ((BaseMultiVH) BVH).getMultiType(item) : viewType;
     }
 

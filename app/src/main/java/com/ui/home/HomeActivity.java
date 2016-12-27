@@ -82,11 +82,15 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         if (item.getItemId() == R.id.action_settings)
             startActivity(new Intent(mContext, AboutActivity.class));
         else if (item.getItemId() == R.id.action_feedback)
+            if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
+            else startActivity(new Intent(this, FeedBackActivity.class));
+        else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
             dlMainDrawer.openDrawer(GravityCompat.START);
         return true;
     }
+
 
     @Override
     public void initView() {
@@ -94,8 +98,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> impleme
         mDrawerToggle.syncState();
         dlMainDrawer.addDrawerListener(mDrawerToggle);
         fab.setOnClickListener(v -> {
-            if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
-            else startActivity(new Intent(this, FeedBackActivity.class));
+
         });
         View mHeaderView = nvMainNavigation.getHeaderView(0);
         im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);

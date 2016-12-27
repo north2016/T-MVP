@@ -19,17 +19,20 @@
         android:orderInCategory="100"
         android:title="反馈"
         app:showAsAction="collapseActionView" />
+
+
     <item
         android:id="@+id/action_feedback"
         android:icon="@drawable/ic_whilte_send"
         android:orderInCategory="300"
         android:title="反馈"
         app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/action_search"
-        android:icon="@mipmap/ic_search"
+        android:id="@+id/action_about"
+        android:icon="@drawable/ic_menu_info"
         android:orderInCategory="200"
-        android:title="搜索"
+        android:title="关于"
         app:showAsAction="ifRoom" />
 
 

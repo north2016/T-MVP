@@ -12,7 +12,7 @@ import com.ui.main.R;
 import butterknife.Bind;
 
 @Instance(type = Instance.typeVH)
-public class CommFooterVH extends BaseViewHolder<Object> {
+public class CommFooterVH extends BaseViewHolder<Boolean> {
     @Bind(R.id.progressbar)
     public ProgressBar progressbar;
     @Bind(R.id.tv_state)
@@ -29,8 +29,7 @@ public class CommFooterVH extends BaseViewHolder<Object> {
     }
 
     @Override
-    public void onBindViewHolder(View view, Object o) {
-        boolean isHasMore = (null == o ? false : true);
+    public void onBindViewHolder(View view, Boolean isHasMore) {
         progressbar.setVisibility(isHasMore ? View.VISIBLE : View.GONE);
         tv_state.setText(isHasMore ? "正在加载" : "已经到底");
     }

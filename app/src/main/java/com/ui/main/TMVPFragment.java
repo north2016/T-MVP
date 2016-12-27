@@ -1,7 +1,6 @@
 package com.ui.main;
 
 import android.app.Dialog;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -23,9 +22,7 @@ public class TMVPFragment extends android.support.design.widget.BottomSheetDialo
         View view = View.inflate(getContext(), R.layout.dialog_bottom_sheet, null);
         dialog.setContentView(view);
         mBehavior = BottomSheetBehavior.from((View) view.getParent());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         return dialog;
     }
 

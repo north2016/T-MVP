@@ -43,12 +43,14 @@ public class InstanceProcessor implements IProcessor {
         MethodSpec.Builder methodBuilder1 = MethodSpec.methodBuilder("create").addAnnotation(MemoryCache.class)
                 .addJavadoc("@此方法由apt自动生成")
                 .returns(Object.class).addModifiers(PUBLIC, STATIC).addException(IllegalAccessException.class).addException(InstantiationException.class)
-                .addParameter(Class.class, "mClass");
+                .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
+        ;
 
-        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("create")
+        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("createVH")
                 .addJavadoc("@此方法由apt自动生成")
                 .returns(Object.class).addModifiers(PUBLIC, STATIC)
                 .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
+
 
         List<ClassName> mList = new ArrayList<>();
         CodeBlock.Builder blockBuilder1 = CodeBlock.builder();
@@ -64,8 +66,9 @@ public class InstanceProcessor implements IProcessor {
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
                 if (element.getAnnotation(Instance.class).type() == Instance.typeDefault)
-                    blockBuilder1.addStatement("case $S: return new $T()", currentType.simpleName(), currentType);
+                    blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);
                 else if (element.getAnnotation(Instance.class).type() == Instance.typeVH) {
+                    blockBuilder1.addStatement("case $S: return  new $T(view)", currentType.simpleName(), currentType);
                     blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
                 }
             }

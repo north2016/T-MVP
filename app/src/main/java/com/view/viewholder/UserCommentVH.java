@@ -23,7 +23,7 @@ import butterknife.Bind;
  * Created by baixiaokang on 16/5/4.
  */
 @Instance(type = Instance.typeVH)
-public class UserCommentVH extends BaseViewHolder<CommentInfo> {
+public class UserCommentVH extends BaseViewHolder<CommentInfo> implements View.OnClickListener {
     @Bind(R.id.tv_content)
     TextView tv_content;
     @Bind(R.id.tv_title)
@@ -42,17 +42,16 @@ public class UserCommentVH extends BaseViewHolder<CommentInfo> {
 
     @Override
     public void onBindViewHolder(View view, final CommentInfo data) {
+        super.onBindViewHolder(view, data);
         tv_content.setText(data.content);
         tv_title.setText(data.article.title);
         ImageUtil.loadImg(im_article, data.article.image);
-        view.setOnClickListener(
-                new View.OnClickListener() {
-                    @SingleClick
-                    public void onClick(View view) {
-                        ActivityCompat.startActivity((Activity) mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data.article)
-                                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle());
-                    }
-                }
-        );
+        view.setOnClickListener(this);
+    }
+
+    @SingleClick
+    public void onClick(View view) {
+        ActivityCompat.startActivity(mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data.article)
+                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle());
     }
 }

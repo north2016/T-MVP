@@ -1,14 +1,19 @@
 package com.base.util;
 
 import android.view.View;
+import android.widget.LinearLayout;
 
+import com.App;
 import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
+import com.base.BaseViewHolder;
 import com.ui.article.InstanceFactory;
 
 import java.lang.reflect.ParameterizedType;
 
 import static com.data.entity.RepositoryFactory.create;
+
+//import com.ui.article.InstanceFactory;
 
 /**
  * Created by baixiaokang on 16/4/30.
@@ -41,16 +46,13 @@ public class InstanceUtil {
     @TimeLog
     public static <T> T getInstance(Class clazz) {
         try {
-            return (T) InstanceFactory.create(clazz);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            return (T) InstanceFactory.create(clazz, BaseViewHolder.class.isAssignableFrom(clazz) ? new LinearLayout(App.getAppContext()) : null);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
 
     /**
      * 通过实例工厂去实例化相应类
@@ -59,8 +61,8 @@ public class InstanceUtil {
      * @return
      */
     @TimeLog
-    public static <T> T getInstance(Class clazz, View view) {
-        return (T) InstanceFactory.create(clazz, view);
+    public static <T> T getViewHolder(Class clazz, View view) {
+        return (T) InstanceFactory.createVH(clazz, view);
     }
 
     @MemoryCache
@@ -73,7 +75,7 @@ public class InstanceUtil {
         return null;
     }
 
-    public static  <T> T getRepositoryInstance(Class cla) {
+    public static <T> T getRepositoryInstance(Class cla) {
         try {
             return (T) create((Class) ((ParameterizedType) (cla
                     .getGenericSuperclass())).getActualTypeArguments()[0]);

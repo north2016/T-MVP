@@ -9,6 +9,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     public Context mContext;
+    public T data;
 
     public BaseViewHolder(View v) {
         super(v);
@@ -29,6 +30,8 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
      *
      * @return
      */
-    public abstract void onBindViewHolder(View view, T obj);
 
+    protected void onBindViewHolder(View view, T obj) {
+        this.data = obj;
+    }
 }

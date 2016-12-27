@@ -23,7 +23,7 @@ import butterknife.Bind;
  * Created by baixiaokang on 16/4/23.
  */
 @Instance(type = Instance.typeVH)
-public class ArticleItemVH extends BaseViewHolder<Image> {
+public class ArticleItemVH extends BaseViewHolder<Image> implements View.OnClickListener {
     @Bind(R.id.image)
     ImageView image;
     @Bind(R.id.tv_title)
@@ -45,23 +45,21 @@ public class ArticleItemVH extends BaseViewHolder<Image> {
     }
 
     @Override
-    public void onBindViewHolder(View view, final Image data) {
+    public void onBindViewHolder(View view, Image data) {
+        super.onBindViewHolder(view, data);
         ImageUtil.loadImg(image, data.image);
         tv_title.setText(data.title);
         tv_des.setText(data.author);
         tv_info.setText(data.type);
         tv_time.setText(data.createdAt);
-        view.setOnClickListener(
-                new View.OnClickListener() {
-                    @SingleClick
-                    public void onClick(View view) {
-                        ActivityCompat.startActivity(
-                                (Activity) mContext,
-                                new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
-                                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,
-                                        ArticleActivity.TRANSLATE_VIEW).toBundle());
-                    }
-                }
-        );
+        view.setOnClickListener(this);
+    }
+
+    @SingleClick
+    public void onClick(View view) {
+        ActivityCompat.startActivity(mContext,
+                new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data)
+                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, image,
+                        ArticleActivity.TRANSLATE_VIEW).toBundle());
     }
 }
