@@ -7,49 +7,36 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.C;
 import com.base.BaseViewHolder;
-import com.base.RxManager;
+import com.base.CoreAdapter;
+import com.base.CoreAdapterPresenter;
 import com.base.util.InstanceUtil;
 import com.data.Data;
 import com.data.Repository;
 import com.ui.main.R;
-import com.view.viewholder.CommFooterVH;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 
-/**
- * @author Administrator
- */
-public class TRecyclerView<T extends Repository> extends LinearLayout {
-    private T mRepository;//仓库
+public class TRecyclerView<T extends Repository> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     @Bind(R.id.ll_emptyview)
-    LinearLayout ll_emptyview;
+    LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
     private Context context;
-    public CoreAdapter mCommAdapter = new CoreAdapter();
-    private int begin = 0;
-    private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false;
-
-    public RxManager mRxManager = new RxManager();
-    private Map<String, String> param = new HashMap<>();
+    private CoreAdapter mCommAdapter;
+    private CoreAdapterPresenter mCoreAdapterPresenter;
+    private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false, isReverse = false;
 
     public TRecyclerView(Context context) {
         super(context);
@@ -61,22 +48,20 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         init(context);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mRxManager.clear();
-    }
-
     public void init(Context context) {
         this.context = context;
-        View layout = LayoutInflater.from(context).inflate(
-                R.layout.layout_list_recyclerview, null);
-        layout.setLayoutParams(new LinearLayout.LayoutParams(
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-                android.view.ViewGroup.LayoutParams.MATCH_PARENT));
-        addView(layout);
+        View layout = inflate(context, R.layout.layout_list_recyclerview, this);
         ButterKnife.bind(this, layout);
+        mCoreAdapterPresenter = new CoreAdapterPresenter(this);
         initView(context);
+    }
+
+    public TRecyclerView setReverse() {
+        isReverse = true;
+        mLayoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
+        mLayoutManager.setReverseLayout(true);//列表翻转
+        recyclerview.setLayoutManager(mLayoutManager);
+        return this;
     }
 
     private void initView(Context context) {
@@ -87,6 +72,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
+        mCommAdapter = new CoreAdapter(context);
         recyclerview.setAdapter(mCommAdapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             protected int lastVisibleItem;
@@ -98,7 +84,7 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                         && newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == recyclerview.getAdapter()
                         .getItemCount() && mCommAdapter.isHasMore)
-                    fetch();
+                    mCoreAdapterPresenter.fetch();
             }
 
             @Override
@@ -107,27 +93,12 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
             }
         });
-//        mRxManager.on(C.EVENT_DEL_ITEM, (arg0) -> mCommAdapter.removeItem((Integer) arg0));
-//        mRxManager.on(C.EVENT_UPDATE_ITEM, (arg0) -> {
-//                    if (mRepository.getClass().getSimpleName().equals(((UpDateData) arg0).oj.getClass().getSimpleName())) {
-//                        mCommAdapter.upDateItem(((UpDateData) arg0).i, ((UpDateData) arg0).oj);
-//                    }
-//                }
-//        );
-        ll_emptyview.setOnClickListener((view -> {
+        ll_emptyView.setOnClickListener((view -> {
             isEmpty = false;
-            ll_emptyview.setVisibility(View.GONE);
+            ll_emptyView.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
             reFetch();
         }));
-    }
-
-    public CoreAdapter getAdapter() {
-        return mCommAdapter;
-    }
-
-    public void setRefreshing(boolean i) {
-        swiperefresh.setRefreshing(i);
     }
 
     public TRecyclerView setIsRefreshable(boolean i) {
@@ -137,49 +108,41 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
     public TRecyclerView setHeadView(Class<? extends BaseViewHolder> cla) {
-        if (cla == null) {
-            isHasHeadView = false;
+        isHasHeadView = cla == null ? false : true;
+        if (!isHasHeadView) {
             this.mCommAdapter.setHeadViewType(0, cla, null);
         } else {
-            Object obj = ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA);
             int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
-            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, obj);
-            isHasHeadView = true;
+            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA));
         }
         return this;
     }
 
-    public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla) {
-        this.begin = 0;
-        int mFooterViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType();
-        this.mCommAdapter.setFooterViewType(mFooterViewType, cla);
-        return this;
-    }
 
-    public void setEmpty() {
-        if (!isHasHeadView && !isEmpty) {
-            isEmpty = true;
-            ll_emptyview.setVisibility(View.VISIBLE);
-            swiperefresh.setVisibility(View.GONE);
+    public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla, Object data) {
+        if (cla == null) {
+            this.mCommAdapter.setFooterViewType(0, cla, data);
+        } else {
+            mCoreAdapterPresenter.setBegin(0);
+            this.mCommAdapter.setFooterViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType(), cla, data);
         }
+        return this;
     }
 
     public TRecyclerView setView(Class<? extends BaseViewHolder> cla) {
-        BaseViewHolder BVH = InstanceUtil.getInstance(cla, new LinearLayout(context));
-        int mType = BVH.getType();
-        this.mRepository = InstanceUtil.getRepositoryInstance(cla);
-        this.mCommAdapter.setViewType(mType, cla);
+        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(cla));
+        this.mCommAdapter.setViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla, new LinearLayout(context)))).getType(), cla);
         return this;
     }
 
     public TRecyclerView setParam(String key, String value) {
-        this.param.put(key, value);
+        mCoreAdapterPresenter.setParam(key, value);
         return this;
     }
 
     public TRecyclerView setData(List<T> datas) {
         if (isEmpty) {
-            ll_emptyview.setVisibility(View.GONE);
+            ll_emptyView.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
         }
         mCommAdapter.setBeans(datas, 1);
@@ -187,144 +150,39 @@ public class TRecyclerView<T extends Repository> extends LinearLayout {
     }
 
     public void reFetch() {
-        this.begin = 0;
+        mCoreAdapterPresenter.setBegin(0);
         swiperefresh.setRefreshing(true);
-        fetch();
+        mCoreAdapterPresenter.fetch();
     }
 
     public void fetch() {
-        begin++;
+        mCoreAdapterPresenter.fetch();
+    }
+
+    @Override
+    public void setEmpty() {
+        if (!isHasHeadView && !isEmpty) {
+            isEmpty = true;
+            ll_emptyView.setVisibility(View.VISIBLE);
+            swiperefresh.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void getDataSuc(Data response, int begin) {
+        swiperefresh.setRefreshing(false);
+        mCommAdapter.setBeans(response.results, begin);
+        if (begin == 1 && (response.results == null || response.results.size() == 0))
+            setEmpty();
+        else if (isReverse)
+            recyclerview.scrollToPosition(mCommAdapter.getItemCount() - response.results.size() - 2);
+    }
+
+    @Override
+    public void reSetEmpty() {
         if (isEmpty) {
-            ll_emptyview.setVisibility(View.GONE);
+            ll_emptyView.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
         }
-        if (mRepository == null) {
-            Log.e("mRepository", "null");
-            return;
-        }
-        mRepository.param = param;//设置仓库钥匙
-        mRxManager.add(mRepository.getPageAt(begin)//根据仓库货物来源取出货物
-                .subscribe(
-                        new Action1<Data>() {
-                            @Override
-                            public void call(Data response) {
-                                swiperefresh.setRefreshing(false);
-                                mCommAdapter.setBeans(response.results, begin);
-                                if (begin == 1 && (response.results == null || response.results.size() == 0))
-                                    setEmpty();
-                            }
-                        }, new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable e) {
-                                e.printStackTrace();
-                                setEmpty();
-                            }
-                        }
-                ));
     }
-
-
-//    public class UpDateData {
-//        public int i;
-//        public T oj;
-//
-//        public UpDateData(int i, T oj) {
-//            this.i = i;
-//            this.oj = oj;
-//        }
-//    }
-
-    public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        protected List<M> mItemList = new ArrayList<>();
-        public boolean isHasMore = true;
-        public int viewtype, isHasFooter = 1, isHasHader = 0, mHeadViewType;
-        public Object mHeadData;
-        public Class<? extends BaseViewHolder> mItemViewClass, mHeadViewClass, mFooterViewClass = CommFooterVH.class;
-        public int mFooterViewType = CommFooterVH.LAYOUT_TYPE;
-
-        public void setViewType(int i, Class<? extends BaseViewHolder> cla) {
-            this.isHasMore = true;
-            this.viewtype = i;
-            this.mItemList = new ArrayList<>();
-            this.mItemViewClass = cla;
-            notifyDataSetChanged();
-        }
-
-        public void setHeadViewType(int i, Class<? extends BaseViewHolder> cla, Object data) {
-            if (cla == null) {
-                this.isHasHader = 0;
-            } else {
-                this.isHasHader = 1;
-                this.mHeadViewType = i;
-                this.mHeadViewClass = cla;
-                this.mHeadData = data;
-            }
-        }
-
-        public void setHeadViewData(Object data) {
-            this.mHeadData = data;
-        }
-
-        public void setFooterViewType(int i, Class<? extends BaseViewHolder> cla) {
-            this.mFooterViewType = i;
-            this.mFooterViewClass = cla;
-            this.mItemList = new ArrayList<>();
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            return isHasHader == 1 ? (position == 0 ? mHeadViewType
-                    : (position + 1 == getItemCount() ? mFooterViewType : viewtype))
-                    : (position + 1 == getItemCount() ? mFooterViewType : viewtype);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mItemList.size() + isHasFooter + isHasHader;
-        }
-
-        public void setBeans(List<M> datas, int begin) {
-            if (datas == null) datas = new ArrayList<>();
-            this.isHasMore = datas.size() >= C.PAGE_COUNT;
-            if (begin > 1) this.mItemList.addAll(datas);
-            else this.mItemList = datas;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (viewType == mHeadViewType) {
-                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mHeadViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                        mHeadViewType, parent, false));
-            } else if (viewType == mFooterViewType) {
-                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mFooterViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                        mFooterViewType, parent, false));
-            } else {
-                return (RecyclerView.ViewHolder) InstanceUtil.getInstance(mItemViewClass, LayoutInflater.from(parent.getContext()).inflate(
-                        viewtype, parent, false));
-            }
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ((BaseViewHolder) holder).onBindViewHolder(holder.itemView,
-                    position + 1 == getItemCount() ? (isHasMore ? new Object()
-                            : null) : isHasHader == 1 && position == 0 ? mHeadData
-                            : mItemList.get(position - isHasHader));
-        }
-
-//        public void removeItem(int position) {
-//            mItemList.remove(position);
-//            notifyItemRemoved(position);
-//            if (mItemList.size() == 0) reFetch();
-//        }
-//
-//        public void upDateItem(int position, T item) {
-//            mItemList.remove(position);
-//            mItemList.add(position, item);
-//            notifyItemChanged(position);
-//        }
-    }
-
 }

@@ -19,21 +19,19 @@ public class UserPresenter extends UserContract.Presenter {
 
     @Override
     public void upLoadFace(File file) {
-        mRxManager.add(mModel.upFile(file).subscribe(
+        mCompositeSubscription.add(mModel.upFile(file).subscribe(
                 res -> upUserInfo(res.url),
                 e -> mView.showMsg("上传失败!")));
-
     }
 
     @Override
     public void upUserInfo(String face) {
         _User user = SpUtil.getUser();
         user.face = face;
-        mRxManager.add(mModel.upUser(user).subscribe(
+        mCompositeSubscription.add(mModel.upUser(user).subscribe(
                 res -> {
                     SpUtil.setUser(user);
                     OkBus.getInstance().onEvent(EventTags.ON_USER_LOGIN, user);
-                    //mRxManager.post(C.EVENT_LOGIN, user);
                     mView.showMsg("更新成功!");
                 },
                 e -> mView.showMsg("更新失败!")));

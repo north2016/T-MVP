@@ -1,8 +1,7 @@
 package com.ui.main;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.LinearLayout;
 
 import com.base.BaseActivity;
@@ -17,16 +16,17 @@ import butterknife.Bind;
  */
 public class AboutActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+
     @Bind(R.id.lv_user)
     TRecyclerView lv_user;
     @Bind(R.id.ll_header)
     LinearLayout llHeader;
 
-    public static Double[] Lines = {0.0, 100.0, 200.0, 300.0, 400.0, 500.0};
-    public static Double[] num0 = {200.0, 400.0, 230.0, 350.0, 210.0, 310.0, 350.0, 200.0};
-    public static Double[] num1 = {400.0, 480.0, 300.0, 450.0, 310.0, 500.0, 450.0, 400.0};
+    public Double[] Lines = {0.0, 100.0, 200.0, 300.0, 400.0, 500.0};
+    public Double[] num0 = {200.0, 400.0, 230.0, 350.0, 210.0, 310.0, 350.0, 200.0};
+    public Double[] num1 = {400.0, 480.0, 300.0, 450.0, 310.0, 500.0, 450.0, 400.0};
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     public int getLayoutId() {
@@ -35,18 +35,9 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setSupportActionBar(toolbar);
-        final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle("用户列表");
+        setTitle("用户列表");
+        fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
         lv_user.setView(UserItemVH.class).setIsRefreshable(false).fetch();
         llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) onBackPressed();
-        return super.onOptionsItemSelected(item);
-    }
-
 }

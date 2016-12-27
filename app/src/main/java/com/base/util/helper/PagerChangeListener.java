@@ -22,7 +22,7 @@ public class PagerChangeListener implements ViewPager.OnPageChangeListener {
         mImageAnimator = imageAnimator;
     }
 
-    public static PagerChangeListener newInstance(CollapsingToolbarLayout collapsingToolbar, FragmentAdapter adapter, ImageView originImage, ImageView outgoingImage) {
+    public static PagerChangeListener newInstance(CollapsingToolbarLayout collapsingToolbar, ImageView originImage, ImageView outgoingImage) {
         ImageAnimator imageAnimator = new ImageAnimator(collapsingToolbar, originImage, outgoingImage);
         return new PagerChangeListener(imageAnimator);
     }

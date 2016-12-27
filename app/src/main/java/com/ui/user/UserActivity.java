@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.C;
@@ -33,8 +30,6 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
     ImageView image;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.lv_comment)
     TRecyclerView lv_comment;
     @Bind(R.id.im_header)
@@ -47,16 +42,13 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
 
     @Override
     public void initView() {
+        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
         _User user = (_User) getIntent().getSerializableExtra(C.HEAD_DATA);
         initUser(user);
-        setSupportActionBar(toolbar);
-        final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
         lv_comment.setView(UserCommentVH.class)
-                .setParam("include", "article")
-                .setParam("creater", creater)
+                .setParam(C.INCLUDE, C.ARTICLE)
+                .setParam(C.CREATER, creater)
                 .setIsRefreshable(false)
                 .fetch();
 
@@ -80,12 +72,6 @@ public class UserActivity extends BaseActivity<UserPresenter, UserModel> impleme
                 showMsg("照片无法打开");
             }
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) onBackPressed();
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

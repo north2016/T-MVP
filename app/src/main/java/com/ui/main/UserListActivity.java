@@ -5,9 +5,7 @@ package com.ui.main;
  */
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.MenuItem;
 
 import com.EventTags;
 import com.api.Api;
@@ -29,11 +27,8 @@ import rx.schedulers.Schedulers;
  */
 public class UserListActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
     @Bind(R.id.tl_user)
     TabLayout tlUser;
-
 
     @Override
     public int getLayoutId() {
@@ -61,11 +56,5 @@ public class UserListActivity extends BaseActivity {
     @Bus(tag = EventTags.ABOUT_INIT_USERS, thread = Bus.UI)
     private void setUsers(List<_User> users) {
         tlUser.setM_Users(users);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) onBackPressed();
-        return super.onOptionsItemSelected(item);
     }
 }

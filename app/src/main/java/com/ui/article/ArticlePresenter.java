@@ -16,7 +16,7 @@ public class ArticlePresenter extends ArticleContract.Presenter {
         if (null == SpUtil.getUser())
             mView.showLoginAction();
         else
-            mRxManager.add(mModel
+            mCompositeSubscription.add(mModel
                     .createComment(content,
                             ApiUtil.getPointer(article),
                             ApiUtil.getPointer(user))

@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.base.util.SpUtil;
 import com.base.util.InstanceUtil;
+import com.base.util.SpUtil;
 import com.ui.main.R;
 import com.view.layout.SwipeBackLayout;
 
@@ -20,10 +23,10 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016/4/5.
  */
 public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity {
+    protected Toolbar toolbar;
     public boolean isNight;
     public P mPresenter;
     public Context mContext;
-
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
 
@@ -35,9 +38,20 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
         mContext = this;
-        mPresenter = InstanceUtil.getInstance(this, 0);
-        this.initView();
-        if (this instanceof BaseView) mPresenter.setVM(this, InstanceUtil.getInstance(this, 1));
+        initToolBar();
+        initView();
+        if (this instanceof BaseView) {
+            mPresenter = InstanceUtil.getInstance(this, 0);
+            mPresenter.setVM(this, InstanceUtil.getInstance(this, 1));
+        }
+    }
+
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -87,6 +101,21 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
         return container;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (-1 != getMenuId()) getMenuInflater().inflate(getMenuId(), menu);
+        return true;
+    }
+
+    public int getMenuId() {
+        return -1;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return super.onOptionsItemSelected(item);
+    }
 
     public abstract int getLayoutId();
 

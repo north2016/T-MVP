@@ -12,5 +12,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="app_about">关于TMVP\n\n写代码，最爽的事情就是，\n用最少的代码，做最多的事情。\n用最少的改动做最简单的升级迭代扩展，\n用最快的方式，做最复杂的效果。\n用最高的效率，做最好的用户体验。\n\n 为了这个目标，\n我和TMVP一路探寻。\n也希望能够给你一些帮助。\n\n嗯，下面这货，如果你看他不爽请随便扫他\n</string>
 
 </resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:layout_heightPercent="100%">
+
+        <TextView
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="TMVP by North"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_margin"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:padding="10dp"
+                android:text="@string/app_about"
+                android:textColor="#666"
+                android:textSize="16sp" />
+
+        </android.support.v7.widget.CardView>
+        　
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:src="@drawable/wechatpay" />
+    </LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

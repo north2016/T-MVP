@@ -5,6 +5,8 @@ import com.data.Data;
 import com.data.entity.Comment;
 import com.data.entity.CommentInfo;
 import com.data.entity.Image;
+import com.data.entity.Message;
+import com.data.entity.MessageInfo;
 import com.data.entity._User;
 import com.ui.user.UserModel;
 
@@ -40,16 +42,23 @@ public interface ApiService {
     @GET("classes/Comment")
     Observable<Data<CommentInfo>> getCommentList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit);
 
-    @Headers("Content-Type: application/json")
     @POST("classes/Comment")
     Observable<CreatedResult> createComment(@Body Comment mComment);
 
 
     @Headers("Content-Type: image/png")
     @POST("files/{name}")
-    Observable<CreatedResult> upFile(@Path("name") String name, @Body RequestBody  body);
+    Observable<CreatedResult> upFile(@Path("name") String name, @Body RequestBody body);
 
 
     @PUT("users/{uid}")
     Observable<CreatedResult> upUser(@Header("X-LC-Session") String session, @Path("uid") String uid, @Body UserModel.Face face);
+
+
+    @POST("classes/Message")
+    Observable<CreatedResult> createMessage(@Body Message mComment);
+
+    @GET("classes/Message")
+    Observable<Data<MessageInfo>> getMessageList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit,@Query("order") String order);
+
 }

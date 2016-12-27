@@ -4,19 +4,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.base.BaseListFragment;
+
 import java.util.List;
 
 /**
  * Created by baixiaokang on 16/5/8.
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter {
-    private List<Fragment> mFragments;
-    private List<String> mTitles;
+    private List<BaseListFragment> mFragments;
+    private String[] mTitles;
 
-    public FragmentAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public static FragmentAdapter newInstance(FragmentManager fm, List<BaseListFragment> fragments, String[] titles) {
+        FragmentAdapter mFragmentAdapter = new FragmentAdapter(fm);
+        mFragmentAdapter.mFragments = fragments;
+        mFragmentAdapter.mTitles = titles;
+        return mFragmentAdapter;
+    }
+
+    public FragmentAdapter(FragmentManager fm) {
         super(fm);
-        mFragments = fragments;
-        mTitles = titles;
     }
 
     @Override
@@ -31,6 +38,6 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles.get(position);
+        return mTitles[position];
     }
 }

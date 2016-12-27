@@ -6,7 +6,6 @@ import android.preference.PreferenceActivity;
 import android.preference.SwitchPreference;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -28,8 +27,7 @@ public class SettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.settings);
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar ab = mDelegate.getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        mDelegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         isNight = (SwitchPreference) findPreference("isNight");
         isNight.setOnPreferenceChangeListener((preference, newValue) -> {
@@ -47,11 +45,6 @@ public class SettingsActivity extends PreferenceActivity {
         startActivity(intent);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) onBackPressed();
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -90,5 +83,11 @@ public class SettingsActivity extends PreferenceActivity {
         if (mDelegate == null)
             mDelegate = AppCompatDelegate.create(this, null);
         return mDelegate;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) onBackPressed();
+        return super.onOptionsItemSelected(item);
     }
 }

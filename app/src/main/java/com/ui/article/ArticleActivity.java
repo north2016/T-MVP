@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,42 +49,27 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel
 
     @Override
     public void initView() {
+        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
         Image mSubject = (Image) getIntent().getSerializableExtra(C.HEAD_DATA);
-        setSupportActionBar(toolbar);
-        final ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
         ImageUtil.loadImg(image, mSubject.image);
         setTitle(mSubject.title);
-        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
         bt_comment.setOnClickListener(v -> {
-            if (TextUtils.isEmpty(et_comment.getText().toString()))
+            String comment = et_comment.getText().toString();
+            if (TextUtils.isEmpty(comment))
                 Snackbar.make(fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
-            else
-                mPresenter.createComment(et_comment.getText().toString(), mSubject, SpUtil.getUser());
+            else mPresenter.createComment(comment, mSubject, SpUtil.getUser());
         });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mSubject.objectId));
         lv_comment.setHeadView(ArticleHeaderVH.class)
                 .setView(CommentItemVH.class)
-                .setParam("include", "creater")
-                .setParam("article", article)
+                .setParam(C.INCLUDE, C.CREATER)
+                .setParam(C.ARTICLE, article)
                 .setIsRefreshable(false)
                 .fetch();
     }
 
     public void checkin(View view) {
         Snackbar.make(view, "没啥卵用", Snackbar.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_overaction, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) onBackPressed();
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
