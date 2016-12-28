@@ -2,6 +2,9 @@
 ![首页](app.gif)
 
 #更新日志：
+2016/12／18：使用Apt生成全局的ApiFactory替代所有的Model
+2016/12／17：增加了BaseMultiVH扩展支持多类型的ViewHolder
+2016/12／16：抽离CoreAdapterPresenter优化TRecyclerView
 
 ##1、[安卓AOP实战:Javassist强撸EventBus](http://www.jianshu.com/p/33d8a3165b07)
 >加入OkBus，实现注解传递事件
