@@ -2,9 +2,11 @@
 ![首页](app.gif)
 
 #更新日志：
->2016/12／28：使用Apt生成全局的ApiFactory替代所有的Model
->2016/12／27：增加了BaseMultiVH扩展支持多类型的ViewHolder
->2016/12／26：抽离CoreAdapterPresenter优化TRecyclerView
+2016/12／28：使用Apt生成全局的ApiFactory替代所有的Model
+
+2016/12／27：增加了BaseMultiVH扩展支持多类型的ViewHolder
+
+2016/12／26：抽离CoreAdapterPresenter优化TRecyclerView
 
 ##1、[安卓AOP实战:Javassist强撸EventBus](http://www.jianshu.com/p/33d8a3165b07)
 >加入OkBus，实现注解传递事件
@@ -14,7 +16,7 @@
 >2、新增apt初始化工厂，替换掉了dagger2。
 >3、新增aop切片，处理缓存和日志
 
-##3、[T-MVP：泛型深度解耦下的MVP大瘦身](http://www.jianshu.com/p/b49958e1889d)
+##3、[T-MVP：泛型深度解耦下的MVP大瘦身](http://www.jianshu.com/p/b49958e1889d)（过时）
 
 
 关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
