@@ -1,6 +1,4 @@
 
-![首页](app.gif)
-
 #更新日志：
 2016/12／28：使用Apt生成全局的ApiFactory替代所有的Model
 
@@ -30,15 +28,15 @@ Github：https://github.com/north2016/T-MVP
 QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>
 
 #答疑
+运行报错的，自觉google，检查As版本(2.2.2)，gradle配置等(AndroidStudio每个版本gradle的api都不一样，坑)，低版本手机FloatingActionButton在xml会报错，因为icon用了SVG(5.0+)
 
-1、很多小伙伴问我为什么要单独抽一个M，相比UseCase的业务分散，M其实是收聚，M的复用，只需要在InstanceFactory里拿到被AOP缓存的内存单例对象，即可实现业务逻辑和内存对象的双层复用
 
-
-2、运行报错的，自觉google，检查As版本(2.2.2)，gradle配置等(AndroidStudio每个版本gradle的api都不一样，坑)，低版本手机FloatingActionButton在xml会报错，因为icon用了SVG(5.0+)
-
+![首页](app.gif)
 ## License
 
 ```
  No Fucking License.  
 ```
+
+
 
