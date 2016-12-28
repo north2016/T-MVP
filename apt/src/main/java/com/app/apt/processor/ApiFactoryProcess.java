@@ -51,10 +51,8 @@ public class ApiFactoryProcess implements IProcessor {
                         methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
                         paramsString += ep.getSimpleName().toString() + ",";
                     }
-
                     ClassName apiClassName = ClassName.get("com.api", "Api");
                     ClassName rxSchedulersClassName = ClassName.get("com.base.util.helper", "RxSchedulers");
-
                     methodBuilder.addStatement(
                             "return $L.getInstance()" +
                                     ".service.$L($L)" +
@@ -64,45 +62,12 @@ public class ApiFactoryProcess implements IProcessor {
                             , paramsString.substring(0, paramsString.length() - 1)
                             , rxSchedulersClassName);
                     tb.addMethod(methodBuilder.build());
-
-//                    List<ClassName> mList = new ArrayList<>();
-//                    CodeBlock.Builder blockBuilder1 = CodeBlock.builder();
-//                    blockBuilder1.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
-//
-//
-//                    if (!Utils.isValidClass(mAbstractProcessor.mMessager, element)) return;
-//                    ClassName currentType = ClassName.get(element);
-//                    if (mList.contains(currentType)) continue;
-//                    mList.add(currentType);
-//                    String qualifiedSuperClassName;
-//                    try {
-//                        Class<?> clazz = element.getAnnotation(Repository.class).clazz();
-//                        qualifiedSuperClassName = clazz.getCanonicalName();
-//                    } catch (MirroredTypeException mte) {
-//                        DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
-//                        TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
-//                        qualifiedSuperClassName = classTypeElement.getQualifiedName().toString();
-//                    }
-//                    blockBuilder1.addStatement("case $S: return new $L()", currentType.simpleName(), qualifiedSuperClassName);
-//
-//                    blockBuilder1.addStatement("default: return null");
-//                    blockBuilder1.endControlFlow();
-//                    methodBuilder1.addCode(blockBuilder1.build());
-//
-//                    tb.addMethod(methodBuilder1.build());
-
-                    //   }
                 }
             }
-
-            if (mElement == null) {
-                // mMessager.printMessage(Diagnostic.Kind.ERROR, "apt处理失败!");
-                return;
-            }
+            if (mElement == null) return;
             String packageName = Utils.getPackageName(mAbstractProcessor.mElements, mElement);
             JavaFile javaFile = JavaFile.builder(packageName, tb.build()).build();// 生成源代码
             javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
-            // javaFile.writeTo(new File(System.getProperty("user.home") + "/Desktop/")); // 测试在桌面生成一份源代码,方便查看
         } catch (NoPackageNameException e) {
             e.printStackTrace();
         } catch (IOException e) {

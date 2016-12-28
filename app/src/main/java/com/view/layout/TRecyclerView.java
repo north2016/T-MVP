@@ -107,7 +107,7 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
     }
 
     public TRecyclerView setHeadView(Class<? extends BaseViewHolder> cla) {
-        isHasHeadView = cla == null ? false : true;
+        isHasHeadView = cla != null;
         if (!isHasHeadView) {
             this.mCommAdapter.setHeadViewType(0, cla, null);
         } else {

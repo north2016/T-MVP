@@ -66,7 +66,7 @@ public class InstanceProcessor implements IProcessor {
                 if (element.getAnnotation(Instance.class).type() == Instance.typeDefault)
                     blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);
                 else if (element.getAnnotation(Instance.class).type() == Instance.typeVH) {
-                    blockBuilder1.addStatement("case $S: return  new $T(view)", currentType.simpleName(), currentType);
+                    blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
                     blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
                 }
             }
