@@ -1,8 +1,10 @@
 package com.ui.article;
 
+import com.api.ApiFactory;
 import com.app.annotation.apt.Instance;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
+import com.data.entity.Comment;
 import com.data.entity.Image;
 import com.data.entity._User;
 
@@ -16,13 +18,16 @@ public class ArticlePresenter extends ArticleContract.Presenter {
         if (null == SpUtil.getUser())
             mView.showLoginAction();
         else
-            mCompositeSubscription.add(mModel
-                    .createComment(content,
-                            ApiUtil.getPointer(article),
-                            ApiUtil.getPointer(user))
-                    .subscribe(
-                            res -> mView.commentSuc(),
-                            e -> mView.commentFail())
+            mCompositeSubscription.add(
+                    ApiFactory
+                            .createComment(
+                                    new Comment(
+                                            ApiUtil.getPointer(article),
+                                            content,
+                                            ApiUtil.getPointer(user)))
+                            .subscribe(
+                                    res -> mView.commentSuc(),
+                                    e -> mView.commentFail())
             );
     }
 }

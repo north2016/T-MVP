@@ -1,5 +1,6 @@
 package com.app.apt;
 
+import com.app.apt.processor.ApiFactoryProcess;
 import com.app.apt.processor.InstanceProcessor;
 import com.app.apt.processor.RepositoryProcess;
 import com.google.auto.service.AutoService;
@@ -21,20 +22,22 @@ import javax.lang.model.util.Elements;
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
 @SupportedAnnotationTypes({//标注注解处理器支持的注解类型
         "com.app.annotation.apt.Instance",
-        "com.app.annotation.apt.Repository"
+        "com.app.annotation.apt.Repository",
+        "com.app.annotation.apt.ApiFactory"
 })
 public class AnnotationProcessor extends AbstractProcessor {
-    private Filer mFiler; //文件相关的辅助类
-    private Elements mElements; //元素相关的辅助类
-    private Messager mMessager; //日志相关的辅助类
+    public Filer mFiler; //文件相关的辅助类
+    public Elements mElements; //元素相关的辅助类
+    public Messager mMessager; //日志相关的辅助类
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         mMessager = processingEnv.getMessager();
         mFiler = processingEnv.getFiler();
         mElements = processingEnv.getElementUtils();
-        new InstanceProcessor().process(roundEnv, mFiler, mElements, mMessager);
-        new RepositoryProcess().process(roundEnv, mFiler, mElements, mMessager);
+        new InstanceProcessor().process(roundEnv,this);
+        new RepositoryProcess().process(roundEnv,this);
+        new ApiFactoryProcess().process(roundEnv,this);
         return true;
     }
 }

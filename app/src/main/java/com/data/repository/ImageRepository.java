@@ -1,9 +1,8 @@
 package com.data.repository;
 
 import com.C;
-import com.api.Api;
+import com.api.ApiFactory;
 import com.base.util.ApiUtil;
-import com.base.util.helper.RxSchedulers;
 import com.data.Repository;
 import com.data.entity.Image;
 
@@ -16,12 +15,10 @@ public class ImageRepository extends Repository<Image> {
 
     @Override
     public Observable getPageAt(final int page) {
-        return Api.getInstance().service
-                .getAllImages(
-                        ApiUtil.getWhere(param),
-                        "-createdAt",
-                        C.PAGE_COUNT * (page - 1),
-                        C.PAGE_COUNT)
-                .compose(RxSchedulers.io_main());
+        return ApiFactory.getAllImages(
+                ApiUtil.getWhere(param),
+                C._CREATED_AT,
+                C.PAGE_COUNT * (page - 1),
+                C.PAGE_COUNT);
     }
 }

@@ -6,12 +6,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.C;
-import com.api.Api;
+import com.api.ApiFactory;
 import com.base.BaseActivity;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.base.util.helper.RxSchedulers;
 import com.data.entity.Message;
 import com.data.entity._User;
 import com.view.layout.TRecyclerView;
@@ -49,10 +48,8 @@ public class FeedBackActivity extends BaseActivity {
                 Snackbar.make(btSend, "内容不能为空!", Snackbar.LENGTH_LONG).show();
                 return;
             }
-            Api.getInstance().service
-                    .createMessage(new Message(ApiUtil.getPointer(new _User(C.ADMIN_ID)), msg,
-                            ApiUtil.getPointer(user), user.objectId))
-                    .compose(RxSchedulers.io_main())
+            ApiFactory.createMessage(new Message(ApiUtil.getPointer(new _User(C.ADMIN_ID)), msg,
+                    ApiUtil.getPointer(user), user.objectId))
                     .subscribe(res -> {
                         lvMsg.reFetch();
                         ViewUtil.hideKeyboard(this);

@@ -1,13 +1,13 @@
 package com.data.entity;
 
-import com.base.BaseEntity;
+import com.base.BaseBean;
 import com.data.Pointer;
 
 /**
  * Created by baixiaokang on 16/5/4.
  */
 
-public class Comment extends BaseEntity.BaseBean {
+public class Comment extends BaseBean {
 
     public Pointer article;
     public String content;

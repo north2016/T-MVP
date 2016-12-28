@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected Toolbar toolbar;
     public boolean isNight;
     public P mPresenter;
@@ -42,7 +42,7 @@ public abstract class BaseActivity<P extends BasePresenter, M extends BaseModel>
         initView();
         if (this instanceof BaseView) {
             mPresenter = InstanceUtil.getInstance(this, 0);
-            mPresenter.setVM(this, InstanceUtil.getInstance(this, 1));
+            mPresenter.setView(this);
         }
     }
 

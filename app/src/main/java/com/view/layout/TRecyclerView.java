@@ -16,8 +16,7 @@ import com.base.BaseViewHolder;
 import com.base.CoreAdapter;
 import com.base.CoreAdapterPresenter;
 import com.base.util.InstanceUtil;
-import com.data.Data;
-import com.data.Repository;
+import com.data.DataArr;
 import com.ui.main.R;
 
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TRecyclerView<T extends Repository> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
+public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
@@ -140,12 +139,12 @@ public class TRecyclerView<T extends Repository> extends FrameLayout implements 
         return this;
     }
 
-    public TRecyclerView setData(List<T> datas) {
+    public TRecyclerView setData(List<T> data) {
         if (isEmpty) {
             ll_emptyView.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
         }
-        mCommAdapter.setBeans(datas, 1);
+        mCommAdapter.setBeans(data, 1);
         return this;
     }
 
@@ -169,7 +168,7 @@ public class TRecyclerView<T extends Repository> extends FrameLayout implements 
     }
 
     @Override
-    public void getDataSuc(Data response, int begin) {
+    public void setData(DataArr response, int begin) {
         swiperefresh.setRefreshing(false);
         mCommAdapter.setBeans(response.results, begin);
         if (begin == 1 && (response.results == null || response.results.size() == 0))

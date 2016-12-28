@@ -1,14 +1,15 @@
 package com.api;
 
+import com.app.annotation.apt.ApiFactory;
 import com.data.CreatedResult;
-import com.data.Data;
+import com.data.DataArr;
 import com.data.entity.Comment;
 import com.data.entity.CommentInfo;
+import com.data.entity.Face;
 import com.data.entity.Image;
 import com.data.entity.Message;
 import com.data.entity.MessageInfo;
 import com.data.entity._User;
-import com.ui.user.UserModel;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -24,6 +25,7 @@ import rx.Observable;
 /**
  * Created by Administrator on 2016/3/23.
  */
+@ApiFactory
 public interface ApiService {
     @GET("login")
     Observable<_User> login(@Query("username") String username, @Query("password") String password);
@@ -33,14 +35,14 @@ public interface ApiService {
 
 
     @GET("users")
-    Observable<Data<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
+    Observable<DataArr<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
 
     @GET("classes/Image")
-    Observable<Data<Image>> getAllImages(@Query("where") String where, @Query("order") String order, @Query("skip") int skip, @Query("limit") int limit);
+    Observable<DataArr<Image>> getAllImages(@Query("where") String where, @Query("order") String order, @Query("skip") int skip, @Query("limit") int limit);
 
 
     @GET("classes/Comment")
-    Observable<Data<CommentInfo>> getCommentList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit);
+    Observable<DataArr<CommentInfo>> getCommentList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit);
 
     @POST("classes/Comment")
     Observable<CreatedResult> createComment(@Body Comment mComment);
@@ -52,13 +54,13 @@ public interface ApiService {
 
 
     @PUT("users/{uid}")
-    Observable<CreatedResult> upUser(@Header("X-LC-Session") String session, @Path("uid") String uid, @Body UserModel.Face face);
+    Observable<CreatedResult> upUser(@Header("X-LC-Session") String session, @Path("uid") String uid, @Body Face face);
 
 
     @POST("classes/Message")
     Observable<CreatedResult> createMessage(@Body Message mComment);
 
     @GET("classes/Message")
-    Observable<Data<MessageInfo>> getMessageList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit,@Query("order") String order);
+    Observable<DataArr<MessageInfo>> getMessageList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit, @Query("order") String order);
 
 }

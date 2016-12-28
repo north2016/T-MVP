@@ -1,14 +1,14 @@
 package com.data.entity;
 
 import com.app.annotation.apt.Repository;
-import com.base.BaseEntity;
+import com.base.BaseBean;
 import com.data.repository._UserRepository;
 
 /**
  * Created by baixiaokang on 16/4/29.
  */
 @Repository(clazz = _UserRepository.class)
-public class _User extends BaseEntity.BaseBean {
+public class _User extends BaseBean {
     public String username;
     public String password;
     public String face;

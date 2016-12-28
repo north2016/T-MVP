@@ -13,12 +13,14 @@ import java.lang.reflect.ParameterizedType;
 
 import static com.data.entity.RepositoryFactory.create;
 
-//import com.ui.article.InstanceFactory;
 
 /**
  * Created by baixiaokang on 16/4/30.
  */
 public class InstanceUtil {
+
+    private static View PUPPET_VIEW = new LinearLayout(App.getAppContext());// 傀儡view
+
     /**
      * 通过实例工厂去实例化相应类
      *
@@ -46,7 +48,7 @@ public class InstanceUtil {
     @TimeLog
     public static <T> T getInstance(Class clazz) {
         try {
-            return (T) InstanceFactory.create(clazz, BaseViewHolder.class.isAssignableFrom(clazz) ? new LinearLayout(App.getAppContext()) : null);
+            return (T) InstanceFactory.create(clazz, BaseViewHolder.class.isAssignableFrom(clazz) ? PUPPET_VIEW : null);
         } catch (Exception e) {
             e.printStackTrace();
         }

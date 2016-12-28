@@ -8,7 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 
 import com.EventTags;
-import com.api.Api;
+import com.api.ApiFactory;
 import com.app.annotation.javassist.Bus;
 import com.base.BaseActivity;
 import com.base.OkBus;
@@ -19,7 +19,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -41,9 +40,7 @@ public class UserListActivity extends BaseActivity {
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("用户一览");
-        Api.getInstance().service
-                .getAllUser(0, 1000)
-                .subscribeOn(Schedulers.io())
+        ApiFactory.getAllUser(0, 1000)
                 //.observeOn(AndroidSchedulers.mainThread())
                 .flatMap(userData -> Observable.from(userData.results))
                 .filter(user -> !TextUtils.isEmpty(user.face))

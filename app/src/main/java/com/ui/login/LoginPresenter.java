@@ -1,9 +1,11 @@
 package com.ui.login;
 
 import com.EventTags;
+import com.api.ApiFactory;
 import com.app.annotation.apt.Instance;
 import com.base.OkBus;
 import com.base.util.SpUtil;
+import com.data.entity._User;
 
 /**
  * Created by baixiaokang on 16/4/29.
@@ -13,7 +15,7 @@ public class LoginPresenter extends LoginContract.Presenter {
 
     @Override
     public void login(String name, String pass) {
-        mCompositeSubscription.add(mModel.login(name, pass).subscribe(user -> {
+        mCompositeSubscription.add(ApiFactory.login(name, pass).subscribe(user -> {
                     SpUtil.setUser(user);
                     OkBus.getInstance().onEvent(EventTags.ON_USER_LOGIN, user);
                     mView.loginSuccess();
@@ -24,7 +26,7 @@ public class LoginPresenter extends LoginContract.Presenter {
 
     @Override
     public void sign(String name, String pass) {
-        mCompositeSubscription.add(mModel.sign(name, pass)
+        mCompositeSubscription.add(ApiFactory.createUser(new _User(name, pass))
                 .subscribe(res -> mView.signSuccess(),
                         e -> mView.showMsg("注册失败!")));
     }

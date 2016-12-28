@@ -1,15 +1,20 @@
 package com.ui.user;
 
 import com.EventTags;
+import com.api.ApiFactory;
 import com.app.annotation.apt.Instance;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
 import com.base.OkBus;
 import com.base.util.SpUtil;
+import com.data.entity.Face;
 import com.data.entity._User;
 
 import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * Created by baixiaokang on 16/5/5.
@@ -19,7 +24,7 @@ public class UserPresenter extends UserContract.Presenter {
 
     @Override
     public void upLoadFace(File file) {
-        mCompositeSubscription.add(mModel.upFile(file).subscribe(
+        mCompositeSubscription.add(ApiFactory.upFile(file.getName(), RequestBody.create(MediaType.parse("image/*"), file)).subscribe(
                 res -> upUserInfo(res.url),
                 e -> mView.showMsg("上传失败!")));
     }
@@ -28,7 +33,7 @@ public class UserPresenter extends UserContract.Presenter {
     public void upUserInfo(String face) {
         _User user = SpUtil.getUser();
         user.face = face;
-        mCompositeSubscription.add(mModel.upUser(user).subscribe(
+        mCompositeSubscription.add(ApiFactory.upUser(user.sessionToken, user.objectId, new Face(user.face)).subscribe(
                 res -> {
                     SpUtil.setUser(user);
                     OkBus.getInstance().onEvent(EventTags.ON_USER_LOGIN, user);

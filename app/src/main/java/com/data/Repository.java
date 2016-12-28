@@ -13,5 +13,5 @@ public abstract class Repository<T> {
 
     public Map<String, String> param;//钥匙
 
-    public abstract Observable<Data<T>> getPageAt(int page);//来源
+    public abstract Observable<DataArr<T>> getPageAt(int page);//来源
 }

@@ -2,7 +2,7 @@ package com.base.util;
 
 import android.text.TextUtils;
 
-import com.base.BaseEntity;
+import com.base.BaseBean;
 import com.data.Pointer;
 
 import java.util.Map;
@@ -23,7 +23,7 @@ public class ApiUtil {
         return "{" + where.substring(0, where.length() - 1) + "}";
     }
 
-    public static <T extends BaseEntity.BaseBean> Pointer getPointer(T obj) {
+    public static <T extends BaseBean> Pointer getPointer(T obj) {
         return new Pointer(obj.getClass().getSimpleName(), obj.objectId);
     }
 

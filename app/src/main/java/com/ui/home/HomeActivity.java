@@ -40,7 +40,7 @@ import com.view.viewholder.ArticleItemVH;
 import butterknife.Bind;
 import rx.Observable;
 
-public class HomeActivity extends BaseActivity<HomePresenter, HomeModel> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener {
     @Bind(R.id.tabs)
     TabLayout tabs;
     @Bind(R.id.viewpager)

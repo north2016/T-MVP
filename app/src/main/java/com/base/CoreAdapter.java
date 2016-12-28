@@ -89,11 +89,11 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return mItemList.size() + isHasFooter + isHasHeader;
     }
 
-    public void setBeans(List<M> datas, int begin) {
-        if (datas == null) datas = new ArrayList<>();
-        this.isHasMore = datas.size() >= C.PAGE_COUNT;
-        if (begin > 1) this.mItemList.addAll(datas);
-        else this.mItemList = datas;
+    public void setBeans(List<M> data, int begin) {
+        if (data == null) data = new ArrayList<>();
+        this.isHasMore = data.size() >= C.PAGE_COUNT;
+        if (begin > 1) this.mItemList.addAll(data);
+        else this.mItemList = data;
         notifyDataSetChanged();
     }
 

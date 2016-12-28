@@ -1,9 +1,8 @@
 package com.data.repository;
 
 import com.C;
-import com.api.Api;
+import com.api.ApiFactory;
 import com.base.util.ApiUtil;
-import com.base.util.helper.RxSchedulers;
 import com.data.Repository;
 import com.data.entity.MessageInfo;
 
@@ -17,12 +16,10 @@ public class MessageInfoRepository extends Repository<MessageInfo> {
 
     @Override
     public Observable getPageAt(int page) {
-        return Api.getInstance().service
-                .getMessageList(
-                        ApiUtil.getInclude(param),
-                        ApiUtil.getWhere(param),
-                        C.PAGE_COUNT * (page - 1),
-                        C.PAGE_COUNT, "-createdAt")
-                .compose(RxSchedulers.io_main());
+        return ApiFactory.getMessageList(
+                ApiUtil.getInclude(param),
+                ApiUtil.getWhere(param),
+                C.PAGE_COUNT * (page - 1),
+                C.PAGE_COUNT, C._CREATED_AT);
     }
 }

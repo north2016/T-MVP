@@ -27,7 +27,7 @@ import com.view.viewholder.CommentItemVH;
 
 import butterknife.Bind;
 
-public class ArticleActivity extends BaseActivity<ArticlePresenter, ArticleModel> implements ArticleContract.View {
+public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View {
     public static final String TRANSLATE_VIEW = "share_img";
     @Bind(R.id.image)
     ImageView image;

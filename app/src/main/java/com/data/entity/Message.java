@@ -1,13 +1,13 @@
 package com.data.entity;
 
-import com.base.BaseEntity;
+import com.base.BaseBean;
 import com.data.Pointer;
 
 /**
  * Created by baixiaokang on 16/12/24.
  */
 
-public class Message extends BaseEntity.BaseBean {
+public class Message extends BaseBean {
 
     public Pointer receiver;
     public String message;

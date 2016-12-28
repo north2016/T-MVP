@@ -2,6 +2,7 @@ package com.app.apt.processor;
 
 import com.app.annotation.apt.Instance;
 import com.app.annotation.aspect.MemoryCache;
+import com.app.apt.AnnotationProcessor;
 import com.app.apt.inter.IProcessor;
 import com.app.apt.util.NoPackageNameException;
 import com.app.apt.util.Utils;
@@ -15,12 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.Messager;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
-import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
 import static com.squareup.javapoet.TypeSpec.classBuilder;
@@ -36,7 +34,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 public class InstanceProcessor implements IProcessor {
     //逻辑很简单,这里直接生成代码,就没有封装成面向对象的方式
     @Override
-    public void process(RoundEnvironment roundEnv, Filer mFiler, Elements mElements, Messager mMessager) {
+    public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
         TypeElement mElement = null;
         String CLASS_NAME = "InstanceFactory"; // 设置你要生成的代码class名字
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 实例化工厂 此类由apt自动生成");
@@ -59,9 +57,9 @@ public class InstanceProcessor implements IProcessor {
         blockBuilder2.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
         try {
             for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(Instance.class))) {
-                mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
+                mAbstractProcessor.mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
                 if (mElement == null) mElement = element;
-                if (!Utils.isValidClass(mMessager, element)) return;
+                if (!Utils.isValidClass(mAbstractProcessor.mMessager, element)) return;
                 ClassName currentType = ClassName.get(element);
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
@@ -85,9 +83,9 @@ public class InstanceProcessor implements IProcessor {
                 // mMessager.printMessage(Diagnostic.Kind.ERROR, "apt处理失败!");
                 return;
             }
-            String packageName = Utils.getPackageName(mElements, mElement);
+            String packageName = Utils.getPackageName(mAbstractProcessor.mElements, mElement);
             JavaFile javaFile = JavaFile.builder(packageName, tb.build()).build();// 生成源代码
-            javaFile.writeTo(mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
+            javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
             // javaFile.writeTo(new File(System.getProperty("user.home") + "/Desktop/")); // 测试在桌面生成一份源代码,方便查看
         } catch (NoPackageNameException e) {
             e.printStackTrace();

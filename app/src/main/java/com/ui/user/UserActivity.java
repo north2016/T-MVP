@@ -23,7 +23,7 @@ import java.io.File;
 
 import butterknife.Bind;
 
-public class UserActivity extends BaseActivity<UserPresenter, UserModel> implements UserContract.View {
+public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View {
     public static final String TRANSLATE_VIEW = "share_img";
     private static final int IMAGE_REQUEST_CODE = 100;
     @Bind(R.id.image)
