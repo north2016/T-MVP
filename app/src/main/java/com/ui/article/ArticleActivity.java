@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -60,16 +59,12 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
             else mPresenter.createComment(comment, mSubject, SpUtil.getUser());
         });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mSubject.objectId));
-        lv_comment.setHeadView(ArticleHeaderVH.class)
+        lv_comment.setHeadView(ArticleHeaderVH.class, mSubject)
                 .setView(CommentItemVH.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
                 .setIsRefreshable(false)
                 .fetch();
-    }
-
-    public void checkin(View view) {
-        Snackbar.make(view, "没啥卵用", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

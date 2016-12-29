@@ -1,6 +1,5 @@
 package com.view.layout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.C;
 import com.base.BaseViewHolder;
 import com.base.CoreAdapter;
 import com.base.CoreAdapterPresenter;
@@ -106,13 +104,13 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
         return this;
     }
 
-    public TRecyclerView setHeadView(Class<? extends BaseViewHolder> cla) {
+    public TRecyclerView setHeadView(Class<? extends BaseViewHolder> cla, Object data) {
         isHasHeadView = cla != null;
         if (!isHasHeadView) {
             this.mCommAdapter.setHeadViewType(0, cla, null);
         } else {
             int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType();
-            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, ((Activity) context).getIntent().getSerializableExtra(C.HEAD_DATA));
+            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, data);
         }
         return this;
     }

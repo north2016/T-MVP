@@ -1,7 +1,7 @@
 package com.data.repository;
 
 import com.C;
-import com.api.ApiFactory;
+import com.apt.ApiFactory;
 import com.base.util.ApiUtil;
 import com.data.Repository;
 import com.data.entity.Image;

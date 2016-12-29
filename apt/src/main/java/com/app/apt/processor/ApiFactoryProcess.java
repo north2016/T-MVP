@@ -3,7 +3,6 @@ package com.app.apt.processor;
 import com.app.annotation.apt.ApiFactory;
 import com.app.apt.AnnotationProcessor;
 import com.app.apt.inter.IProcessor;
-import com.app.apt.util.NoPackageNameException;
 import com.app.apt.util.Utils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -13,6 +12,7 @@ import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
 
+import javax.annotation.processing.FilerException;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
@@ -33,13 +33,11 @@ import static javax.lang.model.element.Modifier.STATIC;
 public class ApiFactoryProcess implements IProcessor {
     @Override
     public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
-        TypeElement mElement = null;
         String CLASS_NAME = "ApiFactory"; // 设置你要生成的代码class名字
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ API工厂 此类由apt自动生成");
         try {
             for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(ApiFactory.class))) {
                 mAbstractProcessor.mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
-                if (mElement == null) mElement = element;
                 for (Element e : element.getEnclosedElements()) {
                     ExecutableElement executableElement = (ExecutableElement) e;
                     MethodSpec.Builder methodBuilder =
@@ -62,13 +60,9 @@ public class ApiFactoryProcess implements IProcessor {
                     tb.addMethod(methodBuilder.build());
                 }
             }
-            if (mElement == null) return;
-
-            String packageName = Utils.getPackageName(mAbstractProcessor.mElements, mElement);
-            JavaFile javaFile = JavaFile.builder(packageName, tb.build()).build();// 生成源代码
+            JavaFile javaFile = JavaFile.builder(Utils.PackageName, tb.build()).build();// 生成源代码
             javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
-        } catch (NoPackageNameException e) {
-            e.printStackTrace();
+        } catch (FilerException e) {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

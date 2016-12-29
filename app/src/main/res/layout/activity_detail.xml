@@ -66,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:clickable="true"
-        android:onClick="checkin"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/ic_whilte_send" />

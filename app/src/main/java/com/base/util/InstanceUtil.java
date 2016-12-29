@@ -6,12 +6,12 @@ import android.widget.LinearLayout;
 import com.App;
 import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
+import com.apt.InstanceFactory;
 import com.base.BaseViewHolder;
-import com.ui.article.InstanceFactory;
 
 import java.lang.reflect.ParameterizedType;
 
-import static com.data.entity.RepositoryFactory.create;
+import static com.apt.RepositoryFactory.create;
 
 
 /**
