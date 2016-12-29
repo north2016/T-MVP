@@ -26,12 +26,15 @@ import javax.lang.model.util.Elements;
         "com.app.annotation.apt.ApiFactory"
 })
 public class AnnotationProcessor extends AbstractProcessor {
-    public Filer mFiler = processingEnv.getFiler(); //文件相关的辅助类
-    public Elements mElements = processingEnv.getElementUtils(); //元素相关的辅助类
-    public Messager mMessager = processingEnv.getMessager(); //日志相关的辅助类
+    public Filer mFiler; //文件相关的辅助类
+    public Elements mElements; //元素相关的辅助类
+    public Messager mMessager; //日志相关的辅助类
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        mFiler = processingEnv.getFiler();
+        mElements = processingEnv.getElementUtils();
+        mMessager = processingEnv.getMessager();
         new InstanceProcessor().process(roundEnv, this);
         new RepositoryProcess().process(roundEnv, this);
         new ApiFactoryProcess().process(roundEnv, this);

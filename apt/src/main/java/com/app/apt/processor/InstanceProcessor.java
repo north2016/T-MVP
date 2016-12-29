@@ -63,9 +63,10 @@ public class InstanceProcessor implements IProcessor {
                 ClassName currentType = ClassName.get(element);
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
-                if (element.getAnnotation(Instance.class).type() == Instance.typeDefault)
+                int type = element.getAnnotation(Instance.class).type();
+                if (type == Instance.typeDefault)
                     blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);
-                else if (element.getAnnotation(Instance.class).type() == Instance.typeVH) {
+                else if (type == Instance.typeVH) {
                     blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
                     blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
                 }

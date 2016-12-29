@@ -1,6 +1,7 @@
 package com.base;
 
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by baixiaokang on 16/12/26.
@@ -10,6 +11,8 @@ import android.view.View;
 public abstract class BaseMultiVH<T> extends BaseViewHolder<T> {
     public BaseMultiVH(View v) {
         super(v);
+        if (((ViewGroup) v).getChildCount() > 0)
+            initView(v);
     }
 
     /**
@@ -19,4 +22,11 @@ public abstract class BaseMultiVH<T> extends BaseViewHolder<T> {
      * @return
      */
     public abstract int getMultiType(T item);
+
+    /**
+     * 不同布局交给子类去初始化view
+     *
+     * @param v
+     */
+    public abstract void initView(View v);
 }

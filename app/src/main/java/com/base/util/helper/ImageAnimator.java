@@ -9,9 +9,6 @@ import android.widget.ImageView;
 import com.base.util.BaseUtils;
 import com.base.util.ImageUtil;
 
-/**
- * 渐变的动画效果  原作者by wangchenlong on 15/11/9.  已经被我大量修改
- */
 public class ImageAnimator {
     String[] mImages = {
             "http://img-cdn.luoo.net/pics/vol/585800ce78e88.jpg?imageView2/1/w/640/h/452",

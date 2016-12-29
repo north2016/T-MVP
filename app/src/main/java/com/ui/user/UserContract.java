@@ -12,9 +12,9 @@ import java.io.File;
 public interface UserContract {
 
     interface View extends BaseView {
-
         void showMsg(String msg);
-       void  initUser(_User user);
+
+        void initUser(_User user);
     }
 
     abstract class Presenter extends BasePresenter<View> {

@@ -97,9 +97,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
         dlMainDrawer.addDrawerListener(mDrawerToggle);
-        fab.setOnClickListener(v -> {
-
-        });
+        fab.setOnClickListener(v -> {});
         View mHeaderView = nvMainNavigation.getHeaderView(0);
         im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
         im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);

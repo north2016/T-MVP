@@ -2,7 +2,6 @@ package com;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Resources;
 
 import com.app.annotation.aspect.TimeLog;
 import com.base.util.SpUtil;
@@ -24,9 +23,4 @@ public class App extends Application {
     public static Context getAppContext() {
         return mApp;
     }
-
-    public static Resources getAppResources() {
-        return mApp.getResources();
-    }
-
 }

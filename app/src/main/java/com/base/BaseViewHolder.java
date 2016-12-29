@@ -14,7 +14,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder {
     public BaseViewHolder(View v) {
         super(v);
         mContext = v.getContext();
-        if (((ViewGroup) v).getChildCount() > 0)
+        if (((ViewGroup) v).getChildCount() > 0&&!(this instanceof BaseMultiVH))
             ButterKnife.bind(this, v);
     }
 

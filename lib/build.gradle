@@ -3,9 +3,6 @@ apply plugin: 'java'
 sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
-dependencies {
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-}
 
 // 解决build警告：编码GBK的不可映射字符
 tasks.withType(JavaCompile) {

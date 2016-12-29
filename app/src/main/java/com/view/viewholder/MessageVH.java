@@ -20,6 +20,7 @@ import com.ui.main.R;
 import com.ui.user.UserActivity;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by baixiaokang on 16/12/24.
@@ -39,6 +40,11 @@ public class MessageVH extends BaseMultiVH<MessageInfo> implements View.OnClickL
     @Override
     public int getMultiType(MessageInfo item) {
         return item.creater.face == C.ADMIN_FACE ? R.layout.list_item_comment_admin : getType();
+    }
+
+    @Override
+    public void initView(View v) {
+        ButterKnife.bind(this, v);
     }
 
     @Override

@@ -67,7 +67,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public Object getItem(int position) {
         return isHasFooter == 1 && position + 1 == getItemCount()
-                ? (mFootData == null ? (isHasMore ? true : false) : mFootData)
+                ? (mFootData == null ? isHasMore : mFootData)
                 : isHasHeader == 1 && position == 0 ? mHeadData : mItemList.get(position - isHasHeader);
     }
 

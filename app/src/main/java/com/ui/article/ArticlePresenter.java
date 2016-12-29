@@ -13,6 +13,7 @@ import com.data.entity._User;
  */
 @Instance
 public class ArticlePresenter extends ArticleContract.Presenter {
+
     @Override
     public void createComment(String content, Image article, _User user) {
         if (null == SpUtil.getUser())
@@ -31,3 +32,5 @@ public class ArticlePresenter extends ArticleContract.Presenter {
             );
     }
 }
+
+

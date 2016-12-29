@@ -51,20 +51,19 @@ public class ApiFactoryProcess implements IProcessor {
                         methodBuilder.addParameter(TypeName.get(ep.asType()), ep.getSimpleName().toString());
                         paramsString += ep.getSimpleName().toString() + ",";
                     }
-                    ClassName apiClassName = ClassName.get("com.api", "Api");
-                    ClassName rxSchedulersClassName = ClassName.get("com.base.util.helper", "RxSchedulers");
                     methodBuilder.addStatement(
-                            "return $L.getInstance()" +
+                            "return $T.getInstance()" +
                                     ".service.$L($L)" +
                                     ".compose($T.io_main())"
-                            , apiClassName.simpleName()
+                            , ClassName.get("com.api", "Api")
                             , e.getSimpleName().toString()
                             , paramsString.substring(0, paramsString.length() - 1)
-                            , rxSchedulersClassName);
+                            , ClassName.get("com.base.util.helper", "RxSchedulers"));
                     tb.addMethod(methodBuilder.build());
                 }
             }
             if (mElement == null) return;
+
             String packageName = Utils.getPackageName(mAbstractProcessor.mElements, mElement);
             JavaFile javaFile = JavaFile.builder(packageName, tb.build()).build();// 生成源代码
             javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码

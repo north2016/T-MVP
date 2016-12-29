@@ -41,12 +41,12 @@ public class UserListActivity extends BaseActivity {
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setTitle("用户一览");
         ApiFactory.getAllUser(0, 1000)
-                //.observeOn(AndroidSchedulers.mainThread())
                 .flatMap(userData -> Observable.from(userData.results))
                 .filter(user -> !TextUtils.isEmpty(user.face))
                 .buffer(1000)
                 .subscribe(
-                        users -> OkBus.getInstance().onEvent(EventTags.ABOUT_INIT_USERS, users)//使用OkBus替换Rxjava的线程切换
+                        //使用OkBus替换Rxjava的线程切换
+                        users -> OkBus.getInstance().onEvent(EventTags.ABOUT_INIT_USERS, users)
                         , e -> e.printStackTrace());
     }
 

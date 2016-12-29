@@ -8,8 +8,6 @@ import com.data.entity._User;
  * Created by baixiaokang on 16/4/22.
  */
 public interface HomeContract {
-
-
     interface View extends BaseView {
         void showTabList(String[] mTabs);
 
