@@ -1,7 +1,7 @@
 package com.ui.login;
 
 import com.EventTags;
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.OkBus;
 import com.base.util.SpUtil;
@@ -10,7 +10,7 @@ import com.data.entity._User;
 /**
  * Created by baixiaokang on 16/4/29.
  */
-@Instance
+@InstanceFactory
 public class LoginPresenter extends LoginContract.Presenter {
 
     @Override

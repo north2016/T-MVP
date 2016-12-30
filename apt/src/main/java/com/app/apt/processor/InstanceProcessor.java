@@ -1,6 +1,6 @@
 package com.app.apt.processor;
 
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.MemoryCache;
 import com.app.apt.AnnotationProcessor;
 import com.app.apt.inter.IProcessor;
@@ -18,6 +18,8 @@ import java.util.List;
 import javax.annotation.processing.FilerException;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
@@ -53,18 +55,32 @@ public class InstanceProcessor implements IProcessor {
         blockBuilder1.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
         blockBuilder2.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
         try {
-            for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(Instance.class))) {
+            for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(InstanceFactory.class))) {
                 mAbstractProcessor.mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
                 if (!Utils.isValidClass(mAbstractProcessor.mMessager, element)) return;
                 ClassName currentType = ClassName.get(element);
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
-                int type = element.getAnnotation(Instance.class).type();
-                if (type == Instance.typeDefault)
-                    blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);
-                else if (type == Instance.typeVH) {
-                    blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
-                    blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);
+                String className = null;
+                try {
+                    Class<?> clazz = element.getAnnotation(InstanceFactory.class).clazz();
+                    className = clazz.getCanonicalName();
+                } catch (MirroredTypeException mte) {
+                    DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
+                    TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+                    className = classTypeElement.getQualifiedName().toString();
+                } catch (Exception e) {
+                }
+                if (className != null && !className.equals(InstanceFactory.class.getName())) {
+                    blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), Utils.getType(className));//初始化Repository
+                } else {
+                    int type = element.getAnnotation(InstanceFactory.class).type();
+                    if (type == InstanceFactory.typeDefault)
+                        blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);//初始化Presenter
+                    else if (type == InstanceFactory.typeVH) {
+                        blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化傀儡ViewHolder，会被缓存的，全局单例
+                        blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化真正的ViewHolder
+                    }
                 }
             }
             blockBuilder1.addStatement("default: return mClass.newInstance()");

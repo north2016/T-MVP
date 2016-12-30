@@ -35,8 +35,9 @@ public class CoreAdapterPresenter<T extends Repository> {
         this.mRepository = mRepository;
     }
 
-    public void setParam(String key, String value) {
+    public CoreAdapterPresenter setParam(String key, String value) {
         this.param.put(key, value);
+        return this;
     }
 
     public void setBegin(int begin) {

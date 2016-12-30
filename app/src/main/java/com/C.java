@@ -9,7 +9,7 @@ import com.data.entity._User;
 public class C {
     //base
     public static final int PAGE_COUNT = 10;
-
+    public static final int FLAG_MULTI_VH = 0x000001;
     // intent
     public static final String HEAD_DATA = "data";
     public static final String VH_CLASS = "vh";
@@ -24,7 +24,7 @@ public class C {
     public static final String ADMIN_FACE = "https://avatars0.githubusercontent.com/u/7598555?v=3&s=460";
 
 
-    public static MessageInfo getHeaderMessageInfo() {
+    public static MessageInfo getAdminMsg() {
         MessageInfo mMessageInfo = new MessageInfo();
         mMessageInfo.message = "您好，我是本应用的开发者North，如果您有什么好的建议和反馈，可以在这里和我直接对话，谢谢你的支持哦";
         _User admin = new _User();

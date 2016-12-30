@@ -1,13 +1,13 @@
 package com.data.entity;
 
-import com.app.annotation.apt.Repository;
+import com.app.annotation.apt.InstanceFactory;
 import com.base.BaseBean;
 import com.data.repository.MessageInfoRepository;
 
 /**
  * Created by baixiaokang on 16/12/24.
  */
-@Repository(clazz = MessageInfoRepository.class)
+@InstanceFactory(clazz = MessageInfoRepository.class)
 public class MessageInfo extends BaseBean {
 
     public _User receiver;

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.base.BaseBean;
 import com.base.BaseViewHolder;
 import com.base.CoreAdapter;
 import com.base.CoreAdapterPresenter;
@@ -22,7 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
+public class TRecyclerView<M extends BaseBean> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
     @Bind(R.id.recyclerview)
@@ -30,9 +31,8 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
     @Bind(R.id.ll_emptyview)
     LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
-    private Context context;
     private CoreAdapter mCommAdapter;
-    private CoreAdapterPresenter mCoreAdapterPresenter;
+    public CoreAdapterPresenter mCoreAdapterPresenter;
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false, isReverse = false;
 
     public TRecyclerView(Context context) {
@@ -46,14 +46,13 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
     }
 
     public void init(Context context) {
-        this.context = context;
         View layout = inflate(context, R.layout.layout_list_recyclerview, this);
         ButterKnife.bind(this, layout);
         mCoreAdapterPresenter = new CoreAdapterPresenter(this);
         initView(context);
     }
 
-    public TRecyclerView setReverse() {
+    public TRecyclerView<M> setReverse() {
         isReverse = true;
         mLayoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
         mLayoutManager.setReverseLayout(true);//列表翻转
@@ -81,7 +80,7 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
                         && newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == recyclerview.getAdapter()
                         .getItemCount() && mCommAdapter.isHasMore)
-                    mCoreAdapterPresenter.fetch();
+                    fetch();
             }
 
             @Override
@@ -98,13 +97,14 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
         }));
     }
 
-    public TRecyclerView setIsRefreshable(boolean i) {
+    public TRecyclerView<M> setIsRefreshable(boolean i) {
         isRefreshable = i;
         swiperefresh.setEnabled(i);
         return this;
     }
 
-    public TRecyclerView setHeadView(Class<? extends BaseViewHolder> cla, Object data) {
+
+    public TRecyclerView<M> setHeadView(Class<? extends BaseViewHolder> cla, Object data) {
         isHasHeadView = cla != null;
         if (!isHasHeadView) {
             this.mCommAdapter.setHeadViewType(0, cla, null);
@@ -115,8 +115,13 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
         return this;
     }
 
+    public TRecyclerView<M> setTypeSelector(CoreAdapter.VHClassSelector<M> mTypeSelector) {
+        this.mCommAdapter.setTypeSelector(mTypeSelector);
+        this.mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mTypeSelector.getTypeClass(null)));
+        return this;
+    }
 
-    public TRecyclerView setFooterView(Class<? extends BaseViewHolder> cla, Object data) {
+    public TRecyclerView<M> setFooterView(Class<? extends BaseViewHolder> cla, Object data) {
         if (cla == null) {
             this.mCommAdapter.setFooterViewType(0, cla, data);
         } else {
@@ -126,18 +131,18 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
         return this;
     }
 
-    public TRecyclerView setView(Class<? extends BaseViewHolder> cla) {
+    public TRecyclerView<M> setView(Class<? extends BaseViewHolder> cla) {
         mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(cla));
         this.mCommAdapter.setViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType(), cla);
         return this;
     }
 
-    public TRecyclerView setParam(String key, String value) {
+    public TRecyclerView<M> setParam(String key, String value) {
         mCoreAdapterPresenter.setParam(key, value);
         return this;
     }
 
-    public TRecyclerView setData(List<T> data) {
+    public TRecyclerView<M> setData(List<M> data) {
         if (isEmpty) {
             ll_emptyView.setVisibility(View.GONE);
             swiperefresh.setVisibility(View.VISIBLE);
@@ -149,7 +154,7 @@ public class TRecyclerView<T> extends FrameLayout implements CoreAdapterPresente
     public void reFetch() {
         mCoreAdapterPresenter.setBegin(0);
         swiperefresh.setRefreshing(true);
-        mCoreAdapterPresenter.fetch();
+        fetch();
     }
 
     public void fetch() {

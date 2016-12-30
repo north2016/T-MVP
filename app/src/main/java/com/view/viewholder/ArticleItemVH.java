@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.C;
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
@@ -22,7 +22,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/4/23.
  */
-@Instance(type = Instance.typeVH)
+@InstanceFactory(type = InstanceFactory.typeVH)
 public class ArticleItemVH extends BaseViewHolder<Image> implements View.OnClickListener {
     @Bind(R.id.image)
     ImageView image;

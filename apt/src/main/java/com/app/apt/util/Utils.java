@@ -61,4 +61,8 @@ public class Utils {
         return ClassName.get(typeElement).simpleName();
     }
 
+    public static ClassName getType(String className) {
+        return ClassName.get(className.substring(0, className.lastIndexOf(".")),
+                className.substring(className.lastIndexOf(".") + 1, className.length()));
+    }
 }

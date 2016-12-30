@@ -1,7 +1,7 @@
 package com.ui.article;
 
 
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
@@ -12,7 +12,7 @@ import com.data.entity._User;
 /**
  * Created by baixiaokang on 16/5/4.
  */
-@Instance
+@InstanceFactory
 public class ArticlePresenter extends ArticleContract.Presenter {
 
     @Override

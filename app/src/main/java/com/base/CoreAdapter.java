@@ -2,6 +2,7 @@ package com.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -17,7 +18,13 @@ import java.util.List;
  */
 
 public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public interface VHClassSelector<M> {
+        Class getTypeClass(M m);
+    }
+
+    protected VHClassSelector<M> mTypeSelector;
     protected List<M> mItemList = new ArrayList<>();
+    private SparseArray<Class> mMultiVHClass = new SparseArray<>();
     public boolean isHasMore = true;
     public int viewType, isHasFooter = 1, isHasHeader = 0, mHeadViewType, mFooterViewType = CommFooterVH.LAYOUT_TYPE;
     public Object mHeadData, mFootData;
@@ -39,10 +46,14 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void setViewType(int i, Class<? extends BaseViewHolder> cla) {
-        this.isHasMore = true;
         this.viewType = i;
         this.mItemList = new ArrayList<>();
         this.mItemViewClass = cla;
+    }
+
+    public void setTypeSelector(VHClassSelector<M> mTypeSelector) {
+        this.viewType = C.FLAG_MULTI_VH;
+        this.mTypeSelector = mTypeSelector;
     }
 
     public void setHeadViewType(int i, Class<? extends BaseViewHolder> cla, Object data) {
@@ -73,15 +84,20 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemViewType(int position) {
-        int mViewType = getViewType(mItemViewClass, viewType, getItem(position));
-        int mFooterType = isHasFooter == 1 ? getViewType(mFooterViewClass, mFooterViewType, mFootData) : mFooterViewType;
-        int mHeaderType = isHasHeader == 1 ? getViewType(mHeadViewClass, mHeadViewType, mHeadData) : mHeadViewType;
+        int mViewType = getViewType(viewType, getItem(position));
+        int mFooterType = isHasFooter == 1 ? getViewType(mFooterViewType, mFootData) : mFooterViewType;
+        int mHeaderType = isHasHeader == 1 ? getViewType(mHeadViewType, mHeadData) : mHeadViewType;
         return isHasHeader == 1 && position == 0 ? mHeaderType : (isHasFooter == 1 && position + 1 == getItemCount() ? mFooterType : mViewType);
     }
 
-    public int getViewType(Class VHClass, int viewType, Object item) {
-        BaseViewHolder BVH = InstanceUtil.getInstance(VHClass);
-        return BVH instanceof BaseMultiVH ? ((BaseMultiVH) BVH).getMultiType(item) : viewType;
+    public int getViewType(int viewType, Object item) {
+        if (viewType == C.FLAG_MULTI_VH) {
+            Class child = mTypeSelector.getTypeClass((M) item);
+            BaseViewHolder childBVH = InstanceUtil.getInstance(child);
+            int type = childBVH.getType();
+            mMultiVHClass.put(type, child);
+            return type;
+        } else return viewType;
     }
 
     @Override
@@ -98,7 +114,9 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public Class getVHClassByType(int type) {
-        if (type == mHeadViewType) return mHeadViewClass;
+        Class clazz = mMultiVHClass.get(type);
+        if (clazz != null) return clazz;
+        else if (type == mHeadViewType) return mHeadViewClass;
         else if (type == mFooterViewType) return mFooterViewClass;
         else return mItemViewClass;
     }

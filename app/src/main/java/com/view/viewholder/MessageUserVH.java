@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +14,7 @@ import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.SingleClick;
 import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
-import com.data.entity._User;
+import com.data.entity.MessageInfo;
 import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 import com.ui.user.UserActivity;
@@ -21,35 +22,35 @@ import com.ui.user.UserActivity;
 import butterknife.Bind;
 
 /**
- * Created by baixiaokang on 16/5/4.
+ * Created by baixiaokang on 16/12/29.
  */
 @InstanceFactory(type = InstanceFactory.typeVH)
-public class UserItemVH extends BaseViewHolder<_User> implements View.OnClickListener {
+public class MessageUserVH extends BaseViewHolder<MessageInfo> implements View.OnClickListener {
     @Bind(R.id.tv_content)
     TextView tv_content;
     @Bind(R.id.im_user)
     ImageView im_user;
 
-    public UserItemVH(View v) {
+    public MessageUserVH(View v) {
         super(v);
     }
 
     @Override
     public int getType() {
-        return R.layout.list_item_user;
+        return R.layout.list_item_comment;
     }
 
     @Override
-    public void onBindViewHolder(View view, final _User data) {
+    public void onBindViewHolder(View view, final MessageInfo data) {
         super.onBindViewHolder(view, data);
-        tv_content.setText(data.username);
-        ImageUtil.loadRoundImg(im_user, data.face);
+        tv_content.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + "<br/><br/>" + "</font>" + data.message));
+        ImageUtil.loadRoundImg(im_user, data.creater.face);
         im_user.setOnClickListener(this);
     }
 
     @SingleClick
     public void onClick(View view) {
-        ActivityCompat.startActivity(mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data)
+        ActivityCompat.startActivity(mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, data.creater)
                 , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle());
     }
 }

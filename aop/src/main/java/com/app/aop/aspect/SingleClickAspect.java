@@ -21,7 +21,7 @@ import java.util.Calendar;
 @Aspect
 public class SingleClickAspect {
     static int TIME_TAG = R.id.click_time;
-    public static final int MIN_CLICK_DELAY_TIME = 2000;
+    public static final int MIN_CLICK_DELAY_TIME = 1200;
 
     @Pointcut("execution(@com.app.annotation.aspect.SingleClick * *(..))")//方法切入点
     public void methodAnnotated() {

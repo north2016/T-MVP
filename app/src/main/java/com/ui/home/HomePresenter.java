@@ -1,7 +1,7 @@
 package com.ui.home;
 
 import com.EventTags;
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
@@ -12,7 +12,7 @@ import com.data.entity._User;
 /**
  * Created by baixiaokang on 16/4/22.
  */
-@Instance
+@InstanceFactory
 public class HomePresenter extends HomeContract.Presenter {
 
 

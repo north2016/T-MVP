@@ -1,7 +1,7 @@
 package com.ui.user;
 
 import com.EventTags;
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
@@ -19,7 +19,7 @@ import okhttp3.RequestBody;
 /**
  * Created by baixiaokang on 16/5/5.
  */
-@Instance
+@InstanceFactory
 public class UserPresenter extends UserContract.Presenter {
 
     @Override

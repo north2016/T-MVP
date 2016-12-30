@@ -11,8 +11,6 @@ import com.base.BaseViewHolder;
 
 import java.lang.reflect.ParameterizedType;
 
-import static com.apt.RepositoryFactory.create;
-
 
 /**
  * Created by baixiaokang on 16/4/30.
@@ -79,12 +77,13 @@ public class InstanceUtil {
 
     public static <T> T getRepositoryInstance(Class cla) {
         try {
-            return (T) create((Class) ((ParameterizedType) (cla
-                    .getGenericSuperclass())).getActualTypeArguments()[0]);
+            if (cla.getGenericSuperclass() instanceof ParameterizedType)
+                return (T) InstanceFactory.create((Class) ((ParameterizedType) (cla
+                        .getGenericSuperclass())).getActualTypeArguments()[0], null);
+            else return (T) InstanceFactory.create(cla, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-
 }

@@ -1,13 +1,13 @@
 package com.data.entity;
 
-import com.app.annotation.apt.Repository;
+import com.app.annotation.apt.InstanceFactory;
 import com.base.BaseBean;
 import com.data.repository.ImageRepository;
 
 /**
  * Created by Administrator on 2016/4/7.
  */
-@Repository(clazz= ImageRepository.class)
+@InstanceFactory(clazz= ImageRepository.class)
 public class Image extends BaseBean {
     public String image;
     public String createdAt;

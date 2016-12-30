@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.C;
-import com.app.annotation.apt.Instance;
+import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.SingleClick;
-import com.base.BaseMultiVH;
+import com.base.BaseViewHolder;
 import com.base.util.ImageUtil;
 import com.data.entity.MessageInfo;
 import com.ui.article.ArticleActivity;
@@ -20,42 +20,33 @@ import com.ui.main.R;
 import com.ui.user.UserActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
- * Created by baixiaokang on 16/12/24.
+ * Created by baixiaokang on 16/12/29.
  */
-
-@Instance(type = Instance.typeVH)
-public class MessageVH extends BaseMultiVH<MessageInfo> implements View.OnClickListener {
+@InstanceFactory(type = InstanceFactory.typeVH)
+public class MessageAdminVH extends BaseViewHolder<MessageInfo> implements View.OnClickListener {
     @Bind(R.id.tv_content)
     TextView tv_content;
+    @Bind(R.id.tv_name)
+    TextView tv_name;
     @Bind(R.id.im_user)
     ImageView im_user;
 
-    public MessageVH(View v) {
+    public MessageAdminVH(View v) {
         super(v);
     }
 
     @Override
-    public int getMultiType(MessageInfo item) {
-        return item.creater.face == C.ADMIN_FACE ? R.layout.list_item_comment_admin : getType();
-    }
-
-    @Override
-    public void initView(View v) {
-        ButterKnife.bind(this, v);
-    }
-
-    @Override
     public int getType() {
-        return R.layout.list_item_comment;
+        return R.layout.list_item_comment_admin;
     }
 
     @Override
     public void onBindViewHolder(View view, final MessageInfo data) {
         super.onBindViewHolder(view, data);
-        tv_content.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.message));
+        tv_name.setText(data.creater.username);
+        tv_content.setText(Html.fromHtml(data.message));
         ImageUtil.loadRoundImg(im_user, data.creater.face);
         im_user.setOnClickListener(this);
     }
@@ -66,4 +57,3 @@ public class MessageVH extends BaseMultiVH<MessageInfo> implements View.OnClickL
                 , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_user, ArticleActivity.TRANSLATE_VIEW).toBundle());
     }
 }
-
