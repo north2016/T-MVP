@@ -1,5 +1,8 @@
 
 #更新日志：
+
+2016/12／30：新增TRouter全局路由，使用apt生成代码和AspectJ插桩实现页面跳转
+
 2016/12／29：去掉BaseMultiVH新增VHClassSelector支持更完美的多ViewHolder
 
 2016/12／28：使用Apt生成全局的ApiFactory替代所有的Model
