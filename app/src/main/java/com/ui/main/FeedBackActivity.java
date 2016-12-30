@@ -6,14 +6,15 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.C;
+import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.ApiFactory;
 import com.base.BaseActivity;
-import com.base.CoreAdapter;
+import com.base.adapter.VHSelector;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.data.entity.Message;
+import com.data.bean.Message;
 import com.data.entity.MessageInfo;
 import com.data.entity._User;
 import com.view.layout.TRecyclerView;
@@ -22,7 +23,7 @@ import com.view.viewholder.MessageUserVH;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-
+@Router(C.FEED_BACK)
 public class FeedBackActivity extends BaseActivity implements View.OnClickListener {
     _User user = SpUtil.getUser();
     @Bind(R.id.lv_msg)
@@ -30,8 +31,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     @Bind(R.id.et_message)
     EditText etMessage;
 
-    CoreAdapter.VHClassSelector<MessageInfo> mTypeSelector
-            = (item -> item != null && TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
+    VHSelector<MessageInfo> mTypeSelector = (item -> item != null && TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
             ? MessageAdminVH.class : MessageUserVH.class);//AdminID发送的为Admin消息，其他都是普通消息
 
     @Override

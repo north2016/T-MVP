@@ -24,7 +24,6 @@ import com.C;
 import com.base.util.DensityUtil;
 import com.base.util.ImageUtil;
 import com.data.entity._User;
-import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 import com.ui.user.UserActivity;
 
@@ -259,7 +258,7 @@ public class TabLayout extends LinearLayout {
             ImageUtil.loadImg(image, m_Users.get(position).face);
             image.setOnClickListener(m ->
                     ActivityCompat.startActivity((Activity) context, new Intent(context, UserActivity.class).putExtra(C.HEAD_DATA, m_Users.get(position))
-                            , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, image, ArticleActivity.TRANSLATE_VIEW).toBundle())
+                            , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, image, C.TRANSLATE_VIEW).toBundle())
             );
             container.addView(v);
             return v;

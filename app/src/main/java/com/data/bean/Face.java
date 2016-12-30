@@ -1,4 +1,4 @@
-package com.data.entity;
+package com.data.bean;
 
 /**
  * Created by baixiaokang on 16/12/28.

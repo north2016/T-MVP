@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.app.annotation.aspect.JoinPointCallBack;
+import com.apt.TRouter;
 import com.base.util.InstanceUtil;
 import com.base.util.SpUtil;
 import com.ui.main.R;
@@ -22,13 +24,18 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements JoinPointCallBack {
     protected Toolbar toolbar;
     public boolean isNight;
     public P mPresenter;
     public Context mContext;
     private SwipeBackLayout swipeBackLayout;
     private ImageView ivShadow;
+
+    @Override
+    public void onJoinPointCallBack() {
+        TRouter.autoValue(this);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

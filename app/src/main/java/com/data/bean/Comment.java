@@ -1,4 +1,4 @@
-package com.data.entity;
+package com.data.bean;
 
 import com.base.BaseBean;
 import com.data.Pointer;

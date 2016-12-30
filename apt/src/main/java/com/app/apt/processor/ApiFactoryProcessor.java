@@ -30,10 +30,10 @@ import static javax.lang.model.element.Modifier.STATIC;
  * Created by baixiaokang on 16/12/28.
  */
 
-public class ApiFactoryProcess implements IProcessor {
+public class ApiFactoryProcessor implements IProcessor {
     @Override
     public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
-        String CLASS_NAME = "ApiFactory"; // 设置你要生成的代码class名字
+        String CLASS_NAME = "ApiFactory";
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ API工厂 此类由apt自动生成");
         try {
             for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(ApiFactory.class))) {

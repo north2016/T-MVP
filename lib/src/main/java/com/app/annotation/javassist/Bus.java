@@ -35,5 +35,5 @@ public @interface Bus {
      *
      * @return
      */
-    int tag();
+    int value();
 }

@@ -34,10 +34,9 @@ import static javax.lang.model.element.Modifier.STATIC;
  */
 
 public class InstanceProcessor implements IProcessor {
-    //逻辑很简单,这里直接生成代码,就没有封装成面向对象的方式
     @Override
     public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
-        String CLASS_NAME = "InstanceFactory"; // 设置你要生成的代码class名字
+        String CLASS_NAME = "InstanceFactory";
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 实例化工厂 此类由apt自动生成");
         MethodSpec.Builder methodBuilder1 = MethodSpec.methodBuilder("create").addAnnotation(MemoryCache.class)
                 .addJavadoc("@此方法由apt自动生成")

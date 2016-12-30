@@ -7,11 +7,13 @@ package com.ui.main;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 
+import com.C;
 import com.EventTags;
+import com.app.annotation.apt.Router;
 import com.app.annotation.javassist.Bus;
 import com.apt.ApiFactory;
 import com.base.BaseActivity;
-import com.base.OkBus;
+import com.base.event.OkBus;
 import com.data.entity._User;
 import com.view.widget.TabLayout;
 
@@ -24,6 +26,7 @@ import rx.Observable;
 /**
  * 简单页面无需mvp,该咋写还是咋写
  */
+@Router(C.USER_LIST)
 public class UserListActivity extends BaseActivity {
 
     @Bind(R.id.tl_user)
@@ -50,7 +53,7 @@ public class UserListActivity extends BaseActivity {
                         , e -> e.printStackTrace());
     }
 
-    @Bus(tag = EventTags.ABOUT_INIT_USERS, thread = Bus.UI)
+    @Bus(value = EventTags.ABOUT_INIT_USERS, thread = Bus.UI)
     private void setUsers(List<_User> users) {
         tlUser.setM_Users(users);
     }

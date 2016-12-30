@@ -3,7 +3,7 @@ package com.ui.login;
 import com.EventTags;
 import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
-import com.base.OkBus;
+import com.base.event.OkBus;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 

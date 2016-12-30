@@ -5,7 +5,7 @@ import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
-import com.data.entity.Comment;
+import com.data.bean.Comment;
 import com.data.entity.Image;
 import com.data.entity._User;
 

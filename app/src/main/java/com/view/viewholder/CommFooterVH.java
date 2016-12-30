@@ -6,7 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.app.annotation.apt.InstanceFactory;
-import com.base.BaseViewHolder;
+import com.base.adapter.BaseViewHolder;
 import com.ui.main.R;
 
 import butterknife.Bind;

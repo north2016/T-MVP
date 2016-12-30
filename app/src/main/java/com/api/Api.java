@@ -4,6 +4,7 @@ package com.api;
 import android.util.Log;
 
 import com.App;
+import com.C;
 import com.base.util.NetWorkUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,16 +28,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by baixiaokang on 16/3/9.
  */
 public class Api {
-
-    public static final String X_LC_Id = "i7j2k7bm26g7csk7uuegxlvfyw79gkk4p200geei8jmaevmx";
-    public static final String X_LC_Key = "n6elpebcs84yjeaj5ht7x0eii9z83iea8bec9szerejj7zy3";
-    public static final String BASE_URL = "https://leancloud.cn:443/1.1/";
     public Retrofit retrofit;
     public ApiService service;
 
+    private static class SingletonHolder {
+        private static final Api INSTANCE = new Api();
+    }
+
+    public static Api getInstance() {
+        return SingletonHolder.INSTANCE;
+    }
+
     Interceptor mInterceptor = (chain) -> chain.proceed(chain.request().newBuilder()
-            .addHeader("X-LC-Id", X_LC_Id)
-            .addHeader("X-LC-Key", X_LC_Key)
+            .addHeader("X-LC-Id", C.X_LC_Id)
+            .addHeader("X-LC-Key", C.X_LC_Key)
             .addHeader("Content-Type", "application/json")
             .build());
 
@@ -57,28 +62,16 @@ public class Api {
                 .cache(cache)
                 .build();
 
-
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").serializeNulls().create();
 
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(BASE_URL)
+                .baseUrl(C.BASE_URL)
                 .build();
         service = retrofit.create(ApiService.class);
     }
-
-    //在访问HttpMethods时创建单例
-    private static class SingletonHolder {
-        private static final Api INSTANCE = new Api();
-    }
-
-    //获取单例
-    public static Api getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
-
 
     class HttpCacheInterceptor implements Interceptor {
 

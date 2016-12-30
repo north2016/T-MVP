@@ -1,4 +1,4 @@
-package com.base;
+package com.base.event;
 
 import android.os.Message;
 

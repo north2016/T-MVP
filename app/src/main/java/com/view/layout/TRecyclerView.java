@@ -11,9 +11,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.base.BaseBean;
-import com.base.BaseViewHolder;
-import com.base.CoreAdapter;
-import com.base.CoreAdapterPresenter;
+import com.base.adapter.BaseViewHolder;
+import com.base.adapter.CoreAdapter;
+import com.base.adapter.CoreAdapterPresenter;
+import com.base.adapter.VHSelector;
 import com.base.util.InstanceUtil;
 import com.data.DataArr;
 import com.ui.main.R;
@@ -115,7 +116,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setTypeSelector(CoreAdapter.VHClassSelector<M> mTypeSelector) {
+    public TRecyclerView<M> setTypeSelector(VHSelector<M> mTypeSelector) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
         this.mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mTypeSelector.getTypeClass(null)));
         return this;

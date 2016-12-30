@@ -5,7 +5,7 @@ import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
-import com.base.OkBus;
+import com.base.event.OkBus;
 import com.base.util.SpUtil;
 import com.data.entity._User;
 
@@ -37,7 +37,7 @@ public class HomePresenter extends HomeContract.Presenter {
         OkBus.getInstance().onEvent(EventTags.SHOW_TAB_LIST, mTabs);
     }
 
-    @Bus(tag = EventTags.SHOW_TAB_LIST)
+    @Bus(EventTags.SHOW_TAB_LIST)
     public void showTabList(String[] tabs) {
         mView.showTabList(tabs);
     }
@@ -46,12 +46,11 @@ public class HomePresenter extends HomeContract.Presenter {
     private void initEvent() {
     }
 
-    @Bus(tag = EventTags.ON_USER_LOGIN)
+    @Bus(EventTags.ON_USER_LOGIN)
     public void OnLogin(_User user) {
         mView.initUserInfo(user);
     }
 
-    @Override
     @BusUnRegister
     public void onDetached() {
         super.onDetached();

@@ -14,14 +14,14 @@ import java.util.Calendar;
 
 /**
  * Created by baixiaokang on 16/12/9.
- * 防止View被连续点击
+ * 防止View被连续点击,间隔时间600ms
  */
 
 
 @Aspect
 public class SingleClickAspect {
     static int TIME_TAG = R.id.click_time;
-    public static final int MIN_CLICK_DELAY_TIME = 1200;
+    public static final int MIN_CLICK_DELAY_TIME = 600;
 
     @Pointcut("execution(@com.app.annotation.aspect.SingleClick * *(..))")//方法切入点
     public void methodAnnotated() {

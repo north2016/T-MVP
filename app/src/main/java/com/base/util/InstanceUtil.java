@@ -7,7 +7,7 @@ import com.App;
 import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
 import com.apt.InstanceFactory;
-import com.base.BaseViewHolder;
+import com.base.adapter.BaseViewHolder;
 
 import java.lang.reflect.ParameterizedType;
 

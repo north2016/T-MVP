@@ -1,16 +1,16 @@
 package com.ui.main;
 
-import android.content.Intent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 
+import com.C;
 import com.EventTags;
 import com.app.annotation.javassist.Bus;
+import com.apt.TRouter;
 import com.base.BaseActivity;
-import com.base.OkBus;
+import com.base.event.OkBus;
 import com.base.util.AnimationUtil;
 import com.base.util.StatusBarUtil;
-import com.ui.home.HomeActivity;
 
 import butterknife.Bind;
 
@@ -32,7 +32,7 @@ public class FlashActivity extends BaseActivity {
         OkBus.getInstance().onStickyEvent(EventTags.FLASH_INIT_UI, null);
     }
 
-    @Bus(tag = EventTags.FLASH_INIT_UI)
+    @Bus(EventTags.FLASH_INIT_UI)
     public void initUI() {
         StatusBarUtil.setTranslucentBackground(this);
         AlphaAnimation anim = new AlphaAnimation(0.8f, 0.1f);
@@ -41,9 +41,10 @@ public class FlashActivity extends BaseActivity {
         AnimationUtil.setAnimationListener(anim, () -> OkBus.getInstance().onEvent(EventTags.JUMP_TO_MAIN, null));
     }
 
-    @Bus(tag = EventTags.JUMP_TO_MAIN)
+    @Bus(EventTags.JUMP_TO_MAIN)
     public void jumpToMainPage() {
-        startActivity(new Intent(mContext, HomeActivity.class));
+        TRouter.go(C.HOME, null, null);
+        // startActivity(new Intent(mContext, HomeActivity.class));
         finish();
     }
 }

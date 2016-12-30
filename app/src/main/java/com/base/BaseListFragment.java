@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
+import com.base.adapter.BaseViewHolder;
 import com.base.util.InstanceUtil;
 import com.view.layout.TRecyclerView;
 
@@ -18,7 +19,7 @@ public class BaseListFragment extends Fragment {
      * @param vh 传入VH的类名
      * @return
      */
-    public static BaseListFragment newInstance(Class<? extends BaseViewHolder> vh,String type) {
+    public static BaseListFragment newInstance(Class<? extends BaseViewHolder> vh, String type) {
         Bundle arguments = new Bundle();
         arguments.putString(C.VH_CLASS, vh.getCanonicalName());
         arguments.putString("type",type);

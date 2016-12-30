@@ -1,4 +1,4 @@
-package com.base;
+package com.base.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -18,11 +18,7 @@ import java.util.List;
  */
 
 public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public interface VHClassSelector<M> {
-        Class getTypeClass(M m);
-    }
-
-    protected VHClassSelector<M> mTypeSelector;
+    protected VHSelector<M> mTypeSelector;
     protected List<M> mItemList = new ArrayList<>();
     private SparseArray<Class> mMultiVHClass = new SparseArray<>();
     public boolean isHasMore = true;
@@ -37,12 +33,21 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return (RecyclerView.ViewHolder) InstanceUtil.getViewHolder(getVHClassByType(viewType), LayoutInflater.from(context).inflate(viewType, parent, false));
+        return (RecyclerView.ViewHolder) InstanceUtil.getViewHolder(getVHClassByType(viewType),
+                LayoutInflater.from(context).inflate(viewType, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((BaseViewHolder) holder).onBindViewHolder(holder.itemView, getItem(position));
+    }
+
+    public Class getVHClassByType(int type) {
+        Class clazz = mMultiVHClass.get(type);
+        if (clazz != null) return clazz;
+        else if (type == mHeadViewType) return mHeadViewClass;
+        else if (type == mFooterViewType) return mFooterViewClass;
+        else return mItemViewClass;
     }
 
     public void setViewType(int i, Class<? extends BaseViewHolder> cla) {
@@ -51,7 +56,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mItemViewClass = cla;
     }
 
-    public void setTypeSelector(VHClassSelector<M> mTypeSelector) {
+    public void setTypeSelector(VHSelector<M> mTypeSelector) {
         this.viewType = C.FLAG_MULTI_VH;
         this.mTypeSelector = mTypeSelector;
     }
@@ -111,13 +116,5 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (begin > 1) this.mItemList.addAll(data);
         else this.mItemList = data;
         notifyDataSetChanged();
-    }
-
-    public Class getVHClassByType(int type) {
-        Class clazz = mMultiVHClass.get(type);
-        if (clazz != null) return clazz;
-        else if (type == mHeadViewType) return mHeadViewClass;
-        else if (type == mFooterViewType) return mFooterViewClass;
-        else return mItemViewClass;
     }
 }

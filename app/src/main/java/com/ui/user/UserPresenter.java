@@ -6,9 +6,9 @@ import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
 import com.apt.ApiFactory;
-import com.base.OkBus;
+import com.base.event.OkBus;
 import com.base.util.SpUtil;
-import com.data.entity.Face;
+import com.data.bean.Face;
 import com.data.entity._User;
 
 import java.io.File;
@@ -42,17 +42,15 @@ public class UserPresenter extends UserContract.Presenter {
                 e -> mView.showMsg("更新失败!")));
     }
 
-    @Override
     @BusRegister
     public void onAttached() {
     }
 
-    @Bus(tag = EventTags.ON_USER_LOGIN)
+    @Bus(EventTags.ON_USER_LOGIN)
     public void OnLogin(_User user) {
         mView.initUser(user);
     }
 
-    @Override
     @BusUnRegister
     public void onDetached() {
         super.onDetached();

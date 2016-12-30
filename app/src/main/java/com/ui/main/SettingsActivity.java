@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.C;
+import com.app.annotation.apt.Router;
 import com.base.util.SpUtil;
-
+@Router(C.SETTING)
 public class SettingsActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;
     SwitchPreference isNight;

@@ -79,7 +79,7 @@ public class BusHelper {
      */
     static String getRegisterEventMethodStr(BusInfo mBusInfo) {
         String CreateStr = "";
-        mBusInfo.clazz.addInterface(mBusInfo.clazz.classPool.get("com.base.Event"));//为当前的类添加时间处理的接口
+        mBusInfo.clazz.addInterface(mBusInfo.clazz.classPool.get("com.base.event.Event"));//为当前的类添加时间处理的接口
         for (int i = 0; i < mBusInfo.getMethods().size(); i++) {
             MethodInfo methodInfo = mBusInfo.getMethods().get(i).getMethodInfo();
             Annotation mAnnotation = mBusInfo.getAnnotations().get(i)
@@ -87,7 +87,7 @@ public class BusHelper {
             //获取注解属性
             javassist.bytecode.annotation.Annotation annotation = attribute.getAnnotation(mAnnotation.annotationType().canonicalName);
             //获取注解
-            int id = ((IntegerMemberValue) annotation.getMemberValue("tag")).getValue();//获取注解的值
+            int id = ((IntegerMemberValue) annotation.getMemberValue("value")).getValue();//获取注解的值
             int thread = -1;
             if (annotation.getMemberValue("thread") != null)
                 thread = ((IntegerMemberValue) annotation.getMemberValue("thread")).getValue();

@@ -3,11 +3,11 @@ package com.api;
 import com.app.annotation.apt.ApiFactory;
 import com.data.CreatedResult;
 import com.data.DataArr;
-import com.data.entity.Comment;
+import com.data.bean.Comment;
 import com.data.entity.CommentInfo;
-import com.data.entity.Face;
+import com.data.bean.Face;
 import com.data.entity.Image;
-import com.data.entity.Message;
+import com.data.bean.Message;
 import com.data.entity.MessageInfo;
 import com.data.entity._User;
 

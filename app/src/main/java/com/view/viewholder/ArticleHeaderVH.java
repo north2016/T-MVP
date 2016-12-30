@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.app.annotation.apt.InstanceFactory;
-import com.base.BaseViewHolder;
+import com.base.adapter.BaseViewHolder;
 import com.data.entity.Image;
 import com.ui.main.R;
 

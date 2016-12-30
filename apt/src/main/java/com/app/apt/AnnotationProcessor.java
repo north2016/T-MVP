@@ -1,7 +1,8 @@
 package com.app.apt;
 
-import com.app.apt.processor.ApiFactoryProcess;
+import com.app.apt.processor.ApiFactoryProcessor;
 import com.app.apt.processor.InstanceProcessor;
+import com.app.apt.processor.RouterProcessor;
 import com.google.auto.service.AutoService;
 
 import java.util.Set;
@@ -21,7 +22,8 @@ import javax.lang.model.util.Elements;
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//java版本支持
 @SupportedAnnotationTypes({//标注注解处理器支持的注解类型
         "com.app.annotation.apt.InstanceFactory",
-        "com.app.annotation.apt.ApiFactory"
+        "com.app.annotation.apt.ApiFactory",
+        "com.app.annotation.apt.Router"
 })
 public class AnnotationProcessor extends AbstractProcessor {
     public Filer mFiler; //文件相关的辅助类
@@ -34,7 +36,8 @@ public class AnnotationProcessor extends AbstractProcessor {
         mElements = processingEnv.getElementUtils();
         mMessager = processingEnv.getMessager();
         new InstanceProcessor().process(roundEnv, this);
-        new ApiFactoryProcess().process(roundEnv, this);
+        new ApiFactoryProcessor().process(roundEnv, this);
+        new RouterProcessor().process(roundEnv, this);
         return true;
     }
 }

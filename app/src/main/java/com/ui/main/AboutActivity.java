@@ -1,9 +1,11 @@
 package com.ui.main;
 
-import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.LinearLayout;
 
+import com.C;
+import com.app.annotation.apt.Router;
+import com.apt.TRouter;
 import com.base.BaseActivity;
 import com.view.layout.TRecyclerView;
 import com.view.viewholder.UserItemVH;
@@ -14,6 +16,7 @@ import butterknife.Bind;
 /**
  * 简单页面无需mvp,该咋写还是咋写
  */
+@Router(C.ABOUT)
 public class AboutActivity extends BaseActivity {
     @Bind(R.id.fab)
     FloatingActionButton fab;
@@ -33,7 +36,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("用户列表");
-        fab.setOnClickListener(v -> startActivity(new Intent(this, UserListActivity.class)));
+        fab.setOnClickListener(v -> TRouter.go(C.USER_LIST, null, null));
         lv_user.setView(UserItemVH.class).setIsRefreshable(false).fetch();
         llHeader.addView(new ChartView(this, Lines, num0, num1));
     }

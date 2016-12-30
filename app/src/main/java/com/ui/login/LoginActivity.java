@@ -7,6 +7,8 @@ import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.C;
+import com.app.annotation.apt.Router;
 import com.base.BaseActivity;
 import com.ui.home.HomeActivity;
 import com.ui.login.LoginContract.View;
@@ -17,6 +19,8 @@ import butterknife.Bind;
 /**
  * Created by Administrator on 2016/1/14.
  */
+
+@Router(C.LOGIN)
 public class LoginActivity extends BaseActivity<LoginPresenter> implements View {
     @Bind(R.id.fab)
     FloatingActionButton fab;

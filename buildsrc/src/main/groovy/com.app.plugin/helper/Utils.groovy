@@ -20,8 +20,8 @@ public class Utils {
         pool.importPackage(BusHelper.OkBusRegisterAnnotation);
         pool.importPackage(BusHelper.OkBusUnRegisterAnnotation);
         pool.importPackage("android.os.Bundle");
-        pool.importPackage("com.base.OkBus")
-        pool.importPackage("com.base.Event")
+        pool.importPackage("com.base.event.OkBus")
+        pool.importPackage("com.base.event.Event")
         pool.importPackage("android.os.Message")
     }
 

@@ -1,9 +1,5 @@
 package com.view.viewholder;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,10 +7,11 @@ import android.widget.TextView;
 import com.C;
 import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.SingleClick;
-import com.base.BaseViewHolder;
+import com.apt.TRouter;
+import com.base.adapter.BaseViewHolder;
 import com.base.util.ImageUtil;
+import com.data.bean.ExtraData;
 import com.data.entity.CommentInfo;
-import com.ui.article.ArticleActivity;
 import com.ui.main.R;
 
 import butterknife.Bind;
@@ -51,7 +48,6 @@ public class UserCommentVH extends BaseViewHolder<CommentInfo> implements View.O
 
     @SingleClick
     public void onClick(View view) {
-        ActivityCompat.startActivity(mContext, new Intent(mContext, ArticleActivity.class).putExtra(C.HEAD_DATA, data.article)
-                , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_article, ArticleActivity.TRANSLATE_VIEW).toBundle());
+        TRouter.go(C.ARTICLE, new ExtraData(C.HEAD_DATA, data.article).build(), im_article);
     }
 }

@@ -1,13 +1,9 @@
 package com.ui.home;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.C;
+import com.app.annotation.apt.Router;
+import com.app.annotation.aspect.SingleClick;
+import com.apt.TRouter;
 import com.base.BaseActivity;
 import com.base.BaseListFragment;
 import com.base.util.ImageUtil;
@@ -26,21 +25,17 @@ import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.base.util.helper.PagerChangeListener;
+import com.data.bean.ExtraData;
 import com.data.entity._User;
-import com.ui.article.ArticleActivity;
-import com.ui.login.LoginActivity;
-import com.ui.main.AboutActivity;
-import com.ui.main.FeedBackActivity;
 import com.ui.main.R;
-import com.ui.main.SettingsActivity;
 import com.ui.main.TMVPFragment;
-import com.ui.user.UserActivity;
 import com.view.viewholder.ArticleItemVH;
 
 import butterknife.Bind;
 import rx.Observable;
 
-public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener {
+@Router(C.HOME)
+public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     @Bind(R.id.tabs)
     TabLayout tabs;
     @Bind(R.id.viewpager)
@@ -80,10 +75,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings)
-            startActivity(new Intent(mContext, AboutActivity.class));
+            TRouter.go(C.ABOUT, null, null);
         else if (item.getItemId() == R.id.action_feedback)
             if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
-            else startActivity(new Intent(this, FeedBackActivity.class));
+            else TRouter.go(C.FEED_BACK, null, null);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
@@ -91,13 +86,11 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         return true;
     }
 
-
     @Override
     public void initView() {
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
         dlMainDrawer.addDrawerListener(mDrawerToggle);
-        fab.setOnClickListener(v -> {});
         View mHeaderView = nvMainNavigation.getHeaderView(0);
         im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
         im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);
@@ -120,10 +113,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     public void initUserInfo(_User user) {
         ImageUtil.loadRoundAndBgImg(im_face, user.face, im_bg);
         tv_name.setText(user.username);
-        im_face.setOnClickListener(v ->
-                ActivityCompat.startActivity(mContext, new Intent(mContext, UserActivity.class).putExtra(C.HEAD_DATA, user)
-                        , ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) mContext, im_face, ArticleActivity.TRANSLATE_VIEW).toBundle())
-        );
+        im_face.setOnClickListener(this);
     }
 
     @Override
@@ -131,10 +121,23 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         item.setChecked(true);
         dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)
-            startActivity(new Intent(mContext, SettingsActivity.class));
+            TRouter.go(C.SETTING, null, null);
         else if (item.getItemId() == R.id.nav_share)
-            startActivity(new Intent(mContext, LoginActivity.class));
+            TRouter.go(C.LOGIN, null, null);
         else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
+    }
+
+    @SingleClick
+    public void onClick(View view) {
+        //重构后:
+        TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), im_face);
+        //重构前:
+//        ActivityCompat.startActivity(mContext,
+//                new Intent(mContext, UserActivity.class)
+//                        .putExtra(C.HEAD_DATA, SpUtil.getUser())
+//                , ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        (Activity) mContext, im_face, C.TRANSLATE_VIEW).toBundle());
+
     }
 }

@@ -3,11 +3,13 @@ package com.ui.user;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.C;
+import com.app.annotation.apt.Extra;
+import com.app.annotation.apt.Router;
+import com.app.annotation.apt.SceneTransition;
 import com.base.BaseActivity;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
@@ -23,11 +25,13 @@ import java.io.File;
 
 import butterknife.Bind;
 
+@Router(C.USER_INFO)
 public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View {
-    public static final String TRANSLATE_VIEW = "share_img";
-    private static final int IMAGE_REQUEST_CODE = 100;
+    @Extra(C.HEAD_DATA)
+    public _User user;
     @Bind(R.id.image)
-    ImageView image;
+    @SceneTransition(C.TRANSLATE_VIEW)
+    public ImageView image;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     @Bind(R.id.lv_comment)
@@ -42,8 +46,8 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initView() {
-        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
-        _User user = (_User) getIntent().getSerializableExtra(C.HEAD_DATA);
+//        ViewCompat.setTransitionName(image, C.TRANSLATE_VIEW);
+//        _User user = (_User) getIntent().getSerializableExtra(C.HEAD_DATA);
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
         lv_comment.setView(UserCommentVH.class)
@@ -55,13 +59,13 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             fab.setImageResource(R.drawable.ic_menu_camera);
             fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
-                    IMAGE_REQUEST_CODE));
+                    C.IMAGE_REQUEST_CODE));
         } else fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent mdata) {
-        if (mdata != null && requestCode == IMAGE_REQUEST_CODE) {
+        if (mdata != null && requestCode == C.IMAGE_REQUEST_CODE) {
             try {
                 File file = new File(ImageUtil.getUrlByIntent(mContext, mdata));
                 if (file.exists())

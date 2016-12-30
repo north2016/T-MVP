@@ -1,4 +1,4 @@
-package com.base;
+package com.base.adapter;
 
 import android.util.Log;
 
@@ -13,7 +13,6 @@ import java.util.Map;
  */
 
 public class CoreAdapterPresenter<T extends Repository> {
-
     private T mRepository;//仓库
     private Map<String, String> param = new HashMap<>();//设置仓库钥匙
     private int begin = 0;

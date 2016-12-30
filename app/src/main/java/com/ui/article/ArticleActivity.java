@@ -3,7 +3,6 @@ package com.ui.article;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -11,6 +10,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.C;
+import com.app.annotation.apt.Extra;
+import com.app.annotation.apt.Router;
+import com.app.annotation.apt.SceneTransition;
 import com.base.BaseActivity;
 import com.base.util.ImageUtil;
 import com.base.util.SpUtil;
@@ -26,10 +28,13 @@ import com.view.viewholder.CommentItemVH;
 
 import butterknife.Bind;
 
+@Router(C.ARTICLE)
 public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View {
-    public static final String TRANSLATE_VIEW = "share_img";
+    @Extra(C.HEAD_DATA)
+    public Image mArticle;
+    @SceneTransition(C.TRANSLATE_VIEW)
     @Bind(R.id.image)
-    ImageView image;
+    public ImageView image;
     @Bind(R.id.fab)
     FloatingActionButton fab;
     @Bind(R.id.toolbar)
@@ -48,18 +53,16 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
 
     @Override
     public void initView() {
-        ViewCompat.setTransitionName(image, TRANSLATE_VIEW);
-        Image mSubject = (Image) getIntent().getSerializableExtra(C.HEAD_DATA);
-        ImageUtil.loadImg(image, mSubject.image);
-        setTitle(mSubject.title);
+        ImageUtil.loadImg(image, mArticle.image);
+        setTitle(mArticle.title);
         bt_comment.setOnClickListener(v -> {
             String comment = et_comment.getText().toString();
             if (TextUtils.isEmpty(comment))
                 Snackbar.make(fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
-            else mPresenter.createComment(comment, mSubject, SpUtil.getUser());
+            else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
         });
-        String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mSubject.objectId));
-        lv_comment.setHeadView(ArticleHeaderVH.class, mSubject)
+        String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
+        lv_comment.setHeadView(ArticleHeaderVH.class, mArticle)
                 .setView(CommentItemVH.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
