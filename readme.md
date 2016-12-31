@@ -22,7 +22,7 @@
 ##3、[T-MVP：泛型深度解耦下的MVP大瘦身](http://www.jianshu.com/p/b49958e1889d)（过时）
 
 
-关键词 MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
+关键词 AOP+MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
 
 简书：http://www.jianshu.com/p/b49958e1889d
 
