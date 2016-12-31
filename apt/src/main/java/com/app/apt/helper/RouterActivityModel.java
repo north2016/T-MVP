@@ -10,6 +10,7 @@ import javax.lang.model.element.TypeElement;
  */
 
 public class RouterActivityModel {
+    boolean isNeedBind;//是否需要对目标类进行数据绑定，只有有传参数的和有转场需要初始化数据绑定
     TypeElement element;//当前的Activity
     String actionName;//当前Activity的ActionName
     String SceneTransitionElementName;//转场元素View的名称
@@ -63,5 +64,13 @@ public class RouterActivityModel {
 
     public void setActionName(String mActionName) {
         this.actionName = mActionName;
+    }
+
+    public boolean isNeedBind() {
+        return isNeedBind;
+    }
+
+    public void setNeedBind(boolean needBind) {
+        isNeedBind = needBind;
     }
 }

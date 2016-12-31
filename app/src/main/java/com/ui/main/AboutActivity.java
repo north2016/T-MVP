@@ -36,7 +36,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("用户列表");
-        fab.setOnClickListener(v -> TRouter.go(C.USER_LIST, null, null));
+        fab.setOnClickListener(v -> TRouter.go(C.USER_LIST));
         lv_user.setView(UserItemVH.class).setIsRefreshable(false).fetch();
         llHeader.addView(new ChartView(this, Lines, num0, num1));
     }

@@ -43,7 +43,7 @@ public class FlashActivity extends BaseActivity {
 
     @Bus(EventTags.JUMP_TO_MAIN)
     public void jumpToMainPage() {
-        TRouter.go(C.HOME, null, null);
+        TRouter.go(C.HOME);
         // startActivity(new Intent(mContext, HomeActivity.class));
         finish();
     }

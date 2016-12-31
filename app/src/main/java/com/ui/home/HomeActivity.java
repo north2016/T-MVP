@@ -75,10 +75,10 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_settings)
-            TRouter.go(C.ABOUT, null, null);
+            TRouter.go(C.ABOUT);
         else if (item.getItemId() == R.id.action_feedback)
             if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
-            else TRouter.go(C.FEED_BACK, null, null);
+            else TRouter.go(C.FEED_BACK);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
@@ -121,9 +121,9 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         item.setChecked(true);
         dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)
-            TRouter.go(C.SETTING, null, null);
+            TRouter.go(C.SETTING);
         else if (item.getItemId() == R.id.nav_share)
-            TRouter.go(C.LOGIN, null, null);
+            TRouter.go(C.LOGIN);
         else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
     }

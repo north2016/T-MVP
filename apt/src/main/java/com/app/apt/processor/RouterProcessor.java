@@ -37,13 +37,14 @@ public class RouterProcessor implements IProcessor {
     @Override
     public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
         String CLASS_NAME = "TRouter";
-        TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 实例化工厂 此类由apt自动生成");
+        TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 全局路由器 此类由apt自动生成");
         MethodSpec.Builder methodBuilder1 = MethodSpec.methodBuilder("go")
                 .addJavadoc("@此方法由apt自动生成")
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(String.class, "name").addParameter(HashMap.class, "extra")
                 .addParameter(ClassName.get("android.view", "View"), "view");
-        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("autoValue")
+
+        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("bind")
                 .addJavadoc("@此方法由apt自动生成")
                 .addModifiers(PUBLIC, STATIC)
                 .addParameter(ClassName.get("android.app", "Activity"), "mContext");
@@ -82,6 +83,9 @@ public class RouterProcessor implements IProcessor {
                 }
                 mRouterActivityModel.setExtraElementKeys(mExtraElementKeys);
                 mRouterActivityModel.setExtraElements(mExtraElements);
+                boolean isNeedBind = (mExtraElementKeys != null && mExtraElementKeys.size() > 0
+                        || mRouterActivityModel.getSceneTransitionElement() != null);
+                mRouterActivityModel.setNeedBind(isNeedBind);
                 mRouterActivityModels.add(mRouterActivityModel);
             }
             ClassName mActivityCompatName = ClassName.get("android.support.v4.app", "ActivityCompat");
@@ -89,21 +93,21 @@ public class RouterProcessor implements IProcessor {
             ClassName mActivityOptionsCompatName = ClassName.get("android.support.v4.app", "ActivityOptionsCompat");
             for (RouterActivityModel item : mRouterActivityModels) {
                 blockBuilder1.add("case $S: \n", item.getActionName());//1
-                blockBuilder2.add("case $S: \n", item.getElement().getSimpleName());//1
+                if (item.isNeedBind())
+                    blockBuilder2.add("case $S: \n", item.getElement().getSimpleName());//1
                 if (item.getExtraElements() != null && item.getExtraElements().size() > 0) {
                     for (int i = 0; i < item.getExtraElements().size(); i++) {
                         Element mFiled = item.getExtraElements().get(i);
-                        blockBuilder2.add("(($T)mContext)." +
-                                        "$L" +
-                                        "= ($T) " +
-                                        "$T.getAppContext()" +
-                                        ".mCurActivityExtra.get(" +
-                                        "$S);\n",
-                                item.getElement(),
-                                mFiled,
-                                mFiled,
-                                appClassName,
-                                item.getExtraElementKeys().get(i)
+                        blockBuilder2.add("(($T)mContext)." +//1
+                                        "$L" +//2
+                                        "= ($T) " +//3
+                                        "$T.getAppContext().mCurActivityExtra.get(" +//4
+                                        "$S);\n",//5
+                                item.getElement(),//1
+                                mFiled,//2
+                                mFiled,//3
+                                appClassName,//4
+                                item.getExtraElementKeys().get(i)//5
                         );//5
                     }
                 }
@@ -137,8 +141,8 @@ public class RouterProcessor implements IProcessor {
                             item.getElement()//4
                     );
                 }
-                blockBuilder1.addStatement("break");//1
-                blockBuilder2.addStatement("break");//1
+                blockBuilder1.addStatement("\nbreak");//1
+                if (item.isNeedBind()) blockBuilder2.addStatement("break");//1
             }
             blockBuilder1.addStatement("default: break");
             blockBuilder1.endControlFlow();
@@ -149,6 +153,21 @@ public class RouterProcessor implements IProcessor {
 
             tb.addMethod(methodBuilder1.build());
             tb.addMethod(methodBuilder2.build());
+
+            //增加go(action)和go(action,extra):两个重载方法
+            tb.addMethod(MethodSpec.methodBuilder("go")
+                    .addJavadoc("@此方法由apt自动生成")
+                    .addModifiers(PUBLIC, STATIC)
+                    .addParameter(String.class, "name")
+                    .addParameter(HashMap.class, "extra")
+                    .addCode("go(name,extra,null);\n").build());
+
+            tb.addMethod(MethodSpec.methodBuilder("go")
+                    .addJavadoc("@此方法由apt自动生成")
+                    .addModifiers(PUBLIC, STATIC)
+                    .addParameter(String.class, "name")
+                    .addCode("go(name,null,null);\n").build());
+
             JavaFile javaFile = JavaFile.builder(Utils.PackageName, tb.build()).build();// 生成源代码
             javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
         } catch (FilerException e) {

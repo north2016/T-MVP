@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.app.annotation.aspect.JoinPointCallBack;
 import com.apt.TRouter;
 import com.base.util.InstanceUtil;
 import com.base.util.SpUtil;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Administrator on 2016/4/5.
  */
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements JoinPointCallBack {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     protected Toolbar toolbar;
     public boolean isNight;
     public P mPresenter;
@@ -33,17 +32,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private ImageView ivShadow;
 
     @Override
-    public void onJoinPointCallBack() {
-        TRouter.autoValue(this);
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isNight = SpUtil.isNight();
         setTheme(isNight ? R.style.AppThemeNight : R.style.AppThemeDay);
         this.setContentView(this.getLayoutId());
         ButterKnife.bind(this);
+        TRouter.bind(this);
         mContext = this;
         initToolBar();
         initView();
