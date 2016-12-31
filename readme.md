@@ -11,16 +11,15 @@
 
 2016/12／26：抽离CoreAdapterPresenter优化TRecyclerView
 
-##1、[安卓AOP实战:Javassist强撸EventBus](http://www.jianshu.com/p/33d8a3165b07)
+##[安卓AOP实战:APT打造极简路由](http://www.jianshu.com/p/6ccfa7b50f0e)
+>全局路由TRouter，更优雅的页面跳转
+
+
+##[安卓AOP实战:Javassist强撸EventBus](http://www.jianshu.com/p/33d8a3165b07)
 >加入OkBus，实现注解传递事件
 
-##2、[安卓AOP三剑客:APT,AspectJ,Javassist](http://www.jianshu.com/p/dca3e2c8608a)
->1、去掉所有反射
->2、新增apt初始化工厂，替换掉了dagger2。
->3、新增aop切片，处理缓存和日志
-
-##3、[T-MVP：泛型深度解耦下的MVP大瘦身](http://www.jianshu.com/p/b49958e1889d)（过时）
-
+##[安卓AOP三剑客:APT,AspectJ,Javassist](http://www.jianshu.com/p/dca3e2c8608a)
+>1、去掉所有反射>2、新增apt初始化工厂，替换掉了dagger2。>3、新增aop切片，处理缓存和日志
 
 关键词 AOP+MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS
 
