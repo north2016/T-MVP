@@ -65,11 +65,11 @@ public class ChartView extends View implements View.OnClickListener {
                 } else {
                     mPath.reset();
                     mPath.moveTo(x0, y0);
-                    mPath.cubicTo((x0 + x1) / 2, y1 < y0 ? y1 : y0, (x0 + x1) / 2, y1 > y0 ? y1 : y0, x1, y1);
+                    mPath.cubicTo((x0 + x1) / 2, y0, (x0 + x1) / 2, y1, x1, y1);
                     canvas.drawPath(mPath, mYellowPaint);
                     mPath.reset();
                     mPath.moveTo(x0, y2);
-                    mPath.cubicTo((x0 + x1) / 2, y2 < y3 ? y2 : y3, (x0 + x1) / 2, y2 > y3 ? y2 : y3, x1, y3);
+                    mPath.cubicTo((x0 + x1) / 2, y2, (x0 + x1) / 2, y3, x1, y3);
                     canvas.drawPath(mPath, mGreenPaint);
                 }
             }
