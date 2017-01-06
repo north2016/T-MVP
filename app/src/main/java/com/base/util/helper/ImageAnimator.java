@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.base.util.BaseUtils;
-import com.base.util.ImageUtil;
+import com.base.util.BindingUtils;
 
 public class ImageAnimator {
     String[] mImages = {
@@ -52,7 +52,7 @@ public class ImageAnimator {
         this.collapsingToolbar = collapsingToolbar;
         mTargetImage = targetImage;
         mOutgoingImage = outgoingImage;
-        ImageUtil.loadImg(mTargetImage, mImages[0]);
+        BindingUtils.loadImg(mTargetImage, mImages[0]);
         collapsingToolbar.setContentScrimColor(mColors[0]);
         collapsingToolbar.setStatusBarScrimColor(mColors[0]);
     }
@@ -84,7 +84,7 @@ public class ImageAnimator {
 
         // 目标图片
         //   mTargetImage.setImageResource(incomeId);
-        ImageUtil.loadImg(mTargetImage, mImages[endPosition]);
+        BindingUtils.loadImg(mTargetImage, mImages[endPosition]);
         mStart = Math.min(startPosition, endPosition);
         mEnd = Math.max(startPosition, endPosition);
     }
@@ -104,7 +104,7 @@ public class ImageAnimator {
         if (endPosition == mActualStart) {
             mTargetImage.setImageDrawable(mOutgoingImage.getDrawable());
         } else {
-            ImageUtil.loadImg(mTargetImage, mImages[endPosition]);
+            BindingUtils.loadImg(mTargetImage, mImages[endPosition]);
             collapsingToolbar.setContentScrimColor(mColors[endPosition]);
             collapsingToolbar.setStatusBarScrimColor(mColors[endPosition]);
             //mTargetImage.setImageResource(incomeId);

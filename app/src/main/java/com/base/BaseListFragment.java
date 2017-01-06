@@ -26,14 +26,18 @@ public class BaseListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mXRecyclerView = new TRecyclerView(getContext()).setParam("type", getArguments().getString("type"))
-                .setViewAndRepository(getArguments().getInt(C.VH_CLASS), ImageRepository.class);
+        mXRecyclerView = new TRecyclerView(getContext())
+                .setViewType(getArguments().getInt(C.VH_CLASS));
         return mXRecyclerView;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mXRecyclerView != null) mXRecyclerView.fetch();
+        if (mXRecyclerView != null)
+            mXRecyclerView.getPresenter()
+                    .setRepository(ImageRepository.class)
+                    .setParam("type", getArguments().getString("type"))
+                    .fetch();
     }
 }

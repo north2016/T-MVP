@@ -15,7 +15,7 @@ import com.app.annotation.aspect.SingleClick;
 import com.apt.TRouter;
 import com.base.BaseActivity;
 import com.base.BaseListFragment;
-import com.base.util.ImageUtil;
+import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
 import com.base.util.helper.FragmentAdapter;
@@ -87,7 +87,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
         ImageView im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
         ImageView im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);
         TextView tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);
-        ImageUtil.loadRoundAndBgImg(im_face, user.face, im_bg);
+        BindingUtils.loadRoundAndBgImg(im_face, user.face, im_bg);
         tv_name.setText(user.username);
         im_face.setOnClickListener(this);
     }

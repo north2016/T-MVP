@@ -1,13 +1,7 @@
 package com.base.util;
 
-import android.view.View;
-import android.widget.LinearLayout;
-
-import com.App;
-import com.app.annotation.aspect.MemoryCache;
 import com.app.annotation.aspect.TimeLog;
 import com.apt.InstanceFactory;
-import com.base.adapter.BaseViewHolder;
 
 import java.lang.reflect.ParameterizedType;
 
@@ -17,7 +11,6 @@ import java.lang.reflect.ParameterizedType;
  */
 public class InstanceUtil {
 
-    private static View PUPPET_VIEW = new LinearLayout(App.getAppContext());// 傀儡view
 
     /**
      * 通过实例工厂去实例化相应类
@@ -46,19 +39,8 @@ public class InstanceUtil {
     @TimeLog
     public static <T> T getInstance(Class clazz) {
         try {
-            return (T) InstanceFactory.create(clazz, BaseViewHolder.class.isAssignableFrom(clazz) ? PUPPET_VIEW : null);
+            return (T) InstanceFactory.create(clazz);
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    @MemoryCache
-    public static Class<?> forName(String className) {
-        try {
-            return Class.forName(className);
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return null;

@@ -9,7 +9,7 @@ import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.ApiFactory;
 import com.base.DataBindingActivity;
-import com.base.adapter.VHSelector;
+import com.base.adapter.TypeSelector;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
@@ -23,8 +23,8 @@ import com.ui.main.databinding.ActivityFeedbackBinding;
 @Router(C.FEED_BACK)
 public class FeedBackActivity extends DataBindingActivity<ActivityFeedbackBinding> implements View.OnClickListener {
     _User user = SpUtil.getUser();
-
-    VHSelector<MessageInfo> mTypeSelector = (item -> TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
+    TypeSelector<MessageInfo> mTypeSelector
+            = (item -> TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
             ? R.layout.list_item_comment_admin : R.layout.list_item_comment_user);//AdminID发送的为Admin消息，其他都是普通消息
 
     @Override
@@ -36,8 +36,11 @@ public class FeedBackActivity extends DataBindingActivity<ActivityFeedbackBindin
     public void initView() {
         setTitle("用户反馈");
         mViewBinding.lvMsg.setReverse().setIsRefreshable(false)
-                .setTypeSelectorAndRepository(mTypeSelector, MessageInfoRepository.class)
-                .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg())
+                .setTypeSelector(mTypeSelector)
+                .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg());
+        mViewBinding.lvMsg
+                .getPresenter()
+                .setRepository(MessageInfoRepository.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.UID, user.objectId)
                 .fetch();

@@ -10,7 +10,7 @@ import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
 import com.base.BaseActivity;
-import com.base.util.ImageUtil;
+import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
 import com.data.Pointer;
@@ -40,7 +40,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
 
     @Override
     public void initView() {
-        ImageUtil.loadImg(mViewBinding.image, mArticle.image);
+        BindingUtils.loadImg(mViewBinding.image, mArticle.image);
         setTitle(mArticle.title);
         mViewBinding.btComment.setOnClickListener(v -> {
             String comment = mViewBinding.btComment.getText().toString();
@@ -50,11 +50,14 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
         });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
 
-        mViewBinding.lvComment.setHeadView(R.layout.list_item_article, mArticle)
-                .setViewAndRepository(R.layout.list_item_comment, CommentInfoRepository.class)
+        mViewBinding.lvComment
+                .setHeadView(R.layout.list_item_article, mArticle)
+                .setViewType(R.layout.list_item_comment)
+                .setIsRefreshable(false);
+        mViewBinding.lvComment.getPresenter()
+                .setRepository(CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
-                .setIsRefreshable(false)
                 .fetch();
     }
 

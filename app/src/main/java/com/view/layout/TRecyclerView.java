@@ -14,10 +14,8 @@ import android.widget.LinearLayout;
 import com.base.BaseBean;
 import com.base.adapter.CoreAdapter;
 import com.base.adapter.CoreAdapterPresenter;
-import com.base.adapter.VHSelector;
-import com.base.util.InstanceUtil;
+import com.base.adapter.TypeSelector;
 import com.data.DataArr;
-import com.data.Repository;
 import com.ui.main.R;
 
 import java.util.List;
@@ -28,8 +26,13 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     RecyclerView recyclerview;
     LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
-    private CoreAdapter mCommAdapter;
-    public CoreAdapterPresenter mCoreAdapterPresenter;
+    private CoreAdapter<M> mCommAdapter;
+
+    public CoreAdapterPresenter getPresenter() {
+        return mCoreAdapterPresenter;
+    }
+
+    private CoreAdapterPresenter mCoreAdapterPresenter;
     private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false, isReverse = false;
 
     public TRecyclerView(Context context) {
@@ -79,7 +82,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
                         && newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisibleItem + 1 == recyclerview.getAdapter()
                         .getItemCount() && mCommAdapter.isHasMore)
-                    fetch();
+                    mCoreAdapterPresenter.fetch();
             }
 
             @Override
@@ -113,9 +116,8 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setTypeSelectorAndRepository(VHSelector<M> mTypeSelector, Class<? extends Repository> mRepository) {
+    public TRecyclerView<M> setTypeSelector(TypeSelector<M> mTypeSelector) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
-        mCoreAdapterPresenter.setRepository(InstanceUtil.getInstance(mRepository));
         return this;
     }
 
@@ -129,22 +131,14 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setViewAndRepository(@LayoutRes int type, Class<? extends Repository> mRepository) {
-        mCoreAdapterPresenter.setRepository(InstanceUtil.getInstance(mRepository));
+    public TRecyclerView<M> setViewType(@LayoutRes int type) {
         this.mCommAdapter.setViewType(type);
         return this;
     }
 
-    public TRecyclerView<M> setParam(String key, String value) {
-        mCoreAdapterPresenter.setParam(key, value);
-        return this;
-    }
 
     public TRecyclerView<M> setData(List<M> data) {
-        if (isEmpty) {
-            ll_emptyView.setVisibility(View.GONE);
-            swiperefresh.setVisibility(View.VISIBLE);
-        }
+        reSetEmpty();
         mCommAdapter.setBeans(data, 1);
         return this;
     }
@@ -152,12 +146,9 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     public void reFetch() {
         mCoreAdapterPresenter.setBegin(0);
         swiperefresh.setRefreshing(true);
-        fetch();
-    }
-
-    public void fetch() {
         mCoreAdapterPresenter.fetch();
     }
+
 
     @Override
     public void setEmpty() {

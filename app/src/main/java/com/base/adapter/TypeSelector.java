@@ -4,6 +4,6 @@ package com.base.adapter;
  * Created by baixiaokang on 16/12/30.
  */
 
-public interface VHSelector<M> {
+public interface TypeSelector<M> {
     int getType(M m);
 }

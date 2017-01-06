@@ -28,13 +28,6 @@ public class ApiUtil {
     }
 
     public static String getInclude(Map<String, String> param) {
-        String include = "";
-        for (Map.Entry<String, String> entry : param.entrySet()) {
-            if (TextUtils.equals(entry.getKey(), "include")) {
-                include = entry.getValue();
-                break;
-            }
-        }
-        return include;
+        return param.get("include");
     }
 }

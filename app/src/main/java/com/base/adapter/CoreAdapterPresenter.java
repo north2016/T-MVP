@@ -2,6 +2,7 @@ package com.base.adapter;
 
 import android.util.Log;
 
+import com.base.util.InstanceUtil;
 import com.data.DataArr;
 import com.data.Repository;
 
@@ -30,8 +31,9 @@ public class CoreAdapterPresenter<T extends Repository> {
         this.view = mIAdapterViewImpl;
     }
 
-    public void setRepository(T mRepository) {
-        this.mRepository = mRepository;
+    public CoreAdapterPresenter setRepository(Class<T> mRepository) {
+        this.mRepository = InstanceUtil.getInstance(mRepository);
+        return this;
     }
 
     public CoreAdapterPresenter setParam(String key, String value) {

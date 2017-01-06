@@ -19,7 +19,7 @@ import java.util.List;
  */
 
 public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
-    protected VHSelector<M> mTypeSelector;
+    protected TypeSelector<M> mTypeSelector;
     protected List<M> mItemList = new ArrayList<>();
     public boolean isHasMore = true;
     public int viewType, isHasFooter = 1, isHasHeader = 0, mHeadViewType, mFooterViewType = R.layout.list_footer_view;
@@ -45,7 +45,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
         this.viewType = type;
     }
 
-    public void setTypeSelector(VHSelector<M> mTypeSelector) {
+    public void setTypeSelector(TypeSelector<M> mTypeSelector) {
         this.mTypeSelector = mTypeSelector;
         this.viewType = C.FLAG_MULTI_VH;
     }

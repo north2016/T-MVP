@@ -10,7 +10,7 @@ import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
 import com.base.BaseActivity;
-import com.base.util.ImageUtil;
+import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
 import com.data.Pointer;
@@ -43,12 +43,12 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     public void initView() {
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        mViewBinding.lvComment.setViewAndRepository(R.layout.list_item_user_comment, CommentInfoRepository.class)
+        mViewBinding.lvComment.setViewType(R.layout.list_item_user_comment).setIsRefreshable(false);
+        mViewBinding.lvComment.getPresenter().setRepository(
+                CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
-                .setIsRefreshable(false)
                 .fetch();
-
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             mViewBinding.fab.setImageResource(R.drawable.ic_menu_camera);
             mViewBinding.fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
@@ -60,7 +60,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     protected void onActivityResult(int requestCode, int resultCode, Intent mdata) {
         if (mdata != null && requestCode == C.IMAGE_REQUEST_CODE) {
             try {
-                File file = new File(ImageUtil.getUrlByIntent(mContext, mdata));
+                File file = new File(BindingUtils.getUrlByIntent(mContext, mdata));
                 if (file.exists())
                     mPresenter.upLoadFace(file);
                 else showMsg("照片无法打开");
@@ -78,7 +78,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
 
     @Override
     public void initUser(_User user) {
-        ImageUtil.loadRoundAndBgImg(image, user.face, mViewBinding.imHeader);
+        BindingUtils.loadRoundAndBgImg(image, user.face, mViewBinding.imHeader);
         setTitle(user.username);
     }
 }
