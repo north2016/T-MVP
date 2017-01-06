@@ -20,7 +20,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/12/29.
  */
-@InstanceFactory(InstanceFactory.typeVH)
+@InstanceFactory(InstanceFactory.TYPE_VH)
 public class MessageAdminVH extends BaseViewHolder<MessageInfo> implements View.OnClickListener {
     @Bind(R.id.tv_content)
     TextView tv_content;

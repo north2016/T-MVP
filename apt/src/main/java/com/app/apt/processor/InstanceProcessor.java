@@ -74,9 +74,9 @@ public class InstanceProcessor implements IProcessor {
                     blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), Utils.getType(className));//初始化Repository
                 } else {
                     int type = element.getAnnotation(InstanceFactory.class).value();
-                    if (type == InstanceFactory.typeDefault)
+                    if (type == InstanceFactory.TYPE_DEFAULT)
                         blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);//初始化Presenter
-                    else if (type == InstanceFactory.typeVH) {
+                    else if (type == InstanceFactory.TYPE_VH) {
                         blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化傀儡ViewHolder，会被缓存的，全局单例
                         blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化真正的ViewHolder
                     }
