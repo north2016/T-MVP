@@ -116,7 +116,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setTypeSelector(VHSelector<M> mTypeSelector, Class<? extends Repository> mRepository) {
+    public TRecyclerView<M> setTypeSelectorAndRepository(VHSelector<M> mTypeSelector, Class<? extends Repository> mRepository) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
         mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
         return this;
@@ -132,7 +132,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setView(@LayoutRes int type, Class<? extends Repository> mRepository) {
+    public TRecyclerView<M> setViewAndRepository(@LayoutRes int type, Class<? extends Repository> mRepository) {
         mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
         this.mCommAdapter.setViewType(type);
         return this;

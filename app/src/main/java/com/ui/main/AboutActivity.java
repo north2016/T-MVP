@@ -35,7 +35,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("用户列表");
-        lv_user.setView(R.layout.list_item_user, _UserRepository.class).setIsRefreshable(false).fetch();
+        lv_user.setViewAndRepository(R.layout.list_item_user, _UserRepository.class).setIsRefreshable(false).fetch();
         llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 }

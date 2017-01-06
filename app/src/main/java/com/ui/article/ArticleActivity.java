@@ -63,7 +63,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
 
         lv_comment.setHeadView(R.layout.list_item_article, mArticle)
-                .setView(R.layout.list_item_comment, CommentInfoRepository.class)
+                .setViewAndRepository(R.layout.list_item_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
                 .setIsRefreshable(false)

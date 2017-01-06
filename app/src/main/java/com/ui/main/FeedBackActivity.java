@@ -43,7 +43,7 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     public void initView() {
         setTitle("用户反馈");
         lvMsg.setReverse().setIsRefreshable(false)
-                .setTypeSelector(mTypeSelector, MessageInfoRepository.class)
+                .setTypeSelectorAndRepository(mTypeSelector, MessageInfoRepository.class)
                 .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg())
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.UID, user.objectId)

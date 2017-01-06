@@ -48,7 +48,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     public void initView() {
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        lv_comment.setView(R.layout.list_item_user_comment, CommentInfoRepository.class)
+        lv_comment.setViewAndRepository(R.layout.list_item_user_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
                 .setIsRefreshable(false)

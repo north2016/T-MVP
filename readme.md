@@ -1,5 +1,9 @@
+QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>
+
 
 #更新日志：
+
+2017/1／6： 使用DataBinding替换掉所有的ViewHolder，从此迈向新时代
 
 2016/12／30：使用Apt生成全局路由TRouter，更优雅的页面跳转，支持传递参数和共享view转场动画
 
@@ -10,6 +14,8 @@
 2016/12／27：增加了BaseMultiVH扩展支持多类型的ViewHolder
 
 2016/12／26：抽离CoreAdapterPresenter优化TRecyclerView
+
+#系列文章：
 
 ##[安卓AOP实战:APT打造极简路由](http://www.jianshu.com/p/6ccfa7b50f0e)
 >全局路由TRouter，更优雅的页面跳转
@@ -29,7 +35,6 @@ weibo：http://weibo.com/1917320262
 
 Github：https://github.com/north2016/T-MVP
 
-QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>
 
 #答疑
 运行报错的，自觉google，检查As版本(2.2.2)，gradle配置等(AndroidStudio每个版本gradle的api都不一样，坑)，低版本手机FloatingActionButton在xml会报错，因为icon用了SVG(5.0+)

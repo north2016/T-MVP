@@ -27,7 +27,7 @@ public class BaseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mXRecyclerView = new TRecyclerView(getContext()).setParam("type", getArguments().getString("type"))
-                .setView(getArguments().getInt(C.VH_CLASS), ImageRepository.class);
+                .setViewAndRepository(getArguments().getInt(C.VH_CLASS), ImageRepository.class);
         return mXRecyclerView;
     }
 
