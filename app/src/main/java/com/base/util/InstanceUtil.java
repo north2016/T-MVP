@@ -54,34 +54,11 @@ public class InstanceUtil {
     }
 
 
-    /**
-     * 通过实例工厂去实例化相应类
-     *
-     * @param <T> 返回实例的泛型类型
-     * @return
-     */
-    @TimeLog
-    public static <T> T getViewHolder(Class clazz, View view) {
-        return (T) InstanceFactory.createVH(clazz, view);
-    }
-
     @MemoryCache
     public static Class<?> forName(String className) {
         try {
             return Class.forName(className);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static <T> T getRepositoryInstance(Class cla) {
-        try {
-            if (cla.getGenericSuperclass() instanceof ParameterizedType)
-                return (T) InstanceFactory.create((Class) ((ParameterizedType) (cla
-                        .getGenericSuperclass())).getActualTypeArguments()[0], null);
-            else return (T) InstanceFactory.create(cla, null);
-        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

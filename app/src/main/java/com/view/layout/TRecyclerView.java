@@ -22,15 +22,10 @@ import com.ui.main.R;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class TRecyclerView<M extends BaseBean> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
-    @Bind(R.id.swiperefresh)
     SwipeRefreshLayout swiperefresh;
-    @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
-    @Bind(R.id.ll_emptyview)
     LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
     private CoreAdapter mCommAdapter;
@@ -49,7 +44,9 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
 
     public void init(Context context) {
         View layout = inflate(context, R.layout.layout_list_recyclerview, this);
-        ButterKnife.bind(this, layout);
+        swiperefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
+        recyclerview = (RecyclerView) layout.findViewById(R.id.recyclerview);
+        ll_emptyView = (LinearLayout) layout.findViewById(R.id.ll_emptyview);
         mCoreAdapterPresenter = new CoreAdapterPresenter(this);
         initView(context);
     }
@@ -118,7 +115,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
 
     public TRecyclerView<M> setTypeSelectorAndRepository(VHSelector<M> mTypeSelector, Class<? extends Repository> mRepository) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
-        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
+        mCoreAdapterPresenter.setRepository(InstanceUtil.getInstance(mRepository));
         return this;
     }
 
@@ -133,7 +130,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     }
 
     public TRecyclerView<M> setViewAndRepository(@LayoutRes int type, Class<? extends Repository> mRepository) {
-        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
+        mCoreAdapterPresenter.setRepository(InstanceUtil.getInstance(mRepository));
         this.mCommAdapter.setViewType(type);
         return this;
     }

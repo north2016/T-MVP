@@ -1,6 +1,7 @@
 package com.data.repository;
 
 import com.C;
+import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.util.ApiUtil;
 import com.data.Repository;
@@ -11,7 +12,7 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/12/24.
  */
-
+@InstanceFactory
 public class MessageInfoRepository extends Repository<MessageInfo> {
 
     @Override

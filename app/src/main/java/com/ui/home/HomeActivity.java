@@ -1,12 +1,7 @@
 package com.ui.home;
 
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -29,31 +24,12 @@ import com.data.bean.ExtraData;
 import com.data.entity._User;
 import com.ui.main.R;
 import com.ui.main.TMVPFragment;
+import com.ui.main.databinding.ActivityMainBinding;
 
-import butterknife.Bind;
 import rx.Observable;
 
 @Router(C.HOME)
-public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-    @Bind(R.id.tabs)
-    TabLayout tabs;
-    @Bind(R.id.viewpager)
-    ViewPager viewpager;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.nv_main_navigation)
-    NavigationView nvMainNavigation;
-    @Bind(R.id.dl_main_drawer)
-    DrawerLayout dlMainDrawer;
-    @Bind(R.id.toolbar_iv_outgoing)
-    ImageView mIvOutgoing;
-    @Bind(R.id.toolbar_iv_target)
-    ImageView mIvTarget;
-    ImageView im_face, im_bg;
-    TextView tv_name;
-    PagerChangeListener mPagerChangeListener;
-    @Bind(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
+public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBinding> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     @Override
     public int getLayoutId() {
@@ -67,7 +43,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 
     @Override
     public void onBackPressed() {
-        if (dlMainDrawer.isDrawerOpen(Gravity.LEFT)) dlMainDrawer.closeDrawers();
+        if (mViewBinding.dlMainDrawer.isDrawerOpen(Gravity.LEFT))
+            mViewBinding.dlMainDrawer.closeDrawers();
         else super.onBackPressed();
     }
 
@@ -81,20 +58,16 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
-            dlMainDrawer.openDrawer(GravityCompat.START);
+            mViewBinding.dlMainDrawer.openDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
     public void initView() {
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mViewBinding.dlMainDrawer, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
-        dlMainDrawer.addDrawerListener(mDrawerToggle);
-        View mHeaderView = nvMainNavigation.getHeaderView(0);
-        im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
-        im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);
-        tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);
-        nvMainNavigation.setNavigationItemSelectedListener(this);
+        mViewBinding.dlMainDrawer.addDrawerListener(mDrawerToggle);
+        mViewBinding.nvMainNavigation.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -102,14 +75,18 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         Observable.from(mTabs)
                 .map(tab -> BaseListFragment.newInstance(R.layout.list_item_card_main, tab)).toList()
                 .map(fragments -> FragmentAdapter.newInstance(getSupportFragmentManager(), fragments, mTabs))
-                .subscribe(mFragmentAdapter -> viewpager.setAdapter(mFragmentAdapter));
-        mPagerChangeListener = PagerChangeListener.newInstance(collapsingToolbar, mIvTarget, mIvOutgoing);
-        viewpager.addOnPageChangeListener(mPagerChangeListener);
-        tabs.setupWithViewPager(viewpager);
+                .subscribe(mFragmentAdapter -> mViewBinding.viewpager.setAdapter(mFragmentAdapter));
+        PagerChangeListener mPagerChangeListener = PagerChangeListener.newInstance(mViewBinding.collapsingToolbar, mViewBinding.toolbarIvTarget, mViewBinding.toolbarIvOutgoing);
+        mViewBinding.viewpager.addOnPageChangeListener(mPagerChangeListener);
+        mViewBinding.tabs.setupWithViewPager(mViewBinding.viewpager);
     }
 
     @Override
     public void initUserInfo(_User user) {
+        View mHeaderView = mViewBinding.nvMainNavigation.getHeaderView(0);
+        ImageView im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
+        ImageView im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);
+        TextView tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);
         ImageUtil.loadRoundAndBgImg(im_face, user.face, im_bg);
         tv_name.setText(user.username);
         im_face.setOnClickListener(this);
@@ -118,7 +95,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         item.setChecked(true);
-        dlMainDrawer.closeDrawers();
+        mViewBinding.dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)
             TRouter.go(C.SETTING);
         else if (item.getItemId() == R.id.nav_share)
@@ -130,6 +107,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @SingleClick
     public void onClick(View v) {
         if (R.id.im_face == v.getId())
-            TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), im_face);
+            TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
     }
 }

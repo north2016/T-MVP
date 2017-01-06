@@ -1,7 +1,6 @@
 package com.ui.user;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -19,25 +18,16 @@ import com.data.entity._User;
 import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
 import com.ui.main.R;
-import com.view.layout.TRecyclerView;
+import com.ui.main.databinding.ActivityUserBinding;
 
 import java.io.File;
 
-import butterknife.Bind;
-
 @Router(C.USER_INFO)
-public class UserActivity extends BaseActivity<UserPresenter> implements UserContract.View {
+public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBinding> implements UserContract.View {
     @Extra(C.HEAD_DATA)
     public _User user;
-    @Bind(R.id.image)
     @SceneTransition(C.TRANSLATE_VIEW)
     public ImageView image;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.lv_comment)
-    TRecyclerView lv_comment;
-    @Bind(R.id.im_header)
-    ImageView im_header;
 
     @Override
     public int getLayoutId() {
@@ -45,20 +35,25 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     }
 
     @Override
+    protected void beforeTRouter() {
+        image = mViewBinding.image;
+    }
+
+    @Override
     public void initView() {
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        lv_comment.setViewAndRepository(R.layout.list_item_user_comment, CommentInfoRepository.class)
+        mViewBinding.lvComment.setViewAndRepository(R.layout.list_item_user_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
                 .setIsRefreshable(false)
                 .fetch();
 
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
-            fab.setImageResource(R.drawable.ic_menu_camera);
-            fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
+            mViewBinding.fab.setImageResource(R.drawable.ic_menu_camera);
+            mViewBinding.fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
                     C.IMAGE_REQUEST_CODE));
-        } else fab.setOnClickListener(v -> ToastUtil.show("ok"));
+        } else mViewBinding.fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 
     @Override
@@ -78,12 +73,12 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void showMsg(String msg) {
-        Snackbar.make(fab, msg, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mViewBinding.fab, msg, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void initUser(_User user) {
-        ImageUtil.loadRoundAndBgImg(image, user.face, im_header);
+        ImageUtil.loadRoundAndBgImg(image, user.face, mViewBinding.imHeader);
         setTitle(user.username);
     }
 }

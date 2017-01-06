@@ -1,6 +1,7 @@
 package com.data.repository;
 
 import com.C;
+import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.data.Repository;
 import com.data.entity._User;
@@ -10,6 +11,7 @@ import rx.Observable;
 /**
  * Created by baixiaokang on 16/4/29.
  */
+@InstanceFactory
 public class _UserRepository extends Repository<_User> {
     @Override
     public Observable getPageAt(int page) {

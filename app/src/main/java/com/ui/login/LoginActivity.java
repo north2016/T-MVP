@@ -1,37 +1,23 @@
 package com.ui.login;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.C;
 import com.app.annotation.apt.Router;
 import com.base.BaseActivity;
 import com.ui.home.HomeActivity;
 import com.ui.main.R;
-
-import butterknife.Bind;
+import com.ui.main.databinding.ActivityLoginBinding;
 
 /**
  * Created by Administrator on 2016/1/14.
  */
 
 @Router(C.LOGIN)
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.tl_name)
-    TextInputLayout tlName;
-    @Bind(R.id.tl_pass)
-    TextInputLayout tlPass;
-    @Bind(R.id.tv_sign)
-    TextView tv_sign;
-    @Bind(R.id.tv_title)
-    TextView tv_title;
+public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBinding> implements LoginContract.View {
     boolean isLogin = true;
 
     @Override
@@ -41,17 +27,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void initView() {
-        fab.setOnClickListener(v -> doAction());
-        tv_sign.setOnClickListener(v -> {
+        mViewBinding.fab.setOnClickListener(v -> doAction());
+        mViewBinding.tvSign.setOnClickListener(v -> {
             isLogin = false;
-            tv_title.setText("注册");
-            tv_sign.setVisibility(View.GONE);
+            mViewBinding.tvTitle.setText("注册");
+            mViewBinding.tvSign.setVisibility(View.GONE);
         });
     }
 
     private void doAction() {
-        String name = tlName.getEditText().getText().toString();
-        String pass = tlPass.getEditText().getText().toString();
+        String name = mViewBinding.tlName.getEditText().getText().toString();
+        String pass = mViewBinding.tlPass.getEditText().getText().toString();
         String msg = TextUtils.isEmpty(name) ? "用户名不能为空!" : TextUtils.isEmpty(pass) ? "密码不能为空!" : "";
         if (!TextUtils.isEmpty(msg)) showMsg(msg);
         else if (isLogin) mPresenter.login(name, pass);
@@ -71,6 +57,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void showMsg(String msg) {
-        Snackbar.make(fab, msg, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mViewBinding.fab, msg, Snackbar.LENGTH_LONG).show();
     }
 }

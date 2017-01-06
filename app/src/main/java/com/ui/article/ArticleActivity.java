@@ -1,12 +1,8 @@
 package com.ui.article;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.C;
@@ -23,27 +19,19 @@ import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
 import com.ui.login.LoginActivity;
 import com.ui.main.R;
-import com.view.layout.TRecyclerView;
-
-import butterknife.Bind;
+import com.ui.main.databinding.ActivityDetailBinding;
 
 @Router(C.ARTICLE)
-public class ArticleActivity extends BaseActivity<ArticlePresenter> implements ArticleContract.View {
+public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDetailBinding> implements ArticleContract.View {
     @Extra(C.HEAD_DATA)
     public Image mArticle;
     @SceneTransition(C.TRANSLATE_VIEW)
-    @Bind(R.id.image)
     public ImageView image;
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.et_comment)
-    EditText et_comment;
-    @Bind(R.id.bt_comment)
-    Button bt_comment;
-    @Bind(R.id.lv_comment)
-    TRecyclerView lv_comment;
+
+    @Override
+    protected void beforeTRouter() {
+        image = mViewBinding.image;
+    }
 
     @Override
     public int getLayoutId() {
@@ -52,17 +40,17 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
 
     @Override
     public void initView() {
-        ImageUtil.loadImg(image, mArticle.image);
+        ImageUtil.loadImg(mViewBinding.image, mArticle.image);
         setTitle(mArticle.title);
-        bt_comment.setOnClickListener(v -> {
-            String comment = et_comment.getText().toString();
+        mViewBinding.btComment.setOnClickListener(v -> {
+            String comment = mViewBinding.btComment.getText().toString();
             if (TextUtils.isEmpty(comment))
-                Snackbar.make(fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
             else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
         });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
 
-        lv_comment.setHeadView(R.layout.list_item_article, mArticle)
+        mViewBinding.lvComment.setHeadView(R.layout.list_item_article, mArticle)
                 .setViewAndRepository(R.layout.list_item_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
@@ -72,20 +60,20 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
 
     @Override
     public void commentSuc() {
-        lv_comment.reFetch();
-        Snackbar.make(fab, "评论成功!", Snackbar.LENGTH_LONG).show();
+        mViewBinding.lvComment.reFetch();
+        Snackbar.make(mViewBinding.fab, "评论成功!", Snackbar.LENGTH_LONG).show();
         ViewUtil.hideKeyboard(this);
-        et_comment.setText("");
+        mViewBinding.etComment.setText("");
     }
 
     @Override
     public void commentFail() {
-        Snackbar.make(fab, "评论失败!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mViewBinding.fab, "评论失败!", Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void showLoginAction() {
-        Snackbar.make(fab, "请先登录!", Snackbar.LENGTH_LONG)
+        Snackbar.make(mViewBinding.fab, "请先登录!", Snackbar.LENGTH_LONG)
                 .setAction("登录", view -> startActivity(new Intent(mContext, LoginActivity.class))).show();
     }
 }

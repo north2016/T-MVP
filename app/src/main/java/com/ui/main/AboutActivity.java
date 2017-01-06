@@ -1,28 +1,18 @@
 package com.ui.main;
 
-import android.support.design.widget.FloatingActionButton;
-import android.widget.LinearLayout;
-
 import com.C;
 import com.app.annotation.apt.Router;
-import com.base.BaseActivity;
+import com.base.DataBindingActivity;
 import com.data.repository._UserRepository;
-import com.view.layout.TRecyclerView;
+import com.ui.main.databinding.ActivityAboutBinding;
 import com.view.widget.ChartView;
-
-import butterknife.Bind;
 
 /**
  * 简单页面无需mvp,该咋写还是咋写
  */
 @Router(C.ABOUT)
-public class AboutActivity extends BaseActivity {
-    @Bind(R.id.fab)
-    FloatingActionButton fab;
-    @Bind(R.id.lv_user)
-    TRecyclerView lv_user;
-    @Bind(R.id.ll_header)
-    LinearLayout llHeader;
+public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
+
     public Double[] Lines = {0.0, 100.0, 200.0, 300.0, 400.0, 500.0};
     public Double[] num0 = {200.0, 400.0, 230.0, 350.0, 210.0, 310.0, 350.0, 200.0};
     public Double[] num1 = {400.0, 480.0, 300.0, 450.0, 310.0, 500.0, 450.0, 400.0};
@@ -35,7 +25,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("用户列表");
-        lv_user.setViewAndRepository(R.layout.list_item_user, _UserRepository.class).setIsRefreshable(false).fetch();
-        llHeader.addView(new ChartView(this, Lines, num0, num1));
+        mViewBinding.lvUser.setViewAndRepository(R.layout.list_item_user, _UserRepository.class).setIsRefreshable(false).fetch();
+        mViewBinding.llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 }

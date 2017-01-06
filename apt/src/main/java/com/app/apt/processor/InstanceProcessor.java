@@ -18,8 +18,6 @@ import java.util.List;
 import javax.annotation.processing.FilerException;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
-import javax.lang.model.type.MirroredTypeException;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
@@ -43,16 +41,9 @@ public class InstanceProcessor implements IProcessor {
                 .returns(Object.class).addModifiers(PUBLIC, STATIC).addException(IllegalAccessException.class).addException(InstantiationException.class)
                 .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
 
-        MethodSpec.Builder methodBuilder2 = MethodSpec.methodBuilder("createVH")
-                .addJavadoc("@此方法由apt自动生成")
-                .returns(Object.class).addModifiers(PUBLIC, STATIC)
-                .addParameter(Class.class, "mClass").addParameter(ClassName.get("android.view", "View"), "view");
-
         List<ClassName> mList = new ArrayList<>();
-        CodeBlock.Builder blockBuilder1 = CodeBlock.builder();
-        CodeBlock.Builder blockBuilder2 = CodeBlock.builder();
-        blockBuilder1.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
-        blockBuilder2.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
+        CodeBlock.Builder blockBuilder = CodeBlock.builder();
+        blockBuilder.beginControlFlow(" switch (mClass.getSimpleName())");//括号开始
         try {
             for (TypeElement element : ElementFilter.typesIn(roundEnv.getElementsAnnotatedWith(InstanceFactory.class))) {
                 mAbstractProcessor.mMessager.printMessage(Diagnostic.Kind.NOTE, "正在处理: " + element.toString());
@@ -60,37 +51,26 @@ public class InstanceProcessor implements IProcessor {
                 ClassName currentType = ClassName.get(element);
                 if (mList.contains(currentType)) continue;
                 mList.add(currentType);
-                String className = null;
-                try {
-                    Class<?> clazz = element.getAnnotation(InstanceFactory.class).clazz();
-                    className = clazz.getCanonicalName();
-                } catch (MirroredTypeException mte) {
-                    DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
-                    TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
-                    className = classTypeElement.getQualifiedName().toString();
-                } catch (Exception e) {
-                }
-                if (className != null && !className.equals(InstanceFactory.class.getName())) {
-                    blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), Utils.getType(className));//初始化Repository
-                } else {
-                    int type = element.getAnnotation(InstanceFactory.class).value();
-                    if (type == InstanceFactory.TYPE_DEFAULT)
-                        blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);//初始化Presenter
-                    else if (type == InstanceFactory.TYPE_VH) {
-                        blockBuilder1.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化傀儡ViewHolder，会被缓存的，全局单例
-                        blockBuilder2.addStatement("case $S: return new $T(view)", currentType.simpleName(), currentType);//初始化真正的ViewHolder
-                    }
-                }
+                //             String className = null;
+//                try {
+//                    Class<?> clazz = element.getAnnotation(InstanceFactory.class).value();
+//                    className = clazz.getCanonicalName();
+//                } catch (MirroredTypeException mte) {
+//                    DeclaredType classTypeMirror = (DeclaredType) mte.getTypeMirror();
+//                    TypeElement classTypeElement = (TypeElement) classTypeMirror.asElement();
+//                    className = classTypeElement.getQualifiedName().toString();
+//                } catch (Exception e) {
+//                }
+//                if (className != null && !className.equals(InstanceFactory.class.getName())) {
+//                    blockBuilder.addStatement("case $S: return  new $T()", currentType.simpleName(), Utils.getType(className));//初始化Repository
+//                } else {
+                blockBuilder.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);//初始化Presenter
+                //               }
             }
-            blockBuilder1.addStatement("default: return mClass.newInstance()");
-            blockBuilder1.endControlFlow();
-            methodBuilder1.addCode(blockBuilder1.build());
-            blockBuilder2.addStatement("default: return null");
-            blockBuilder2.endControlFlow();
-            methodBuilder2.addCode(blockBuilder2.build());
-
+            blockBuilder.addStatement("default: return mClass.newInstance()");
+            blockBuilder.endControlFlow();
+            methodBuilder1.addCode(blockBuilder.build());
             tb.addMethod(methodBuilder1.build());
-            tb.addMethod(methodBuilder2.build());
             JavaFile javaFile = JavaFile.builder(Utils.PackageName, tb.build()).build();// 生成源代码
             javaFile.writeTo(mAbstractProcessor.mFiler);// 在 app module/build/generated/source/apt 生成一份源代码
         } catch (FilerException e) {
