@@ -1,28 +1,24 @@
 package com.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
-import com.base.adapter.BaseViewHolder;
-import com.base.util.InstanceUtil;
+import com.data.repository.ImageRepository;
 import com.view.layout.TRecyclerView;
 
 
 public class BaseListFragment extends Fragment {
     private TRecyclerView mXRecyclerView;
 
-    /**
-     * @param vh 传入VH的类名
-     * @return
-     */
-    public static BaseListFragment newInstance(Class<? extends BaseViewHolder> vh, String type) {
+    public static BaseListFragment newInstance(@LayoutRes int res, String type) {
         Bundle arguments = new Bundle();
-        arguments.putString(C.VH_CLASS, vh.getCanonicalName());
-        arguments.putString("type",type);
+        arguments.putInt(C.VH_CLASS, res);
+        arguments.putString("type", type);
         BaseListFragment fragment = new BaseListFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -30,8 +26,8 @@ public class BaseListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mXRecyclerView = new TRecyclerView(getContext()).setParam("type",getArguments().getString("type"))
-                .setView(InstanceUtil.forName(getArguments().getString(C.VH_CLASS)));
+        mXRecyclerView = new TRecyclerView(getContext()).setParam("type", getArguments().getString("type"))
+                .setView(getArguments().getInt(C.VH_CLASS), ImageRepository.class);
         return mXRecyclerView;
     }
 

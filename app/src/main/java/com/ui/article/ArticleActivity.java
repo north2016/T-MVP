@@ -19,12 +19,11 @@ import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
 import com.data.Pointer;
 import com.data.entity.Image;
+import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
 import com.ui.login.LoginActivity;
 import com.ui.main.R;
 import com.view.layout.TRecyclerView;
-import com.view.viewholder.ArticleHeaderVH;
-import com.view.viewholder.CommentItemVH;
 
 import butterknife.Bind;
 
@@ -62,8 +61,9 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter> implements A
             else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
         });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
-        lv_comment.setHeadView(ArticleHeaderVH.class, mArticle)
-                .setView(CommentItemVH.class)
+
+        lv_comment.setHeadView(R.layout.list_item_article, mArticle)
+                .setView(R.layout.list_item_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
                 .setIsRefreshable(false)

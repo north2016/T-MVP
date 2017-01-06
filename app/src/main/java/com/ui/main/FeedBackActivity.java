@@ -17,12 +17,12 @@ import com.base.util.ViewUtil;
 import com.data.bean.Message;
 import com.data.entity.MessageInfo;
 import com.data.entity._User;
+import com.data.repository.MessageInfoRepository;
 import com.view.layout.TRecyclerView;
-import com.view.viewholder.MessageAdminVH;
-import com.view.viewholder.MessageUserVH;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+
 @Router(C.FEED_BACK)
 public class FeedBackActivity extends BaseActivity implements View.OnClickListener {
     _User user = SpUtil.getUser();
@@ -31,8 +31,8 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     @Bind(R.id.et_message)
     EditText etMessage;
 
-    VHSelector<MessageInfo> mTypeSelector = (item -> item != null && TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
-            ? MessageAdminVH.class : MessageUserVH.class);//AdminID发送的为Admin消息，其他都是普通消息
+    VHSelector<MessageInfo> mTypeSelector = (item -> TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
+            ? R.layout.list_item_comment_admin : R.layout.list_item_comment_user);//AdminID发送的为Admin消息，其他都是普通消息
 
     @Override
     public int getLayoutId() {
@@ -43,8 +43,8 @@ public class FeedBackActivity extends BaseActivity implements View.OnClickListen
     public void initView() {
         setTitle("用户反馈");
         lvMsg.setReverse().setIsRefreshable(false)
-                .setTypeSelector(mTypeSelector)
-                .setFooterView(MessageAdminVH.class, C.getAdminMsg())
+                .setTypeSelector(mTypeSelector, MessageInfoRepository.class)
+                .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg())
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.UID, user.objectId)
                 .fetch();

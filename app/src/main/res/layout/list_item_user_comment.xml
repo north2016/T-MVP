@@ -1,35 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#fff"
-    android:padding="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+    <data>
 
-        <ImageView
-            android:id="@+id/im_article"
-            android:layout_width="70dp"
-            android:scaleType="centerCrop"
-            android:layout_height="50dp" />
+        <import type="com.base.util.helper.RouterHelper" />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
-    </LinearLayout>
+        <import type="com.data.bean.ExtraData" />
 
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_marginTop="5dp"
+        <import type="com.C" />
+
+        <variable
+            name="item"
+            type="com.data.entity.CommentInfo" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eee"
-        android:padding="10dp" />
-</LinearLayout>
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:onClick="@{()->RouterHelper.go(C.ARTICLE,ExtraData.getExtra(C.HEAD_DATA,item.article),imArticle)}"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imArticle"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{item.article.image}" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@{item.article.title}" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="#eee"
+            android:padding="10dp"
+            android:text="@{item.content}" />
+    </LinearLayout>
+</layout>

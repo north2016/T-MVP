@@ -1,37 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@id/tv_content"
-        android:layout_alignTop="@id/im_user"
-        android:layout_marginTop="10dp"
-        android:padding="10dp"
-        android:textColor="@color/yellow" />
+    <data>
 
-    <TextView
-        android:id="@+id/tv_content"
+        <import type="com.base.util.helper.RouterHelper" />
+
+        <import type="com.data.bean.ExtraData" />
+
+        <import type="com.C" />
+
+        <variable
+            name="item"
+            type="com.data.entity.MessageInfo" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_name"
-        android:layout_toLeftOf="@id/im_user"
-        android:paddingLeft="50dp"
-        android:paddingRight="10dp" />
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/tv_content"
+            android:layout_alignTop="@+id/image"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="@{item.creater.username}"
+            android:textColor="@color/yellow" />
 
-    <ImageView
-        android:id="@+id/im_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_name"
+            android:layout_toLeftOf="@+id/image"
+            android:paddingLeft="50dp"
+            android:paddingRight="10dp"
+            android:text="@{item.message}" />
 
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:onClick="@{()->RouterHelper.go(C.USER_INFO,ExtraData.getExtra(C.HEAD_DATA,item.creater),image)}"
+            app:roundImageUrl="@{item.creater.face}" />
+    </RelativeLayout>
+</layout>
 
 

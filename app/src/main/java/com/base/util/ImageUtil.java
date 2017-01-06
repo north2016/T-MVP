@@ -4,17 +4,23 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.BindingAdapter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.base.util.helper.BlurTransformation;
 import com.base.util.helper.GlideCircleTransform;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.data.entity.CommentInfo;
+import com.data.entity.MessageInfo;
 import com.ui.main.R;
 
 import java.io.BufferedOutputStream;
@@ -29,14 +35,15 @@ import java.io.IOException;
  * Created by baixiaokang on 16/5/6.
  */
 public class ImageUtil {
+    @BindingAdapter({"imageUrl"})
     public static void loadImg(ImageView v, String url) {
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(v);
-
     }
 
+    @BindingAdapter({"roundImageUrl"})
     public static void loadRoundImg(ImageView v, String url) {
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
@@ -44,6 +51,25 @@ public class ImageUtil {
                 .transform(new GlideCircleTransform(v.getContext()))
                 .error(R.mipmap.ic_launcher)
                 .into(v);
+    }
+
+    @BindingAdapter({"comment"})
+    public static void setComment(TextView tv, CommentInfo data) {
+        tv.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.content));
+    }
+
+    @BindingAdapter({"message"})
+    public static void setMessage(TextView tv, MessageInfo data) {
+        tv.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.message));
+    }
+
+    @BindingAdapter({"article"})
+    public static void setArticle(TextView tv, String url) {
+        String article = url.replace("<br>", "\n").replaceAll(" ", "").replaceAll("//", "");
+        if (!TextUtils.isEmpty(article)) {
+            article = article.substring(article.indexOf("&gt;") + 4, article.length());
+            tv.setText(article);
+        }
     }
 
     public static String getFuckUrl(String url) {

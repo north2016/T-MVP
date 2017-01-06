@@ -1,6 +1,7 @@
 package com.view.layout;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +12,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.base.BaseBean;
-import com.base.adapter.BaseViewHolder;
 import com.base.adapter.CoreAdapter;
 import com.base.adapter.CoreAdapterPresenter;
 import com.base.adapter.VHSelector;
 import com.base.util.InstanceUtil;
 import com.data.DataArr;
+import com.data.Repository;
 import com.ui.main.R;
 
 import java.util.List;
@@ -105,36 +106,35 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     }
 
 
-    public TRecyclerView<M> setHeadView(Class<? extends BaseViewHolder> cla, Object data) {
-        isHasHeadView = cla != null;
+    public TRecyclerView<M> setHeadView(@LayoutRes int type, Object data) {
+        isHasHeadView = type != 0;
         if (!isHasHeadView) {
-            this.mCommAdapter.setHeadViewType(0, cla, null);
+            this.mCommAdapter.setHeadViewType(0, null);
         } else {
-            int mHeadViewType = ((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType();
-            this.mCommAdapter.setHeadViewType(mHeadViewType, cla, data);
+            this.mCommAdapter.setHeadViewType(type, data);
         }
         return this;
     }
 
-    public TRecyclerView<M> setTypeSelector(VHSelector<M> mTypeSelector) {
+    public TRecyclerView<M> setTypeSelector(VHSelector<M> mTypeSelector, Class<? extends Repository> mRepository) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
-        this.mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mTypeSelector.getTypeClass(null)));
+        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
         return this;
     }
 
-    public TRecyclerView<M> setFooterView(Class<? extends BaseViewHolder> cla, Object data) {
-        if (cla == null) {
-            this.mCommAdapter.setFooterViewType(0, cla, data);
+    public TRecyclerView<M> setFooterView(@LayoutRes int type, Object data) {
+        if (type == 0) {
+            this.mCommAdapter.setFooterViewType(0, data);
         } else {
             mCoreAdapterPresenter.setBegin(0);
-            this.mCommAdapter.setFooterViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType(), cla, data);
+            this.mCommAdapter.setFooterViewType(type, data);
         }
         return this;
     }
 
-    public TRecyclerView<M> setView(Class<? extends BaseViewHolder> cla) {
-        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(cla));
-        this.mCommAdapter.setViewType(((BaseViewHolder) (InstanceUtil.getInstance(cla))).getType(), cla);
+    public TRecyclerView<M> setView(@LayoutRes int type, Class<? extends Repository> mRepository) {
+        mCoreAdapterPresenter.setRepository(InstanceUtil.getRepositoryInstance(mRepository));
+        this.mCommAdapter.setViewType(type);
         return this;
     }
 

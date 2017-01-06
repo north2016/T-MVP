@@ -16,10 +16,10 @@ import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
 import com.data.Pointer;
 import com.data.entity._User;
+import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
 import com.ui.main.R;
 import com.view.layout.TRecyclerView;
-import com.view.viewholder.UserCommentVH;
 
 import java.io.File;
 
@@ -48,7 +48,7 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
     public void initView() {
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        lv_comment.setView(UserCommentVH.class)
+        lv_comment.setView(R.layout.list_item_user_comment, CommentInfoRepository.class)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
                 .setIsRefreshable(false)

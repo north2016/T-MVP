@@ -25,4 +25,8 @@ public class ExtraData {
     public HashMap build() {
         return this.map;
     }
+
+    public static HashMap getExtra(String key, Object value) {
+        return new ExtraData(key, value).build();
+    }
 }

@@ -5,5 +5,5 @@ package com.base.adapter;
  */
 
 public interface VHSelector<M> {
-    Class getTypeClass(M m);
+    int getType(M m);
 }

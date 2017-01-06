@@ -29,7 +29,6 @@ import com.data.bean.ExtraData;
 import com.data.entity._User;
 import com.ui.main.R;
 import com.ui.main.TMVPFragment;
-import com.view.viewholder.ArticleItemVH;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -101,7 +100,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public void showTabList(String[] mTabs) {
         Observable.from(mTabs)
-                .map(tab -> BaseListFragment.newInstance(ArticleItemVH.class, tab)).toList()
+                .map(tab -> BaseListFragment.newInstance(R.layout.list_item_card_main, tab)).toList()
                 .map(fragments -> FragmentAdapter.newInstance(getSupportFragmentManager(), fragments, mTabs))
                 .subscribe(mFragmentAdapter -> viewpager.setAdapter(mFragmentAdapter));
         mPagerChangeListener = PagerChangeListener.newInstance(collapsingToolbar, mIvTarget, mIvOutgoing);

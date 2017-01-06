@@ -5,10 +5,9 @@ import android.widget.LinearLayout;
 
 import com.C;
 import com.app.annotation.apt.Router;
-import com.apt.TRouter;
 import com.base.BaseActivity;
+import com.data.repository._UserRepository;
 import com.view.layout.TRecyclerView;
-import com.view.viewholder.UserItemVH;
 import com.view.widget.ChartView;
 
 import butterknife.Bind;
@@ -36,8 +35,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("用户列表");
-        fab.setOnClickListener(v -> TRouter.go(C.USER_LIST));
-        lv_user.setView(UserItemVH.class).setIsRefreshable(false).fetch();
+        lv_user.setView(R.layout.list_item_user, _UserRepository.class).setIsRefreshable(false).fetch();
         llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 }
