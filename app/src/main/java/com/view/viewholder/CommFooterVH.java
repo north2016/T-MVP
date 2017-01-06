@@ -11,7 +11,7 @@ import com.ui.main.R;
 
 import butterknife.Bind;
 
-@InstanceFactory(type = InstanceFactory.typeVH)
+@InstanceFactory(InstanceFactory.typeVH)
 public class CommFooterVH extends BaseViewHolder<Boolean> {
     @Bind(R.id.progressbar)
     public ProgressBar progressbar;

@@ -129,15 +129,8 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     }
 
     @SingleClick
-    public void onClick(View view) {
-        //重构后:
-        TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), im_face);
-        //重构前:
-//        ActivityCompat.startActivity(mContext,
-//                new Intent(mContext, UserActivity.class)
-//                        .putExtra(C.HEAD_DATA, SpUtil.getUser())
-//                , ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                        (Activity) mContext, im_face, C.TRANSLATE_VIEW).toBundle());
-
+    public void onClick(View v) {
+        if (R.id.im_face == v.getId())
+            TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), im_face);
     }
 }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -21,7 +20,7 @@ public class TabView extends FrameLayout {
 
     public TabView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.tab_item, this);
+        inflate(context, R.layout.tab_item, this);
         image = (ImageView) findViewById(R.id.image);
     }
 

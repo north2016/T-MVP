@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.C;
 import com.app.annotation.apt.Router;
 import com.base.util.SpUtil;
+
 @Router(C.SETTING)
 public class SettingsActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;

@@ -14,7 +14,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/5/4.
  */
-@InstanceFactory(type = InstanceFactory.typeVH)
+@InstanceFactory(InstanceFactory.typeVH)
 public class ArticleHeaderVH extends BaseViewHolder<Image> {
     @Bind(R.id.tv_article)
     TextView tv_article;

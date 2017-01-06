@@ -50,13 +50,13 @@ public class RouterProcessor implements IProcessor {
                 .addParameter(ClassName.get("android.app", "Activity"), "mContext");
 
         List<ClassName> mList = new ArrayList<>();
-        CodeBlock.Builder blockBuilder1 = CodeBlock.builder();
-        CodeBlock.Builder blockBuilder2 = CodeBlock.builder();
+        CodeBlock.Builder blockBuilderGo = CodeBlock.builder();
+        CodeBlock.Builder blockBuilderBind = CodeBlock.builder();
         ClassName appClassName = ClassName.get("com", "App");
-        blockBuilder1.addStatement("$T.getAppContext().mCurActivityExtra=extra", appClassName);
-        blockBuilder1.addStatement("Activity mContext=$T.getAppContext().getCurActivity()", appClassName);
-        blockBuilder1.beginControlFlow(" switch (name)");//括号开始
-        blockBuilder2.beginControlFlow(" switch (mContext.getClass().getSimpleName())");//括号开始
+        blockBuilderGo.addStatement("$T.getAppContext().mCurActivityExtra=extra", appClassName);
+        blockBuilderGo.addStatement("Activity mContext=$T.getAppContext().getCurActivity()", appClassName);
+        blockBuilderGo.beginControlFlow(" switch (name)");//括号开始
+        blockBuilderBind.beginControlFlow(" switch (mContext.getClass().getSimpleName())");//括号开始
 
         List<RouterActivityModel> mRouterActivityModels = new ArrayList<>();
         try {
@@ -92,13 +92,13 @@ public class RouterProcessor implements IProcessor {
             ClassName mIntentClassName = ClassName.get("android.content", "Intent");
             ClassName mActivityOptionsCompatName = ClassName.get("android.support.v4.app", "ActivityOptionsCompat");
             for (RouterActivityModel item : mRouterActivityModels) {
-                blockBuilder1.add("case $S: \n", item.getActionName());//1
+                blockBuilderGo.add("case $S: \n", item.getActionName());//1
                 if (item.isNeedBind())
-                    blockBuilder2.add("case $S: \n", item.getElement().getSimpleName());//1
+                    blockBuilderBind.add("case $S: \n", item.getElement().getSimpleName());//1
                 if (item.getExtraElements() != null && item.getExtraElements().size() > 0) {
                     for (int i = 0; i < item.getExtraElements().size(); i++) {
                         Element mFiled = item.getExtraElements().get(i);
-                        blockBuilder2.add("(($T)mContext)." +//1
+                        blockBuilderBind.add("(($T)mContext)." +//1
                                         "$L" +//2
                                         "= ($T) " +//3
                                         "$T.getAppContext().mCurActivityExtra.get(" +//4
@@ -112,7 +112,7 @@ public class RouterProcessor implements IProcessor {
                     }
                 }
                 if (item.getSceneTransitionElement() != null) {
-                    blockBuilder1.add("$L.startActivity(mContext," +//2
+                    blockBuilderGo.add("$L.startActivity(mContext," +//2
                                     "\nnew $L(mContext," +//3
                                     "\n$L.class)," +//4
                                     "\n$T.makeSceneTransitionAnimation(" +//5
@@ -124,7 +124,7 @@ public class RouterProcessor implements IProcessor {
                             mActivityOptionsCompatName,//5
                             item.getSceneTransitionElementName());//6
 
-                    blockBuilder2.add(
+                    blockBuilderBind.add(
                             "$T.setTransitionName(" +//2
                                     "(($T)mContext)." +//3
                                     "$L, " +//4
@@ -134,22 +134,22 @@ public class RouterProcessor implements IProcessor {
                             item.getSceneTransitionElement(),//4
                             item.getSceneTransitionElementName());//5
                 } else {
-                    blockBuilder1.add("mContext.startActivity(" +//2
+                    blockBuilderGo.add("mContext.startActivity(" +//2
                                     "\nnew $L(mContext," +//3
                                     "\n$L.class));", //7
                             mIntentClassName,//3
                             item.getElement()//4
                     );
                 }
-                blockBuilder1.addStatement("\nbreak");//1
-                if (item.isNeedBind()) blockBuilder2.addStatement("break");//1
+                blockBuilderGo.addStatement("\nbreak");//1
+                if (item.isNeedBind()) blockBuilderBind.addStatement("break");//1
             }
-            blockBuilder1.addStatement("default: break");
-            blockBuilder1.endControlFlow();
-            methodBuilder1.addCode(blockBuilder1.build());
-            blockBuilder2.addStatement("default: break");
-            blockBuilder2.endControlFlow();
-            methodBuilder2.addCode(blockBuilder2.build());
+            blockBuilderGo.addStatement("default: break");
+            blockBuilderGo.endControlFlow();
+            methodBuilder1.addCode(blockBuilderGo.build());
+            blockBuilderBind.addStatement("default: break");
+            blockBuilderBind.endControlFlow();
+            methodBuilder2.addCode(blockBuilderBind.build());
 
             tb.addMethod(methodBuilder1.build());
             tb.addMethod(methodBuilder2.build());

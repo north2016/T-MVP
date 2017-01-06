@@ -46,8 +46,6 @@ public class UserActivity extends BaseActivity<UserPresenter> implements UserCon
 
     @Override
     public void initView() {
-//        ViewCompat.setTransitionName(image, C.TRANSLATE_VIEW);
-//        _User user = (_User) getIntent().getSerializableExtra(C.HEAD_DATA);
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
         lv_comment.setView(UserCommentVH.class)

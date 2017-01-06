@@ -29,7 +29,7 @@ public class FlashActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        OkBus.getInstance().onStickyEvent(EventTags.FLASH_INIT_UI, null);
+        OkBus.getInstance().onStickyEvent(EventTags.FLASH_INIT_UI);
     }
 
     @Bus(EventTags.FLASH_INIT_UI)
@@ -38,13 +38,12 @@ public class FlashActivity extends BaseActivity {
         AlphaAnimation anim = new AlphaAnimation(0.8f, 0.1f);
         anim.setDuration(5000);
         view.startAnimation(anim);
-        AnimationUtil.setAnimationListener(anim, () -> OkBus.getInstance().onEvent(EventTags.JUMP_TO_MAIN, null));
+        AnimationUtil.setAnimationListener(anim, () -> OkBus.getInstance().onEvent(EventTags.JUMP_TO_MAIN));
     }
 
     @Bus(EventTags.JUMP_TO_MAIN)
     public void jumpToMainPage() {
         TRouter.go(C.HOME);
-        // startActivity(new Intent(mContext, HomeActivity.class));
         finish();
     }
 }

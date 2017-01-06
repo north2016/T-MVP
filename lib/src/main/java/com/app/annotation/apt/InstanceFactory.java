@@ -19,7 +19,7 @@ public @interface InstanceFactory {
     int typeVH = 1;//ViewHolder
     int typeDefault = 0;//普通的
 
-    int type() default typeDefault;
+    int value() default typeDefault;
 
     Class clazz() default InstanceFactory.class;//被初始化的目标类，默认为当前加注解的类
 }

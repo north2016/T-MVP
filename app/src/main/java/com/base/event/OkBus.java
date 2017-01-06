@@ -93,10 +93,20 @@ public class OkBus<T> {
         return this;
     }
 
+    public OkBus onEvent(int tag) {
+        onEvent(tag, null);
+        return this;
+    }
+
     public OkBus onStickyEvent(int tag, T data) {
         LogUtils.e("Bus onStickyEvent", tag + " ");
         mStickyEventList.put(tag, (data == null ? tag : data));
         onEvent(tag, data);
+        return this;
+    }
+
+    public OkBus onStickyEvent(int tag) {
+        onStickyEvent(tag, null);
         return this;
     }
 }

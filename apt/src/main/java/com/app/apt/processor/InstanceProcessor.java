@@ -73,7 +73,7 @@ public class InstanceProcessor implements IProcessor {
                 if (className != null && !className.equals(InstanceFactory.class.getName())) {
                     blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), Utils.getType(className));//初始化Repository
                 } else {
-                    int type = element.getAnnotation(InstanceFactory.class).type();
+                    int type = element.getAnnotation(InstanceFactory.class).value();
                     if (type == InstanceFactory.typeDefault)
                         blockBuilder1.addStatement("case $S: return  new $T()", currentType.simpleName(), currentType);//初始化Presenter
                     else if (type == InstanceFactory.typeVH) {

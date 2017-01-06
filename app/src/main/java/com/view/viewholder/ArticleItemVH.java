@@ -19,7 +19,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/4/23.
  */
-@InstanceFactory(type = InstanceFactory.typeVH)
+@InstanceFactory(InstanceFactory.typeVH)
 public class ArticleItemVH extends BaseViewHolder<Image> implements View.OnClickListener {
     @Bind(R.id.image)
     ImageView image;

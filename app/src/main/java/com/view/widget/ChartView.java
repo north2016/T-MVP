@@ -56,13 +56,13 @@ public class ChartView extends View implements View.OnClickListener {
                 canvas.drawCircle(i * itemWidth, getBaseHeight(num0[i - 1]), 5, mYellowTextPaint);     // 画黄点
                 canvas.drawCircle(i * itemWidth, getBaseHeight(num1[i - 1]), 5, mGreenTextPaint);    // 画绿点
             }
-            if (i > 1) {// 画折线
+            if (i > 1) {
                 float x0 = (i - 1) * itemWidth, y0 = getBaseHeight(num0[i - 2]), x1 = i * itemWidth;
                 float y1 = getBaseHeight(num0[i - 1]), y2 = getBaseHeight(num1[i - 2]), y3 = getBaseHeight(num1[i - 1]);
-                if (isLine) {
+                if (isLine) {// 画折线
                     canvas.drawLine(x0, y0, x1, y1, mYellowTextPaint);// 画黄折线
                     canvas.drawLine(x0, y2, x1, y3, mGreenTextPaint); // 画绿折线
-                } else {
+                } else {// 画曲线
                     mPath.reset();
                     mPath.moveTo(x0, y0);
                     mPath.cubicTo((x0 + x1) / 2, y0, (x0 + x1) / 2, y1, x1, y1);

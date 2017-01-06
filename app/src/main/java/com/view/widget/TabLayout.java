@@ -105,10 +105,8 @@ public class TabLayout extends LinearLayout {
 
     private void initView(Context context) {
         this.context = context;
-        view = LayoutInflater.from(context).inflate(R.layout.tabs_layout, null);
-        addView(view);
+        inflate(context, R.layout.tabs_layout, null);
         init();
-
     }
 
 

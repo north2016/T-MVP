@@ -33,9 +33,8 @@ public class TMVPFragment extends android.support.design.widget.BottomSheetDialo
     }
 
     public static TMVPFragment getInstance() {
-        if (mTMVPFragment == null) {
+        if (mTMVPFragment == null)
             mTMVPFragment = new TMVPFragment();
-        }
         return mTMVPFragment;
     }
 

@@ -19,7 +19,7 @@ import butterknife.Bind;
 /**
  * Created by baixiaokang on 16/5/4.
  */
-@InstanceFactory(type = InstanceFactory.typeVH)
+@InstanceFactory(InstanceFactory.typeVH)
 public class UserCommentVH extends BaseViewHolder<CommentInfo> implements View.OnClickListener {
     @Bind(R.id.tv_content)
     TextView tv_content;
