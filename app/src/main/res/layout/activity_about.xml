@@ -58,7 +58,7 @@
             app:layout_anchorGravity="bottom|right|end"
             app:srcCompat="@drawable/ic_whilte_send" />
 
-        <com.view.layout.TRecyclerView
+        <com.base.adapter.TRecyclerView
             android:id="@+id/lv_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,15 +1,15 @@
 package com.api;
 
 import com.app.annotation.apt.ApiFactory;
-import com.data.CreatedResult;
-import com.data.DataArr;
-import com.data.bean.Comment;
-import com.data.entity.CommentInfo;
-import com.data.bean.Face;
-import com.data.entity.Image;
-import com.data.bean.Message;
-import com.data.entity.MessageInfo;
-import com.data.entity._User;
+import com.base.entity.CreatedResult;
+import com.base.entity.DataArr;
+import com.model.Comment;
+import com.model.Face;
+import com.model.Message;
+import com.model.Image;
+import com.model.CommentInfo;
+import com.model.MessageInfo;
+import com.model._User;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -33,12 +33,11 @@ public interface ApiService {
     @POST("users")
     Observable<CreatedResult> createUser(@Body _User user);
 
-
     @GET("users")
     Observable<DataArr<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
 
     @GET("classes/Image")
-    Observable<DataArr<Image>> getAllImages(@Query("where") String where, @Query("order") String order, @Query("skip") int skip, @Query("limit") int limit);
+    Observable<DataArr<Image>> getAllImages(@Query("where") String where, @Query("skip") int skip, @Query("limit") int limit, @Query("order") String order);
 
 
     @GET("classes/Comment")

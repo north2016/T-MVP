@@ -2,20 +2,19 @@ package com.base.adapter;
 
 import android.util.Log;
 
-import com.base.util.InstanceUtil;
-import com.data.DataArr;
-import com.data.Repository;
+import com.C;
+import com.base.entity.DataArr;
+import com.base.entity.Repository;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by baixiaokang on 16/12/27.
  */
 
-public class CoreAdapterPresenter<T extends Repository> {
-    private T mRepository;//仓库
-    private Map<String, String> param = new HashMap<>();//设置仓库钥匙
+public class AdapterPresenter {
+    private Repository mRepository;//仓库
+    private HashMap<String, Object> param = new HashMap<>();//设置仓库钥匙
     private int begin = 0;
     private final IAdapterView view;
 
@@ -27,16 +26,16 @@ public class CoreAdapterPresenter<T extends Repository> {
         void reSetEmpty();
     }
 
-    public CoreAdapterPresenter(IAdapterView mIAdapterViewImpl) {
+    public AdapterPresenter(IAdapterView mIAdapterViewImpl) {
         this.view = mIAdapterViewImpl;
     }
 
-    public CoreAdapterPresenter setRepository(Class<T> mRepository) {
-        this.mRepository = InstanceUtil.getInstance(mRepository);
+    public AdapterPresenter setRepository(Repository repository) {
+        this.mRepository = repository;
         return this;
     }
 
-    public CoreAdapterPresenter setParam(String key, String value) {
+    public AdapterPresenter setParam(String key, String value) {
         this.param.put(key, value);
         return this;
     }
@@ -52,11 +51,11 @@ public class CoreAdapterPresenter<T extends Repository> {
             Log.e("mRepository", "null");
             return;
         }
-        mRepository.param = param;//设置仓库钥匙
+        param.put(C.PAGE, begin);
         mRepository
-                .getPageAt(begin)//根据仓库货物来源取出货物
+                .getData(param)
                 .subscribe(
-                        res -> view.setData((DataArr) res, begin),
+                        res -> view.setData(res, begin),
                         e -> view.setEmpty());
     }
 }

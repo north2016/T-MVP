@@ -1,4 +1,4 @@
-package com.data.bean;
+package com.base.entity;
 
 import java.util.HashMap;
 

@@ -9,14 +9,14 @@ import com.C;
 import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
+import com.apt.ApiFactory;
 import com.base.BaseActivity;
+import com.base.entity.Pointer;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
-import com.data.Pointer;
-import com.data.entity._User;
-import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
+import com.model._User;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityUserBinding;
 
@@ -35,7 +35,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     }
 
     @Override
-    protected void beforeTRouter() {
+    protected void initTransitionView() {
         image = mViewBinding.image;
     }
 
@@ -44,8 +44,8 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
         initUser(user);
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
         mViewBinding.lvComment.setViewType(R.layout.list_item_user_comment).setIsRefreshable(false);
-        mViewBinding.lvComment.getPresenter().setRepository(
-                CommentInfoRepository.class)
+        mViewBinding.lvComment.getPresenter()
+                .setRepository(ApiFactory::getCommentList)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
                 .fetch();

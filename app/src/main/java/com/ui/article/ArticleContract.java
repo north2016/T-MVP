@@ -2,8 +2,8 @@ package com.ui.article;
 
 import com.base.BasePresenter;
 import com.base.BaseView;
-import com.data.entity.Image;
-import com.data.entity._User;
+import com.model.Image;
+import com.model._User;
 
 
 /**

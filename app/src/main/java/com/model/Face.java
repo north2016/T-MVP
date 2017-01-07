@@ -1,4 +1,4 @@
-package com.data.bean;
+package com.model;
 
 /**
  * Created by baixiaokang on 16/12/28.

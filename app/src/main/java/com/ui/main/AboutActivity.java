@@ -2,8 +2,8 @@ package com.ui.main;
 
 import com.C;
 import com.app.annotation.apt.Router;
+import com.apt.ApiFactory;
 import com.base.DataBindingActivity;
-import com.data.repository._UserRepository;
 import com.ui.main.databinding.ActivityAboutBinding;
 import com.view.widget.ChartView;
 
@@ -29,7 +29,7 @@ public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
                 .setViewType(R.layout.list_item_user);
         mViewBinding.lvUser
                 .getPresenter()
-                .setRepository(_UserRepository.class)
+                .setRepository(ApiFactory::getAllUser)
                 .fetch();
         mViewBinding.llHeader.addView(new ChartView(this, Lines, num0, num1));
     }

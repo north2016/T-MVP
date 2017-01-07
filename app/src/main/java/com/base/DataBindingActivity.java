@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 import com.apt.TRouter;
 import com.base.util.SpUtil;
 import com.ui.main.R;
-import com.view.layout.SwipeBackLayout;
+import com.view.widget.SwipeBackLayout;
 
 /**
  * Created by baixiaokang on 17/1/6.
@@ -38,7 +38,7 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         View rootView = getLayoutInflater().inflate(this.getLayoutId(), null, false);
         mViewBinding = DataBindingUtil.bind(rootView);
         this.setContentView(getLayoutId(), rootView);
-        beforeTRouter();
+        initTransitionView();
         TRouter.bind(this);
         mContext = this;
         initToolBar();
@@ -46,7 +46,7 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     }
 
     //在这里给转场view副值
-    protected void beforeTRouter() {
+    protected void initTransitionView() {
     }
 
     private void initToolBar() {

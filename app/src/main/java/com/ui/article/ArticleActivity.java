@@ -1,6 +1,5 @@
 package com.ui.article;
 
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -9,15 +8,15 @@ import com.C;
 import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
+import com.apt.ApiFactory;
+import com.apt.TRouter;
 import com.base.BaseActivity;
+import com.base.entity.Pointer;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.data.Pointer;
-import com.data.entity.Image;
-import com.data.repository.CommentInfoRepository;
 import com.google.gson.Gson;
-import com.ui.login.LoginActivity;
+import com.model.Image;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityDetailBinding;
 
@@ -29,7 +28,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public ImageView image;
 
     @Override
-    protected void beforeTRouter() {
+    protected void initTransitionView() {
         image = mViewBinding.image;
     }
 
@@ -42,23 +41,25 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public void initView() {
         BindingUtils.loadImg(mViewBinding.image, mArticle.image);
         setTitle(mArticle.title);
-        mViewBinding.btComment.setOnClickListener(v -> {
-            String comment = mViewBinding.btComment.getText().toString();
-            if (TextUtils.isEmpty(comment))
-                Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
-            else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
-        });
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
-
         mViewBinding.lvComment
                 .setHeadView(R.layout.list_item_article, mArticle)
                 .setViewType(R.layout.list_item_comment)
                 .setIsRefreshable(false);
         mViewBinding.lvComment.getPresenter()
-                .setRepository(CommentInfoRepository.class)
+                .setRepository(ApiFactory::getCommentList)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
                 .fetch();
+        mViewBinding.btComment.setOnClickListener(v -> {
+            String comment = mViewBinding.btComment.getText().toString();
+            if (TextUtils.isEmpty(comment))
+                Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
+            else {
+                mViewBinding.etComment.setText("");
+                mPresenter.createComment(comment, mArticle, SpUtil.getUser());
+            }
+        });
     }
 
     @Override
@@ -66,7 +67,6 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
         mViewBinding.lvComment.reFetch();
         Snackbar.make(mViewBinding.fab, "评论成功!", Snackbar.LENGTH_LONG).show();
         ViewUtil.hideKeyboard(this);
-        mViewBinding.etComment.setText("");
     }
 
     @Override
@@ -77,6 +77,6 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     @Override
     public void showLoginAction() {
         Snackbar.make(mViewBinding.fab, "请先登录!", Snackbar.LENGTH_LONG)
-                .setAction("登录", view -> startActivity(new Intent(mContext, LoginActivity.class))).show();
+                .setAction("登录", v -> TRouter.go(C.LOGIN)).show();
     }
 }

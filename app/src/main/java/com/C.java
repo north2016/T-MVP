@@ -1,7 +1,7 @@
 package com;
 
-import com.data.entity.MessageInfo;
-import com.data.entity._User;
+import com.model.MessageInfo;
+import com.model._User;
 
 /**
  * Created by baixiaokang on 16/4/23.
@@ -32,13 +32,14 @@ public class C {
     public static final String INCLUDE = "include";
     public static final String CREATER = "creater";
     public static final String UID = "uId";
+    public static final String PAGE = "page";
 
     //==================Router============//
     public static final String HOME = "home";
     public static final String ARTICLE = "article";
     public static final String LOGIN = "login";
     public static final String ABOUT = "about";
-    public static final String FEED_BACK = "feedback";
+    public static final String ADVISE = "advise";
     public static final String SETTING = "setting";
     public static final String USER_LIST = "userList";
     public static final String USER_INFO = "userInfo";

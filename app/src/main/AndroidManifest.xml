@@ -59,7 +59,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".FeedBackActivity"
+            android:name="com.ui.advise.AdviseActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />

@@ -1,7 +1,7 @@
-package com.data.bean;
+package com.model;
 
 import com.base.BaseBean;
-import com.data.Pointer;
+import com.base.entity.Pointer;
 
 /**
  * Created by baixiaokang on 16/5/4.

@@ -5,7 +5,7 @@ import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
-import com.data.entity._User;
+import com.model._User;
 
 /**
  * Created by baixiaokang on 16/4/29.

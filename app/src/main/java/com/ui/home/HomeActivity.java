@@ -1,5 +1,6 @@
 package com.ui.home;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,13 +16,13 @@ import com.app.annotation.aspect.SingleClick;
 import com.apt.TRouter;
 import com.base.BaseActivity;
 import com.base.BaseListFragment;
+import com.base.entity.ExtraData;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.base.util.helper.PagerChangeListener;
-import com.data.bean.ExtraData;
-import com.data.entity._User;
+import com.model._User;
 import com.ui.main.R;
 import com.ui.main.TMVPFragment;
 import com.ui.main.databinding.ActivityMainBinding;
@@ -54,7 +55,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
             TRouter.go(C.ABOUT);
         else if (item.getItemId() == R.id.action_feedback)
             if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
-            else TRouter.go(C.FEED_BACK);
+            else TRouter.go(C.ADVISE);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
@@ -93,7 +94,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
         mViewBinding.dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)

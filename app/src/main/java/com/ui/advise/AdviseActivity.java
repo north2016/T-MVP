@@ -1,4 +1,4 @@
-package com.ui.main;
+package com.ui.advise;
 
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
@@ -8,21 +8,17 @@ import com.C;
 import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.ApiFactory;
-import com.base.DataBindingActivity;
+import com.base.BaseActivity;
 import com.base.adapter.TypeSelector;
-import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.data.bean.Message;
-import com.data.entity.MessageInfo;
-import com.data.entity._User;
-import com.data.repository.MessageInfoRepository;
+import com.model.MessageInfo;
+import com.ui.main.R;
 import com.ui.main.databinding.ActivityFeedbackBinding;
 
+@Router(C.ADVISE)
+public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedbackBinding> implements View.OnClickListener, AdviseContract.View {
 
-@Router(C.FEED_BACK)
-public class FeedBackActivity extends DataBindingActivity<ActivityFeedbackBinding> implements View.OnClickListener {
-    _User user = SpUtil.getUser();
     TypeSelector<MessageInfo> mTypeSelector
             = (item -> TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
             ? R.layout.list_item_comment_admin : R.layout.list_item_comment_user);//AdminID发送的为Admin消息，其他都是普通消息
@@ -38,11 +34,10 @@ public class FeedBackActivity extends DataBindingActivity<ActivityFeedbackBindin
         mViewBinding.lvMsg.setReverse().setIsRefreshable(false)
                 .setTypeSelector(mTypeSelector)
                 .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg());
-        mViewBinding.lvMsg
-                .getPresenter()
-                .setRepository(MessageInfoRepository.class)
+        mViewBinding.lvMsg.getPresenter()
+                .setRepository(ApiFactory::getMessageList)
                 .setParam(C.INCLUDE, C.CREATER)
-                .setParam(C.UID, user.objectId)
+                .setParam(C.UID, SpUtil.getUser().objectId)
                 .fetch();
         mViewBinding.btSend.setOnClickListener(this);
     }
@@ -50,16 +45,20 @@ public class FeedBackActivity extends DataBindingActivity<ActivityFeedbackBindin
     @SingleClick
     public void onClick(View view) {
         String msg = mViewBinding.etMessage.getText().toString();
-        if (TextUtils.isEmpty(msg)) {
+        if (TextUtils.isEmpty(msg))
             Snackbar.make(view, "内容不能为空!", Snackbar.LENGTH_LONG).show();
-            return;
-        }
-        ApiFactory.createMessage(new Message(ApiUtil.getPointer(new _User(C.ADMIN_ID)), msg,
-                ApiUtil.getPointer(user), user.objectId))
-                .subscribe(res -> {
-                    mViewBinding.lvMsg.reFetch();
-                    ViewUtil.hideKeyboard(this);
-                    mViewBinding.etMessage.setText("");
-                }, e -> Snackbar.make(view, "消息发送失败!", Snackbar.LENGTH_LONG).show());
+        else mPresenter.createMessage(msg);
+    }
+
+    @Override
+    public void sendSuc() {
+        mViewBinding.lvMsg.reFetch();
+        ViewUtil.hideKeyboard(this);
+        mViewBinding.etMessage.setText("");
+    }
+
+    @Override
+    public void sendFail() {
+        Snackbar.make(mViewBinding.btSend, "消息发送失败!", Snackbar.LENGTH_LONG).show();
     }
 }

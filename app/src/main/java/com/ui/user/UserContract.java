@@ -2,7 +2,7 @@ package com.ui.user;
 
 import com.base.BasePresenter;
 import com.base.BaseView;
-import com.data.entity._User;
+import com.model._User;
 
 import java.io.File;
 

@@ -1,7 +1,8 @@
-package com.data;
+package com.base.entity;
 
 /**
  * Created by baixiaokang on 16/5/4.
+ *
  */
 public class Pointer {
     String __type = "Pointer";

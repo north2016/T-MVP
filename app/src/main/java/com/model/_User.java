@@ -1,4 +1,4 @@
-package com.data.entity;
+package com.model;
 
 import com.base.BaseBean;
 

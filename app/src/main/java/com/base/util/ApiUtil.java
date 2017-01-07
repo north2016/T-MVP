@@ -2,8 +2,9 @@ package com.base.util;
 
 import android.text.TextUtils;
 
+import com.C;
 import com.base.BaseBean;
-import com.data.Pointer;
+import com.base.entity.Pointer;
 
 import java.util.Map;
 
@@ -12,12 +13,14 @@ import java.util.Map;
  */
 public class ApiUtil {
 
-    public static String getWhere(Map<String, String> param) {
+    public static String getWhere(Map<String, Object> param) {
         String where = "";
-        for (Map.Entry<String, String> entry : param.entrySet()) {
+        for (Map.Entry<String, Object> entry : param.entrySet()) {
             if (!TextUtils.equals(entry.getKey(), "include")) {
-                boolean isJson = entry.getValue().endsWith("}");
-                where += "\"" + entry.getKey() + "\":" + (isJson ? "" : "\"") + entry.getValue() + (isJson ? "" : "\"") + ",";
+                if (entry.getValue() instanceof String) {
+                    boolean isJson = ((String) entry.getValue()).endsWith("}");
+                    where += "\"" + entry.getKey() + "\":" + (isJson ? "" : "\"") + entry.getValue() + (isJson ? "" : "\"") + ",";
+                }
             }
         }
         return "{" + where.substring(0, where.length() - 1) + "}";
@@ -27,7 +30,11 @@ public class ApiUtil {
         return new Pointer(obj.getClass().getSimpleName(), obj.objectId);
     }
 
-    public static String getInclude(Map<String, String> param) {
-        return param.get("include");
+    public static String getInclude(Map<String, Object> param) {
+        return (String) param.get("include");
+    }
+
+    public static int getSkip(Map<String, Object> param) {
+        return C.PAGE_COUNT * ((int) param.get(C.PAGE) - 1);
     }
 }

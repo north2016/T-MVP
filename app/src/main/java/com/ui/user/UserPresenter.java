@@ -8,8 +8,8 @@ import com.app.annotation.javassist.BusUnRegister;
 import com.apt.ApiFactory;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
-import com.data.bean.Face;
-import com.data.entity._User;
+import com.model.Face;
+import com.model._User;
 
 import java.io.File;
 

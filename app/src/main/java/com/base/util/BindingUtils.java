@@ -16,8 +16,8 @@ import com.base.util.helper.BlurTransformation;
 import com.base.util.helper.GlideCircleTransform;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.data.entity.CommentInfo;
-import com.data.entity.MessageInfo;
+import com.model.CommentInfo;
+import com.model.MessageInfo;
 import com.ui.main.R;
 
 /**

@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
-import com.data.repository.ImageRepository;
-import com.view.layout.TRecyclerView;
+import com.apt.ApiFactory;
+import com.base.adapter.TRecyclerView;
 
 
 public class BaseListFragment extends Fragment {
@@ -34,10 +34,11 @@ public class BaseListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mXRecyclerView != null)
+        if (mXRecyclerView != null) {
             mXRecyclerView.getPresenter()
-                    .setRepository(ImageRepository.class)
+                    .setRepository(ApiFactory::getAllImages)
                     .setParam("type", getArguments().getString("type"))
                     .fetch();
+        }
     }
 }

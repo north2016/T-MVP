@@ -2,7 +2,7 @@ package com.ui.home;
 
 import com.base.BasePresenter;
 import com.base.BaseView;
-import com.data.entity._User;
+import com.model._User;
 
 /**
  * Created by baixiaokang on 16/4/22.

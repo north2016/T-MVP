@@ -1,4 +1,4 @@
-package com.view.layout;
+package com.base.adapter;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -12,28 +12,20 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.base.BaseBean;
-import com.base.adapter.CoreAdapter;
-import com.base.adapter.CoreAdapterPresenter;
-import com.base.adapter.TypeSelector;
-import com.data.DataArr;
+import com.base.entity.DataArr;
 import com.ui.main.R;
 
 import java.util.List;
 
 
-public class TRecyclerView<M extends BaseBean> extends FrameLayout implements CoreAdapterPresenter.IAdapterView {
-    SwipeRefreshLayout swiperefresh;
-    RecyclerView recyclerview;
-    LinearLayout ll_emptyView;
+public class TRecyclerView<M extends BaseBean> extends FrameLayout implements AdapterPresenter.IAdapterView {
+    private SwipeRefreshLayout swipeRefresh;
+    private RecyclerView recyclerview;
+    private LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
     private CoreAdapter<M> mCommAdapter;
-
-    public CoreAdapterPresenter getPresenter() {
-        return mCoreAdapterPresenter;
-    }
-
-    private CoreAdapterPresenter mCoreAdapterPresenter;
-    private boolean isRefreshable = true, isHasHeadView = false, isEmpty = false, isReverse = false;
+    private AdapterPresenter mCoreAdapterPresenter;
+    private boolean isRefreshable = true, isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
 
     public TRecyclerView(Context context) {
         super(context);
@@ -45,12 +37,16 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         init(context);
     }
 
+    public AdapterPresenter getPresenter() {
+        return mCoreAdapterPresenter;
+    }
+
     public void init(Context context) {
         View layout = inflate(context, R.layout.layout_list_recyclerview, this);
-        swiperefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
+        swipeRefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
         recyclerview = (RecyclerView) layout.findViewById(R.id.recyclerview);
         ll_emptyView = (LinearLayout) layout.findViewById(R.id.ll_emptyview);
-        mCoreAdapterPresenter = new CoreAdapterPresenter(this);
+        mCoreAdapterPresenter = new AdapterPresenter(this);
         initView(context);
     }
 
@@ -63,9 +59,9 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     }
 
     private void initView(Context context) {
-        swiperefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
-        swiperefresh.setEnabled(isRefreshable);
-        swiperefresh.setOnRefreshListener(() -> reFetch());
+        swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
+        swipeRefresh.setEnabled(isRefreshable);
+        swipeRefresh.setOnRefreshListener(() -> reFetch());
         recyclerview.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
@@ -94,14 +90,14 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         ll_emptyView.setOnClickListener((view -> {
             isEmpty = false;
             ll_emptyView.setVisibility(View.GONE);
-            swiperefresh.setVisibility(View.VISIBLE);
+            swipeRefresh.setVisibility(View.VISIBLE);
             reFetch();
         }));
     }
 
     public TRecyclerView<M> setIsRefreshable(boolean i) {
         isRefreshable = i;
-        swiperefresh.setEnabled(i);
+        swipeRefresh.setEnabled(i);
         return this;
     }
 
@@ -116,12 +112,13 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
         return this;
     }
 
-    public TRecyclerView<M> setTypeSelector(TypeSelector<M> mTypeSelector) {
+    public TRecyclerView setTypeSelector(TypeSelector mTypeSelector) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
         return this;
     }
 
-    public TRecyclerView<M> setFooterView(@LayoutRes int type, Object data) {
+    public TRecyclerView setFooterView(@LayoutRes int type, Object data) {
+        isHasFootView = type != 0;
         if (type == 0) {
             this.mCommAdapter.setFooterViewType(0, data);
         } else {
@@ -145,23 +142,23 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
 
     public void reFetch() {
         mCoreAdapterPresenter.setBegin(0);
-        swiperefresh.setRefreshing(true);
+        swipeRefresh.setRefreshing(true);
         mCoreAdapterPresenter.fetch();
     }
 
 
     @Override
     public void setEmpty() {
-        if (!isHasHeadView && !isEmpty) {
+        if ((!isHasHeadView || isReverse && !isHasFootView) && !isEmpty) {
             isEmpty = true;
             ll_emptyView.setVisibility(View.VISIBLE);
-            swiperefresh.setVisibility(View.GONE);
+            swipeRefresh.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void setData(DataArr response, int begin) {
-        swiperefresh.setRefreshing(false);
+        swipeRefresh.setRefreshing(false);
         mCommAdapter.setBeans(response.results, begin);
         if (begin == 1 && (response.results == null || response.results.size() == 0))
             setEmpty();
@@ -173,7 +170,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Co
     public void reSetEmpty() {
         if (isEmpty) {
             ll_emptyView.setVisibility(View.GONE);
-            swiperefresh.setVisibility(View.VISIBLE);
+            swipeRefresh.setVisibility(View.VISIBLE);
         }
     }
 }
