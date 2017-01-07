@@ -107,7 +107,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @SingleClick
     public void onClick(View v) {
-        if (R.id.im_face == v.getId())
-            TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+        TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
     }
 }

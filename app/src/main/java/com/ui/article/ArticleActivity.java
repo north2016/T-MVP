@@ -2,12 +2,14 @@ package com.ui.article;
 
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.C;
 import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
+import com.app.annotation.aspect.SingleClick;
 import com.apt.ApiFactory;
 import com.apt.TRouter;
 import com.base.BaseActivity;
@@ -21,7 +23,7 @@ import com.ui.main.R;
 import com.ui.main.databinding.ActivityDetailBinding;
 
 @Router(C.ARTICLE)
-public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDetailBinding> implements ArticleContract.View {
+public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDetailBinding> implements ArticleContract.View, View.OnClickListener {
     @Extra(C.HEAD_DATA)
     public Image mArticle;
     @SceneTransition(C.TRANSLATE_VIEW)
@@ -51,19 +53,12 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
                 .fetch();
-        mViewBinding.btComment.setOnClickListener(v -> {
-            String comment = mViewBinding.btComment.getText().toString();
-            if (TextUtils.isEmpty(comment))
-                Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
-            else {
-                mViewBinding.etComment.setText("");
-                mPresenter.createComment(comment, mArticle, SpUtil.getUser());
-            }
-        });
+        mViewBinding.btComment.setOnClickListener(this);
     }
 
     @Override
     public void commentSuc() {
+        mViewBinding.etComment.setText("");
         mViewBinding.lvComment.reFetch();
         Snackbar.make(mViewBinding.fab, "评论成功!", Snackbar.LENGTH_LONG).show();
         ViewUtil.hideKeyboard(this);
@@ -78,5 +73,13 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public void showLoginAction() {
         Snackbar.make(mViewBinding.fab, "请先登录!", Snackbar.LENGTH_LONG)
                 .setAction("登录", v -> TRouter.go(C.LOGIN)).show();
+    }
+
+    @SingleClick
+    public void onClick(View view) {
+        String comment = mViewBinding.btComment.getText().toString();
+        if (TextUtils.isEmpty(comment))
+            Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
+        else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
     }
 }

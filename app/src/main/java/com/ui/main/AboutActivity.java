@@ -27,8 +27,7 @@ public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
         setTitle("用户列表");
         mViewBinding.lvUser.setIsRefreshable(false)
                 .setViewType(R.layout.list_item_user);
-        mViewBinding.lvUser
-                .getPresenter()
+        mViewBinding.lvUser.getPresenter()
                 .setRepository(ApiFactory::getAllUser)
                 .fetch();
         mViewBinding.llHeader.addView(new ChartView(this, Lines, num0, num1));
