@@ -9,6 +9,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,7 +22,8 @@
                 android:background="?attr/colorPrimary"
                 android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="用户反馈" />
         </android.support.design.widget.AppBarLayout>
 
 
@@ -70,8 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:onClick="onClick"
                     android:background="@drawable/button_ripple_blue"
+                    android:onClick="onClick"
                     android:text="发送"
                     android:textColor="#fff" />
 

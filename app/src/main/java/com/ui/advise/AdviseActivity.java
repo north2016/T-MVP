@@ -15,7 +15,8 @@ import com.ui.main.R;
 import com.ui.main.databinding.ActivityFeedbackBinding;
 
 @Router(C.ADVISE)
-public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedbackBinding> implements View.OnClickListener, TypeSelector<MessageInfo>, AdviseContract.View {
+public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedbackBinding>
+        implements View.OnClickListener, TypeSelector<MessageInfo>, AdviseContract.View {
 
     @Override // AdminID发送的为Admin消息，其他都是普通消息
     public int getType(MessageInfo item) {
@@ -30,7 +31,6 @@ public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedba
 
     @Override
     public void initView() {
-        setTitle("用户反馈");
         mViewBinding.lvMsg.setFootData(C.getAdminMsg()).setTypeSelector(this);
         mPresenter.initAdapterPresenter(mViewBinding.lvMsg.getPresenter());
     }

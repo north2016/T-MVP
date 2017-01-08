@@ -30,7 +30,6 @@ public class HomePresenter extends HomeContract.Presenter {
         getUserInfo();
     }
 
-
     @Override
     public void getTabList() {
         String[] mTabs = {"民谣", "摇滚", "电子", "流行", "爵士", "独立", "故事", "新世纪", "精品推荐", "原声"};

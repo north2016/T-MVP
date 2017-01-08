@@ -24,7 +24,6 @@ public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
 
     @Override
     public void initView() {
-        setTitle("用户列表");
         mViewBinding.lvUser.getPresenter()
                 .setRepository(ApiFactory::getAllUser)
                 .fetch();
