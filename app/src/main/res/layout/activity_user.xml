@@ -82,6 +82,8 @@
                 android:id="@+id/lv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:isRefreshable="false"
+                app:itemType="@layout/list_item_user_comment"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -92,9 +94,9 @@
                 android:layout_margin="@dimen/fab_margin"
                 android:clickable="true"
                 android:onClick="checkin"
-                app:srcCompat="@drawable/ic_whilte_send"
                 app:layout_anchor="@id/appbar"
-                app:layout_anchorGravity="bottom|right|end" />
+                app:layout_anchorGravity="bottom|right|end"
+                app:srcCompat="@drawable/ic_whilte_send" />
 
 
         </android.support.design.widget.CoordinatorLayout>

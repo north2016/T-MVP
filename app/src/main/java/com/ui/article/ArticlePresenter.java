@@ -1,10 +1,14 @@
 package com.ui.article;
 
 
+import com.C;
 import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
+import com.base.adapter.AdapterPresenter;
+import com.base.entity.Pointer;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
+import com.google.gson.Gson;
 import com.model.Comment;
 import com.model.Image;
 import com.model._User;
@@ -31,6 +35,15 @@ public class ArticlePresenter extends ArticleContract.Presenter {
                                     res -> mView.commentSuc(),
                                     e -> mView.commentFail())
             );
+    }
+
+    @Override
+    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter,Image mArticle) {
+        String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
+        mAdapterPresenter.setRepository(ApiFactory::getCommentList)
+                .setParam(C.INCLUDE, C.CREATER)
+                .setParam(C.ARTICLE, article)
+                .fetch();
     }
 }
 

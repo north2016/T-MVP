@@ -1,6 +1,5 @@
 package com.base.adapter;
 
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -19,16 +18,11 @@ import java.util.List;
  */
 
 public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
-    protected TypeSelector<M> mTypeSelector;
-    protected List<M> mItemList = new ArrayList<>();
+    private TypeSelector<M> mTypeSelector;
+    private List<M> mItemList = new ArrayList<>();
     public boolean isHasMore = true;
-    public int viewType, isHasFooter = 1, isHasHeader = 0, mHeadViewType, mFooterViewType = R.layout.list_footer_view;
-    public Object mHeadData, mFootData;
-    public Context context;
-
-    public CoreAdapter(Context context) {
-        this.context = context;
-    }
+    private int viewType, isHasFooter = 1, isHasHeader = 0, mHeadViewType, mFooterViewType = R.layout.list_footer_view;
+    private Object mHeadData, mFootData;
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -45,7 +39,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
         this.viewType = type;
     }
 
-    public void setTypeSelector(TypeSelector<M> mTypeSelector) {
+    public void setTypeSelector(TypeSelector mTypeSelector) {
         this.mTypeSelector = mTypeSelector;
         this.viewType = C.FLAG_MULTI_VH;
     }

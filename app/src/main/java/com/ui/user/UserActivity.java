@@ -9,13 +9,10 @@ import com.C;
 import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
-import com.apt.ApiFactory;
 import com.base.BaseActivity;
-import com.base.entity.Pointer;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
-import com.google.gson.Gson;
 import com.model._User;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityUserBinding;
@@ -42,17 +39,11 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     @Override
     public void initView() {
         initUser(user);
-        String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        mViewBinding.lvComment.setViewType(R.layout.list_item_user_comment).setIsRefreshable(false);
-        mViewBinding.lvComment.getPresenter()
-                .setRepository(ApiFactory::getCommentList)
-                .setParam(C.INCLUDE, C.ARTICLE)
-                .setParam(C.CREATER, creater)
-                .fetch();
+        mPresenter.initAdapterPresenter(mViewBinding.lvComment.getPresenter(), user);
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             mViewBinding.fab.setImageResource(R.drawable.ic_menu_camera);
-            mViewBinding.fab.setOnClickListener(v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT),
-                    C.IMAGE_REQUEST_CODE));
+            mViewBinding.fab.setOnClickListener(
+                    v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT), C.IMAGE_REQUEST_CODE));
         } else mViewBinding.fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 

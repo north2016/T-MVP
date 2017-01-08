@@ -90,7 +90,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
         TextView tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);
         BindingUtils.loadRoundAndBgImg(im_face, user.face, im_bg);
         tv_name.setText(user.username);
-        im_face.setOnClickListener(this);
     }
 
     @Override

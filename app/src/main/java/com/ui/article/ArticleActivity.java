@@ -10,14 +10,11 @@ import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
 import com.app.annotation.aspect.SingleClick;
-import com.apt.ApiFactory;
 import com.apt.TRouter;
 import com.base.BaseActivity;
-import com.base.entity.Pointer;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.google.gson.Gson;
 import com.model.Image;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityDetailBinding;
@@ -43,17 +40,8 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public void initView() {
         BindingUtils.loadImg(mViewBinding.image, mArticle.image);
         setTitle(mArticle.title);
-        String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
-        mViewBinding.lvComment
-                .setHeadView(R.layout.list_item_article, mArticle)
-                .setViewType(R.layout.list_item_comment)
-                .setIsRefreshable(false);
-        mViewBinding.lvComment.getPresenter()
-                .setRepository(ApiFactory::getCommentList)
-                .setParam(C.INCLUDE, C.CREATER)
-                .setParam(C.ARTICLE, article)
-                .fetch();
-        mViewBinding.btComment.setOnClickListener(this);
+        mViewBinding.lvComment.setHeadData(mArticle);
+        mPresenter.initAdapterPresenter(mViewBinding.lvComment.getPresenter(), mArticle);
     }
 
     @Override

@@ -1,13 +1,17 @@
 package com.ui.user;
 
+import com.C;
 import com.EventTags;
 import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.javassist.Bus;
 import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
 import com.apt.ApiFactory;
+import com.base.adapter.AdapterPresenter;
+import com.base.entity.Pointer;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
+import com.google.gson.Gson;
 import com.model.Face;
 import com.model._User;
 
@@ -40,6 +44,15 @@ public class UserPresenter extends UserContract.Presenter {
                     mView.showMsg("更新成功!");
                 },
                 e -> mView.showMsg("更新失败!")));
+    }
+
+    @Override
+    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, _User user) {
+        String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
+        mAdapterPresenter.setRepository(ApiFactory::getCommentList)
+                .setParam(C.INCLUDE, C.ARTICLE)
+                .setParam(C.CREATER, creater)
+                .fetch();
     }
 
     @BusRegister

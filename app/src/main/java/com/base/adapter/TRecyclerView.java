@@ -1,6 +1,7 @@
 package com.base.adapter;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -25,51 +26,53 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
     private LinearLayoutManager mLayoutManager;
     private CoreAdapter<M> mCommAdapter;
     private AdapterPresenter mCoreAdapterPresenter;
-    private boolean isRefreshable = true, isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
+    private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
+    private int headType, footType;
 
     public TRecyclerView(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
-    public TRecyclerView(Context context, AttributeSet att) {
-        super(context, att);
-        init(context);
+    public TRecyclerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context, attrs);
+    }
+
+    public TRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context, attrs);
     }
 
     public AdapterPresenter getPresenter() {
         return mCoreAdapterPresenter;
     }
 
-    public void init(Context context) {
+    public void init(Context context, AttributeSet attrs) {
+        TypedArray ta = getContext().obtainStyledAttributes(attrs, R.styleable.TRecyclerView);
+        headType = ta.getResourceId(R.styleable.TRecyclerView_headType, 0);
+        int itemType = ta.getResourceId(R.styleable.TRecyclerView_itemType, 0);
+        footType = ta.getResourceId(R.styleable.TRecyclerView_footType, 0);
+        isReverse = ta.getBoolean(R.styleable.TRecyclerView_isReverse, false);
+        boolean isRefreshable = ta.getBoolean(R.styleable.TRecyclerView_isRefreshable, true);
+        ta.recycle();
+
         View layout = inflate(context, R.layout.layout_list_recyclerview, this);
         swipeRefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
         recyclerview = (RecyclerView) layout.findViewById(R.id.recyclerview);
         ll_emptyView = (LinearLayout) layout.findViewById(R.id.ll_emptyview);
         mCoreAdapterPresenter = new AdapterPresenter(this);
-        initView(context);
-    }
 
-    public TRecyclerView<M> setReverse() {
-        isReverse = true;
-        mLayoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
-        mLayoutManager.setReverseLayout(true);//列表翻转
-        recyclerview.setLayoutManager(mLayoutManager);
-        return this;
-    }
-
-    private void initView(Context context) {
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
-        swipeRefresh.setEnabled(isRefreshable);
-        swipeRefresh.setOnRefreshListener(() -> reFetch());
+        swipeRefresh.setOnRefreshListener(this::reFetch);
         recyclerview.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        mCommAdapter = new CoreAdapter(context);
+        mCommAdapter = new CoreAdapter<M>();
         recyclerview.setAdapter(mCommAdapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            protected int lastVisibleItem;
+            int lastVisibleItem;
 
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -93,46 +96,36 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
             swipeRefresh.setVisibility(View.VISIBLE);
             reFetch();
         }));
-    }
 
-    public TRecyclerView<M> setIsRefreshable(boolean i) {
-        isRefreshable = i;
-        swipeRefresh.setEnabled(i);
-        return this;
-    }
-
-
-    public TRecyclerView<M> setHeadView(@LayoutRes int type, Object data) {
-        isHasHeadView = type != 0;
-        if (!isHasHeadView) {
-            this.mCommAdapter.setHeadViewType(0, null);
-        } else {
-            this.mCommAdapter.setHeadViewType(type, data);
+        if (itemType != 0) setViewType(itemType);
+        swipeRefresh.setEnabled(isRefreshable);
+        if (isReverse) {
+            mLayoutManager.setStackFromEnd(true);//列表再底部开始展示，反转后由上面开始展示
+            mLayoutManager.setReverseLayout(true);//列表翻转
+            recyclerview.setLayoutManager(mLayoutManager);
         }
-        return this;
     }
 
-    public TRecyclerView setTypeSelector(TypeSelector mTypeSelector) {
+    public TRecyclerView<M> setTypeSelector(TypeSelector mTypeSelector) {
         this.mCommAdapter.setTypeSelector(mTypeSelector);
         return this;
     }
 
-    public TRecyclerView setFooterView(@LayoutRes int type, Object data) {
-        isHasFootView = type != 0;
-        if (type == 0) {
-            this.mCommAdapter.setFooterViewType(0, data);
-        } else {
-            mCoreAdapterPresenter.setBegin(0);
-            this.mCommAdapter.setFooterViewType(type, data);
-        }
+    public TRecyclerView<M> setFootData(Object data) {
+        isHasFootView = footType != 0;
+        this.mCommAdapter.setFooterViewType(footType, data);
         return this;
     }
 
-    public TRecyclerView<M> setViewType(@LayoutRes int type) {
+    public TRecyclerView<M> setHeadData(Object data) {
+        isHasHeadView = headType != 0;
+        this.mCommAdapter.setHeadViewType(headType, data);
+        return this;
+    }
+
+    public void setViewType(@LayoutRes int type) {
         this.mCommAdapter.setViewType(type);
-        return this;
     }
-
 
     public TRecyclerView<M> setData(List<M> data) {
         reSetEmpty();
@@ -145,7 +138,6 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
         swipeRefresh.setRefreshing(true);
         mCoreAdapterPresenter.fetch();
     }
-
 
     @Override
     public void setEmpty() {

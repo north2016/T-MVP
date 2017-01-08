@@ -62,6 +62,8 @@
             android:id="@+id/lv_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:isRefreshable="false"
+            app:itemType="@layout/list_item_user"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 

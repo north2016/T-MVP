@@ -34,7 +34,10 @@
                 android:id="@+id/lv_msg"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.0" />
+                android:layout_weight="1.0"
+                app:footType="@layout/list_item_comment_admin"
+                app:isRefreshable="false"
+                app:isReverse="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,6 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:onClick="onClick"
                     android:background="@drawable/button_ripple_blue"
                     android:text="发送"
                     android:textColor="#fff" />

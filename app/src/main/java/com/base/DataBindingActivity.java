@@ -41,8 +41,12 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         initTransitionView();
         TRouter.bind(this);
         mContext = this;
+        initPresenter();
         initToolBar();
         initView();
+    }
+
+    protected void initPresenter() {
     }
 
     //在这里给转场view副值

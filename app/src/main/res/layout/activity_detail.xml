@@ -63,7 +63,10 @@
             <com.base.adapter.TRecyclerView
                 android:id="@+id/lv_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:headType="@layout/list_item_article"
+                app:isRefreshable="false"
+                app:itemType="@layout/list_item_comment" />
 
         </android.support.v4.widget.NestedScrollView>
 
@@ -110,6 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:onClick="onClick"
                 android:background="@drawable/button_ripple_blue"
                 android:text="评论"
                 android:textColor="#fff" />

@@ -1,7 +1,6 @@
 package com.base;
 
 import android.databinding.ViewDataBinding;
-import android.os.Bundle;
 
 import com.base.util.InstanceUtil;
 
@@ -13,8 +12,7 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
     public P mPresenter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initPresenter() {
         if (this instanceof BaseView) {
             mPresenter = InstanceUtil.getInstance(this, 0);
             mPresenter.setView(this);

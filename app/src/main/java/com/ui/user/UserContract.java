@@ -2,6 +2,7 @@ package com.ui.user;
 
 import com.base.BasePresenter;
 import com.base.BaseView;
+import com.base.adapter.AdapterPresenter;
 import com.model._User;
 
 import java.io.File;
@@ -22,5 +23,7 @@ public interface UserContract {
         public abstract void upLoadFace(File f);
 
         public abstract void upUserInfo(String face);
+
+        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, _User user);
     }
 }

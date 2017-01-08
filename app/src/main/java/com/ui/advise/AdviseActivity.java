@@ -7,21 +7,21 @@ import android.view.View;
 import com.C;
 import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
-import com.apt.ApiFactory;
 import com.base.BaseActivity;
 import com.base.adapter.TypeSelector;
-import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
 import com.model.MessageInfo;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityFeedbackBinding;
 
 @Router(C.ADVISE)
-public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedbackBinding> implements View.OnClickListener, AdviseContract.View {
+public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedbackBinding> implements View.OnClickListener, TypeSelector<MessageInfo>, AdviseContract.View {
 
-    TypeSelector<MessageInfo> mTypeSelector
-            = (item -> TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
-            ? R.layout.list_item_comment_admin : R.layout.list_item_comment_user);//AdminID发送的为Admin消息，其他都是普通消息
+    @Override // AdminID发送的为Admin消息，其他都是普通消息
+    public int getType(MessageInfo item) {
+        return TextUtils.equals(item.creater.objectId, C.ADMIN_ID)
+                ? R.layout.list_item_comment_admin : R.layout.list_item_comment_user;
+    }
 
     @Override
     public int getLayoutId() {
@@ -31,22 +31,14 @@ public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedba
     @Override
     public void initView() {
         setTitle("用户反馈");
-        mViewBinding.lvMsg.setReverse().setIsRefreshable(false)
-                .setTypeSelector(mTypeSelector)
-                .setFooterView(R.layout.list_item_comment_admin, C.getAdminMsg());
-        mViewBinding.lvMsg.getPresenter()
-                .setRepository(ApiFactory::getMessageList)
-                .setParam(C.INCLUDE, C.CREATER)
-                .setParam(C.UID, SpUtil.getUser().objectId)
-                .fetch();
-        mViewBinding.btSend.setOnClickListener(this);
+        mViewBinding.lvMsg.setFootData(C.getAdminMsg()).setTypeSelector(this);
+        mPresenter.initAdapterPresenter(mViewBinding.lvMsg.getPresenter());
     }
 
     @SingleClick
     public void onClick(View view) {
         String msg = mViewBinding.etMessage.getText().toString();
-        if (TextUtils.isEmpty(msg))
-            Snackbar.make(view, "内容不能为空!", Snackbar.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(msg)) showMsg("内容不能为空!");
         else mPresenter.createMessage(msg);
     }
 
@@ -58,7 +50,7 @@ public class AdviseActivity extends BaseActivity<AdvisePresenter, ActivityFeedba
     }
 
     @Override
-    public void sendFail() {
-        Snackbar.make(mViewBinding.btSend, "消息发送失败!", Snackbar.LENGTH_LONG).show();
+    public void showMsg(String msg) {
+        Snackbar.make(mViewBinding.btSend, msg, Snackbar.LENGTH_SHORT).show();
     }
 }
