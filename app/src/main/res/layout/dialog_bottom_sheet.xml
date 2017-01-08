@@ -12,7 +12,6 @@
         app:layout_heightPercent="100%">
 
         <TextView
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="66dp"
             android:background="@color/colorPrimary"

@@ -94,7 +94,6 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        item.setChecked(true);
         mViewBinding.dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)
             TRouter.go(C.SETTING);

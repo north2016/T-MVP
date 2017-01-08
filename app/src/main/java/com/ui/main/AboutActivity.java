@@ -24,9 +24,7 @@ public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
 
     @Override
     public void initView() {
-        mViewBinding.lvUser.getPresenter()
-                .setRepository(ApiFactory::getAllUser)
-                .fetch();
+        mViewBinding.lvUser.getPresenter().setRepository(ApiFactory::getAllUser).fetch();
         mViewBinding.llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 }

@@ -52,8 +52,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
         if (mdata != null && requestCode == C.IMAGE_REQUEST_CODE) {
             try {
                 File file = new File(BindingUtils.getUrlByIntent(mContext, mdata));
-                if (file.exists())
-                    mPresenter.upLoadFace(file);
+                if (file.exists()) mPresenter.upLoadFace(file);
                 else showMsg("照片无法打开");
             } catch (Exception e) {
                 e.printStackTrace();

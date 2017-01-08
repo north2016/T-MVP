@@ -15,7 +15,6 @@ import com.model._User;
 @InstanceFactory
 public class HomePresenter extends HomeContract.Presenter {
 
-
     @Override
     public void getUserInfo() {
         _User user = SpUtil.getUser();
