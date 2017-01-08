@@ -7,7 +7,7 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 
 2017/1／7： 使用DataBinding替换掉所有的ButterKnife，狂删代码
 
-2017/1／6： 使用DataBinding替换掉所有的ViewHolder，从此迈向新时代
+2017/1／6： 使用DataBinding替换掉所有的ViewHolder，狂删代码，从此迈向新时代
 
 2016/12／30：使用Apt生成全局路由TRouter，更优雅的页面跳转，支持传递参数和共享view转场动画
 
