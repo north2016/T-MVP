@@ -4,6 +4,8 @@ import android.databinding.ViewDataBinding;
 
 import com.base.util.InstanceUtil;
 
+import java.lang.reflect.ParameterizedType;
+
 
 /**
  * Created by Administrator on 2016/4/5.
@@ -13,8 +15,12 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
 
     @Override
     protected void initPresenter() {
-        if (this instanceof BaseView) {
-            mPresenter = InstanceUtil.getInstance(this, 0);
+        if (this instanceof BaseView &&
+                this.getClass().getGenericSuperclass() instanceof ParameterizedType &&
+                ((ParameterizedType) (this.getClass().getGenericSuperclass())).getActualTypeArguments().length > 0) {
+            Class mPresenterClass = (Class) ((ParameterizedType) (this.getClass()
+                    .getGenericSuperclass())).getActualTypeArguments()[0];
+            mPresenter = InstanceUtil.getInstance(mPresenterClass);
             mPresenter.setView(this);
         }
     }

@@ -25,7 +25,7 @@ public class SpUtil {
     public static void setNight(Context context, boolean isNight) {
         prefs.edit().putBoolean("isNight", isNight).commit();
         if (context instanceof BaseActivity)
-            ((BaseActivity) context).reload();
+            ((BaseActivity) context).reload(true);
     }
 
     public static _User getUser() {

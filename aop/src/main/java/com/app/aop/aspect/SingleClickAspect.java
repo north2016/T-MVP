@@ -29,9 +29,9 @@ public class SingleClickAspect {
 
     @Around("methodAnnotated()")//在连接点进行方法替换
     public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object arg0 = joinPoint.getArgs()[0];
         View view = null;
-        if (arg0 instanceof View) view = (View) arg0;
+        for (Object arg : joinPoint.getArgs())
+            if (arg instanceof View) view = (View) arg;
         if (view != null) {
             Object tag = view.getTag(TIME_TAG);
             long lastClickTime = ((tag != null) ? (long) tag : 0);

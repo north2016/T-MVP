@@ -2,15 +2,19 @@
 buildscript {
     repositories {
         jcenter()
+       // maven() {
+            //  url 'https://dl.bintray.com/codingbingo/maven'
+       // }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
         classpath 'me.tatarka:gradle-retrolambda:3.2.0'
         classpath 'org.aspectj:aspectjtools:1.8.9'
+        // classpath 'com.codingbingo.library:gradletaskrecord:1.0.0'//追踪Gradle 任务耗时
     }
 }
 
-
+//apply plugin: 'com.codingbingo.gradletaskrecord'//追踪Gradle任务耗时的插件
 
 allprojects {
     repositories {

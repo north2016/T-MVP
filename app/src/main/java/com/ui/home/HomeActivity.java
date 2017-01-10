@@ -86,15 +86,13 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     public void initUserInfo(_User user) {
         View mHeaderView = mViewBinding.nvMainNavigation.getHeaderView(0);
         ImageView im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
-        ImageView im_bg = (ImageView) mHeaderView.findViewById(R.id.im_bg);
         TextView tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);
-        BindingUtils.loadRoundAndBgImg(im_face, user.face, im_bg);
+        BindingUtils.loadRoundImg(im_face, user.face);
         tv_name.setText(user.username);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        mViewBinding.dlMainDrawer.closeDrawers();
         if (item.getItemId() == R.id.nav_manage)
             TRouter.go(C.SETTING);
         else if (item.getItemId() == R.id.nav_share)

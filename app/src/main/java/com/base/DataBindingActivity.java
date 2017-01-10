@@ -21,7 +21,6 @@ import com.view.widget.SwipeBackLayout;
 /**
  * Created by baixiaokang on 17/1/6.
  */
-
 public abstract class DataBindingActivity<B extends ViewDataBinding> extends AppCompatActivity {
     protected Toolbar toolbar;
     public boolean isNight;
@@ -61,20 +60,24 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         }
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
-        if (isNight != SpUtil.isNight()) reload();
+        if (isNight != SpUtil.isNight()) reload(false);
     }
 
-    public void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(0, 0);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
+    public void reload(boolean isNeedAnim) {
+        if (isNeedAnim) {
+            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+            recreate();
+        } else {
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+        }
     }
 
 
