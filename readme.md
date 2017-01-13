@@ -3,6 +3,8 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 
 #更新日志：
 
+2017/1／13： AOP新增用户登陆拦截切片，控制用户权限
+
 2017/1／8： 使用Apt封装Retrofit生成ApiFactory替换掉所有的Repository，狂删代码
 
 2017/1／7： 使用DataBinding替换掉所有的ButterKnife，狂删代码
