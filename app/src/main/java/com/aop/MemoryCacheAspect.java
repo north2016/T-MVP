@@ -1,9 +1,9 @@
-package com.app.aop.aspect;
+package com.aop;
 
 import android.text.TextUtils;
 
-import com.app.aop.utils.LogUtils;
-import com.app.aop.utils.MemoryCacheManager;
+import com.base.util.LogUtils;
+import com.base.util.MemoryCacheManager;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

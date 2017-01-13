@@ -1,7 +1,7 @@
-package com.app.aop.aspect;
+package com.aop;
 
 
-import com.app.aop.utils.LogUtils;
+import com.base.util.LogUtils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

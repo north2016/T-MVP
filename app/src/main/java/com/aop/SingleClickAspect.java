@@ -1,9 +1,9 @@
-package com.app.aop.aspect;
+package com.aop;
 
 import android.view.View;
 
-import com.app.aop.R;
-import com.app.aop.utils.LogUtils;
+import com.base.util.LogUtils;
+import com.ui.main.R;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

@@ -1,4 +1,4 @@
-package com.app.aop.utils;
+package com.base.util;
 
 import android.text.TextUtils;
 import android.util.Log;

@@ -16,13 +16,13 @@ public interface ArticleContract {
         void commentSuc();
 
         void commentFail();
-
-        void showLoginAction();
     }
 
     abstract class Presenter extends BasePresenter<View> {
         public abstract void createComment(String content, Image article, _User user);
-        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter,Image article);
+
+        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, Image article);
+
         @Override
         public void onAttached() {
         }

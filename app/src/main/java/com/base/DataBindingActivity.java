@@ -29,6 +29,7 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     private ImageView ivShadow;
     public B mViewBinding;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         initToolBar();
         initView();
     }
+
 
     protected void initPresenter() {
     }
@@ -123,4 +125,6 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     public abstract int getLayoutId();
 
     public abstract void initView();
+
+
 }

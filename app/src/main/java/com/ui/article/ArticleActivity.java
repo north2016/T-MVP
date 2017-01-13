@@ -10,7 +10,6 @@ import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
 import com.app.annotation.aspect.SingleClick;
-import com.apt.TRouter;
 import com.base.BaseActivity;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
@@ -55,12 +54,6 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     @Override
     public void commentFail() {
         Snackbar.make(mViewBinding.fab, "评论失败!", Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showLoginAction() {
-        Snackbar.make(mViewBinding.fab, "请先登录!", Snackbar.LENGTH_LONG)
-                .setAction("登录", v -> TRouter.go(C.LOGIN)).show();
     }
 
     @SingleClick
