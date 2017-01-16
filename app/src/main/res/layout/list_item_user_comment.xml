@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="?attr/backgroundCard"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -40,6 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:textColor="?attr/textColor"
                 android:text="@{item.article.title}" />
         </LinearLayout>
 
@@ -48,7 +49,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="#eee"
+            android:background="?attr/textColorBg"
+            android:textColor="?attr/textColor"
             android:padding="10dp"
             android:text="@{item.content}" />
     </LinearLayout>

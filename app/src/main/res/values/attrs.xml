@@ -7,4 +7,9 @@
         <attr name="headType" format="reference" />
         <attr name="footType" format="reference" />
     </declare-styleable>
+
+    <attr name="backgroundCard" format="color" />
+    <attr name="textColor" format="color" />
+    <attr name="textColorBg" format="color" />
+
 </resources>

@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="?attr/backgroundCard"
         android:padding="10dp">
 
         <ImageView
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:textColor="?attr/textColor"
             android:text="@{item.username}" />
     </LinearLayout>
 </layout>

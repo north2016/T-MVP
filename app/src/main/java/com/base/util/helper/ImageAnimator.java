@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.base.util.BaseUtils;
 import com.base.util.BindingUtils;
+import com.base.util.SpUtil;
 
 public class ImageAnimator {
     String[] mImages = {
@@ -21,8 +22,8 @@ public class ImageAnimator {
             "http://img-cdn.luoo.net/pics/vol/57e2c6fd714e2.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/579255f04b1da.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/581b681b678f1.jpg?imageView2/1/w/640/h/452"};
-
-    int[] mColors = {
+    int[] mColors;
+    int[] mColorDay = {
             Color.parseColor("#F44336"),
             Color.parseColor("#E91E63"),
             Color.parseColor("#9C27B0"),
@@ -33,6 +34,19 @@ public class ImageAnimator {
             Color.parseColor("#00BCD4"),
             Color.parseColor("#009688"),
             Color.parseColor("#4CAF50"),
+    };
+
+    int[] mColorNight = {
+            Color.parseColor("#290502"),
+            Color.parseColor("#011e2b"),
+            Color.parseColor("#210825"),
+            Color.parseColor("#10091c"),
+            Color.parseColor("#291f00"),
+            Color.parseColor("#021524"),
+            Color.parseColor("#2a2600"),
+            Color.parseColor("#0e210f"),
+            Color.parseColor("#221400"),
+            Color.parseColor("#19120f"),
     };
 
     private static final float FACTOR = 0.1f;
@@ -53,6 +67,7 @@ public class ImageAnimator {
         mTargetImage = targetImage;
         mOutgoingImage = outgoingImage;
         BindingUtils.loadImg(mTargetImage, mImages[0]);
+        mColors = SpUtil.isNight() ? mColorNight : mColorDay;
         collapsingToolbar.setContentScrimColor(mColors[0]);
         collapsingToolbar.setStatusBarScrimColor(mColors[0]);
     }
