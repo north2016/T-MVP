@@ -23,6 +23,8 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 
 #系列文章：
 
+##[安卓AOP实战：面向切片编程](http://www.jianshu.com/p/b96a68ba50db)
+
 ##[Android实用技巧之:用好泛型,少写代码](http://www.jianshu.com/p/0f6800ded3da)
 
 ##[安卓AOP实战:APT打造极简路由](http://www.jianshu.com/p/6ccfa7b50f0e)

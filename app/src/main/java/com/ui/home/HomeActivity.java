@@ -50,10 +50,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings)
-            TRouter.go(C.ABOUT);
-        else if (item.getItemId() == R.id.action_feedback)
-            TRouter.go(C.ADVISE);
+        if (item.getItemId() == R.id.action_settings) TRouter.go(C.ABOUT);
+        else if (item.getItemId() == R.id.action_feedback) TRouter.go(C.ADVISE);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
@@ -91,10 +89,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_manage)
-            TRouter.go(C.SETTING);
-        else if (item.getItemId() == R.id.nav_share)
-            TRouter.go(C.LOGIN);
+        if (item.getItemId() == R.id.nav_manage) TRouter.go(C.SETTING);
+        else if (item.getItemId() == R.id.nav_share) TRouter.go(C.LOGIN);
         else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
     }

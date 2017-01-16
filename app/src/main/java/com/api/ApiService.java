@@ -4,7 +4,7 @@ import com.app.annotation.apt.ApiFactory;
 import com.base.entity.CreatedResult;
 import com.base.entity.DataArr;
 import com.model.Comment;
-import com.model.Face;
+import com.base.entity.Face;
 import com.model.Message;
 import com.model.Image;
 import com.model.CommentInfo;

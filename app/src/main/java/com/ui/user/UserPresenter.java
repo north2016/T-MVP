@@ -12,7 +12,7 @@ import com.base.entity.Pointer;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
 import com.google.gson.Gson;
-import com.model.Face;
+import com.base.entity.Face;
 import com.model._User;
 
 import java.io.File;

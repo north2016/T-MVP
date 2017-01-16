@@ -1,4 +1,4 @@
-package com.model;
+package com.base.entity;
 
 /**
  * Created by baixiaokang on 16/12/28.

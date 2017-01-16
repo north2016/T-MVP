@@ -39,7 +39,7 @@ public class Api {
         return SingletonHolder.INSTANCE;
     }
 
-    Interceptor mInterceptor = (chain) -> chain.proceed(chain.request().newBuilder()
+    Interceptor headInterceptor = (chain) -> chain.proceed(chain.request().newBuilder()
             .addHeader("X-LC-Id", C.X_LC_Id)
             .addHeader("X-LC-Key", C.X_LC_Key)
             .addHeader("Content-Type", "application/json")
@@ -47,8 +47,8 @@ public class Api {
 
     //构造方法私有
     private Api() {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         File cacheFile = new File(App.getAppContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
@@ -56,8 +56,8 @@ public class Api {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(7676, TimeUnit.MILLISECONDS)
                 .connectTimeout(7676, TimeUnit.MILLISECONDS)
-                .addInterceptor(mInterceptor)
-                .addInterceptor(interceptor)
+                .addInterceptor(headInterceptor)
+                .addInterceptor(logInterceptor)
                 .addNetworkInterceptor(new HttpCacheInterceptor())
                 .cache(cache)
                 .build();
