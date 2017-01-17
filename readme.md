@@ -51,6 +51,18 @@ Github：https://github.com/north2016/T-MVP
 
 参考配置：   as:2.2.2    grade:2.2.3       buildTools:24.0.3
 
+apply plugin: com.app.plugin.AspectjPlugin
+apply plugin: com.app.plugin.JavassistPlugin
+这两句话编译不通过千万不要注释掉
+
+对于本例中的Gradle插件mac、win编译都没事，由于我用的是本地的插件，未发布状态。
+有可能你的电脑系统（  linux、ubuntu等）不能识别，但是发布出去肯定是能识别的
+gradle插件发布到本地请看这篇博客 
+
+http://kvh.io/cn/embrace-android-studio-gradle-plugin.html
+
+本demo现阶段处于快速优化迭代状态，只提供idea，暂不提供lib
+   
 ![首页](app.gif)
 ## License
 
