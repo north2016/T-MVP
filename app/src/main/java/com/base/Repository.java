@@ -1,4 +1,6 @@
-package com.base.entity;
+package com.base;
+
+import com.base.entity.DataArr;
 
 import java.util.HashMap;
 

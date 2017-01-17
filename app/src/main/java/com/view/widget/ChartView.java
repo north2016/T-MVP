@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.app.annotation.aspect.SingleClick;
 import com.base.util.BaseUtils;
+import com.base.util.SpUtil;
 import com.ui.main.R;
 
 public class ChartView extends View implements View.OnClickListener {
@@ -38,7 +39,7 @@ public class ChartView extends View implements View.OnClickListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(getResources().getColor(R.color.colorPrimaryDark));
+        canvas.drawColor(getResources().getColor(!SpUtil.isNight() ? R.color.colorPrimary : R.color.md_grey));
         itemWidth = getWidth() / 9;
         itemHeight = getHeight() / 8;
         canvas.drawText("活跃用户", getWidth() / 4, itemHeight * 4 / 3, mYellowTextPaint);

@@ -7,11 +7,6 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
 
-        <!--<item name="android:textColorHint">@color/alpha_white</item>-->
-        <!--<item name="colorControlNormal">@color/alpha_white</item>-->
-        <!--<item name="colorControlActivated">@color/white</item>-->
-        <!--<item name="colorControlHighlight">@color/white</item>-->
-
     </style>
 
     <!-- Base application theme. -->
@@ -20,15 +15,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!--<item name="window_background">#2196F3</item>-->
+
+        <item name="backgroundCard">@color/alpha_white</item>
+        <item name="textColorBg">#eee</item>
+        <item name="textColor">@color/md_grey_600</item>
     </style>
 
 
     <style name="AppThemeNight" parent="AppTheme">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#ff243447</item>
+        <item name="colorPrimary">@color/md_grey</item>
         <item name="colorPrimaryDark">#ff1b2836</item>
-        <item name="colorAccent">@color/md_blue_500</item>
+        <item name="colorAccent">#00524a</item>
+
+        <item name="backgroundCard">@color/md_grey_600</item>
+        <item name="textColorBg">#ff1b2836</item>
+        <item name="textColor">@color/md_white_1000</item>
 
     </style>
 

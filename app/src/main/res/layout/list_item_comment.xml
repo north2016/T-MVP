@@ -15,8 +15,11 @@
     </data>
 
     <LinearLayout
+        android:background="?attr/backgroundCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp"
@@ -35,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1.0"
+            android:textColor="?attr/textColor"
             app:comment="@{item}" />
     </LinearLayout>
 </layout>

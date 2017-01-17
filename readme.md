@@ -3,6 +3,8 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 
 #更新日志：
 
+2017/1／9： AOP新增CheckLoginAspect切片拦截未登陆用户，控制未登陆用户的操作权限
+
 2017/1／8： 使用Apt封装Retrofit生成ApiFactory替换掉所有的Repository，狂删代码
 
 2017/1／7： 使用DataBinding替换掉所有的ButterKnife，狂删代码
@@ -20,6 +22,8 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 2016/12／26：抽离CoreAdapterPresenter优化TRecyclerView
 
 #系列文章：
+
+##[安卓AOP实战：面向切片编程](http://www.jianshu.com/p/b96a68ba50db)
 
 ##[Android实用技巧之:用好泛型,少写代码](http://www.jianshu.com/p/0f6800ded3da)
 
@@ -44,6 +48,8 @@ Github：https://github.com/north2016/T-MVP
 
 #答疑
 运行报错的，自觉google，检查As版本(2.2.2)，gradle配置等(AndroidStudio每个版本gradle的api都不一样，坑)，低版本手机FloatingActionButton在xml会报错，因为icon用了SVG(5.0+)
+
+参考配置：   as:2.2.2    grade:2.2.3       buildTools:24.0.3
 
 ![首页](app.gif)
 ## License

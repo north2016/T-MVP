@@ -12,8 +12,6 @@
     <color name="yellow">#ff7200</color>
 
 
-
-
     <!--blue-->
     <color name="md_blue_100">#BBDEFB</color>
     <color name="md_blue_300">#64B5F6</color>
@@ -26,7 +24,7 @@
     <color name="md_grey_600">#757575</color>
     <color name="md_black_1000">#000000</color>
     <color name="md_white_1000">#ffffff</color>
-
+    <color name="md_grey">#243447</color>
     <!--blue grey-->
     <color name="md_blue_grey_500">#607D8B</color>
 </resources>

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.C;
 import com.base.entity.DataArr;
-import com.base.entity.Repository;
+import com.base.Repository;
 
 import java.util.HashMap;
 

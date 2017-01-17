@@ -6,7 +6,7 @@ import android.os.Message;
 import android.util.SparseArray;
 
 import com.app.annotation.javassist.Bus;
-import com.app.aop.utils.LogUtils;
+import com.base.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
  * Created by baixiaokang on 16/11/15.
  */
 
-public class OkBus<T> {
+public class OkBus {
     private ConcurrentHashMap<Integer, List<SparseArray<Event>>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
     private ConcurrentHashMap<Integer, Object> mStickyEventList = new ConcurrentHashMap<>();//存储粘连事件ID以及其数据
     private ScheduledExecutorService mPool = Executors.newScheduledThreadPool(5);
@@ -81,7 +81,7 @@ public class OkBus<T> {
         return this;
     }
 
-    public OkBus onEvent(int tag, T data) {
+    public OkBus onEvent(int tag, Object data) {
         Message msg = new Message();
         msg.obj = data;
         msg.what = tag;
@@ -98,7 +98,7 @@ public class OkBus<T> {
         return this;
     }
 
-    public OkBus onStickyEvent(int tag, T data) {
+    public OkBus onStickyEvent(int tag, Object data) {
         LogUtils.e("Bus onStickyEvent", tag + " ");
         mStickyEventList.put(tag, (data == null ? tag : data));
         onEvent(tag, data);

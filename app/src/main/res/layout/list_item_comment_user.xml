@@ -20,6 +20,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:background="?attr/backgroundCard"
         android:paddingRight="50dp">
 
         <ImageView
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1.0"
+            android:textColor="?attr/textColor"
             app:message="@{item}" />
     </LinearLayout>
 

@@ -1,9 +1,9 @@
-package com.app.aop.aspect;
+package com.aop;
 
 import android.view.View;
 
-import com.app.aop.R;
-import com.app.aop.utils.LogUtils;
+import com.base.util.LogUtils;
+import com.ui.main.R;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -37,7 +37,7 @@ public class SingleClickAspect {
             long lastClickTime = ((tag != null) ? (long) tag : 0);
             LogUtils.showLog("SingleClickAspect", "lastClickTime:" + lastClickTime);
             long currentTime = Calendar.getInstance().getTimeInMillis();
-            if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {
+            if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {//过滤掉600毫秒内的连续点击
                 view.setTag(TIME_TAG, currentTime);
                 LogUtils.showLog("SingleClickAspect", "currentTime:" + currentTime);
                 joinPoint.proceed();//执行原方法

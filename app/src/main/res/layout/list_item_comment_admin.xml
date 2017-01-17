@@ -16,6 +16,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="?attr/backgroundCard"
         android:layout_height="wrap_content">
 
         <TextView
@@ -38,6 +39,7 @@
             android:layout_toLeftOf="@+id/image"
             android:paddingLeft="50dp"
             android:paddingRight="10dp"
+            android:textColor="?attr/textColor"
             android:text="@{item.message}" />
 
         <ImageView

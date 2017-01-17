@@ -6,11 +6,11 @@
         <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_menu_send"
-            android:title="登录"/>
+            android:title="登录" />
         <item
             android:id="@+id/nav_send"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="切换"/>
+            android:title="换肤" />
 
     </group>
 
@@ -19,7 +19,7 @@
             <item
                 android:id="@+id/nav_manage"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="设置"/>
+                android:title="设置" />
         </menu>
     </item>
 

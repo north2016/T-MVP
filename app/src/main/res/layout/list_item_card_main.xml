@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
+        android:foreground="?attr/selectableItemBackground"
         android:onClick="@{()->RouterHelper.go(C.ARTICLE,ExtraData.getExtra(C.HEAD_DATA,item),image)}"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
@@ -26,8 +27,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal">
+            android:background="?attr/backgroundCard"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <LinearLayout
                 android:layout_width="120dp"
@@ -53,7 +55,9 @@
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minLines="2"
                     android:text="@{item.title}"
+                    android:textColor="?attr/textColor"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -63,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@{item.author}"
+                    android:textColor="?attr/textColor"
                     android:textSize="12sp" />
 
                 <TextView
@@ -73,6 +78,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="@{item.type}"
+                    android:textColor="?attr/textColor"
                     android:textSize="18sp" />
 
                 <TextView
@@ -80,7 +86,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@{item.createdAt}" />
+                    android:text="@{item.createdAt}"
+                    android:textColor="?attr/textColor" />
             </LinearLayout>
 
 

@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:background="?attr/backgroundCard"
         android:orientation="vertical">
 
         <LinearLayout
@@ -33,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:textColor="?attr/textColor"
                 android:text='@{item? "正在加载" :"已经到底"}' />
         </LinearLayout>
 

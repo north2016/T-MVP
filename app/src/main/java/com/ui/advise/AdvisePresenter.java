@@ -2,6 +2,7 @@ package com.ui.advise;
 
 import com.C;
 import com.app.annotation.apt.InstanceFactory;
+import com.app.annotation.aspect.CheckLogin;
 import com.apt.ApiFactory;
 import com.base.adapter.AdapterPresenter;
 import com.base.util.ApiUtil;
@@ -15,7 +16,7 @@ import com.model._User;
 @InstanceFactory
 public class AdvisePresenter extends AdviseContract.Presenter {
 
-    @Override
+    @CheckLogin
     public void createMessage(String msg) {
         _User user = SpUtil.getUser();
         ApiFactory.createMessage(
@@ -28,7 +29,7 @@ public class AdvisePresenter extends AdviseContract.Presenter {
                         e -> mView.showMsg("消息发送失败!"));
     }
 
-    @Override
+    @CheckLogin
     public void initAdapterPresenter(AdapterPresenter mAdapterPresenter) {
         mAdapterPresenter
                 .setRepository(ApiFactory::getMessageList)

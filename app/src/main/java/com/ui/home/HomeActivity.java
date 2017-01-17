@@ -19,7 +19,6 @@ import com.base.BaseListFragment;
 import com.base.entity.ExtraData;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
-import com.base.util.ToastUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.base.util.helper.PagerChangeListener;
 import com.model._User;
@@ -51,11 +50,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings)
-            TRouter.go(C.ABOUT);
-        else if (item.getItemId() == R.id.action_feedback)
-            if (SpUtil.getUser() == null) ToastUtil.show("Not Login!!!");
-            else TRouter.go(C.ADVISE);
+        if (item.getItemId() == R.id.action_settings) TRouter.go(C.ABOUT);
+        else if (item.getItemId() == R.id.action_feedback) TRouter.go(C.ADVISE);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
         else if (item.getItemId() == android.R.id.home)
@@ -93,10 +89,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.nav_manage)
-            TRouter.go(C.SETTING);
-        else if (item.getItemId() == R.id.nav_share)
-            TRouter.go(C.LOGIN);
+        if (item.getItemId() == R.id.nav_manage) TRouter.go(C.SETTING);
+        else if (item.getItemId() == R.id.nav_share) TRouter.go(C.LOGIN);
         else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
     }

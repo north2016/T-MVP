@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="?attr/backgroundCard"
         android:orientation="vertical">
 
         <TextView
@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:lineSpacingExtra="10dp"
+            android:textColor="?attr/textColor"
             android:padding="10dp"
             app:article="@{item.article}" />
     </LinearLayout>
