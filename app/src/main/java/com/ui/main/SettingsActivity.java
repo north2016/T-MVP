@@ -29,13 +29,6 @@ public class SettingsActivity extends PreferenceActivity {
         setSupportActionBar(toolbar);
         mDelegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-//        isNight = (SwitchPreference) findPreference("isNight");
-//        isNight.setOnPreferenceChangeListener((preference, newValue) -> {
-//            AppCompatDelegate.setDefaultNightMode(!SpUtil.isNight() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
-//            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-//            recreate();
-//            return true;
-//        });
     }
 
 
