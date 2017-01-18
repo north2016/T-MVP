@@ -6,7 +6,7 @@ buildscript {
             //  url 'https://dl.bintray.com/codingbingo/maven'
        // }
         maven{
-            url 'file:////u-disk/work/maven_repositories/android/repo'
+            url PLUGIN_URL
         }
     }
     dependencies {
