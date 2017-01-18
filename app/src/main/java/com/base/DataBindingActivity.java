@@ -59,7 +59,6 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         }
     }
 
-
     public void reload() {
         AppCompatDelegate.setDefaultNightMode(SpUtil.isNight() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
