@@ -10,10 +10,10 @@ dependencies {
 }
 uploadArchives {
     repositories.mavenDeployer {
-        repository(url: PLUGIN_URL)
-        pom.groupId = PLUGIN_GROUP
-        pom.artifactId = PLUGIN_ARTIFACTID
-        pom.version = PLUGIN_VERSION
+        repository(url: 'file:/Users/baixiaokang/Documents/repo/')
+        pom.groupId = 'com.app.plugin'
+        pom.artifactId ='gradleplugin'
+        pom.version = '1.0.0'
     }
 }
 

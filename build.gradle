@@ -2,11 +2,8 @@
 buildscript {
     repositories {
         jcenter()
-       // maven() {
-            //  url 'https://dl.bintray.com/codingbingo/maven'
-       // }
         maven{
-            url PLUGIN_URL
+            url uri('file:/Users/baixiaokang/Documents/repo/')
         }
     }
     dependencies {
