@@ -1,37 +1,18 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
 
-    </style>
-
-    <!-- Base application theme. -->
-    <style name="AppThemeDay" parent="AppTheme">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="backgroundCard">@color/alpha_white</item>
-        <item name="textColorBg">#eee</item>
-        <item name="textColor">@color/md_grey_600</item>
-    </style>
-
-
-    <style name="AppThemeNight" parent="AppTheme">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/md_grey</item>
-        <item name="colorPrimaryDark">#ff1b2836</item>
-        <item name="colorAccent">#00524a</item>
-
-        <item name="backgroundCard">@color/md_grey_600</item>
-        <item name="textColorBg">#ff1b2836</item>
-        <item name="textColor">@color/md_white_1000</item>
-
+        <item name="backgroundCard">@color/backgroundCard</item>
+        <item name="textColor">@color/textColor</item>
+        <item name="textColorBg">@color/textColorBg</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

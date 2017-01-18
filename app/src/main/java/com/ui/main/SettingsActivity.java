@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.C;
 import com.app.annotation.apt.Router;
-import com.base.util.SpUtil;
 
 @Router(C.SETTING)
 public class SettingsActivity extends PreferenceActivity {
@@ -20,7 +19,6 @@ public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(SpUtil.isNight() ? R.style.AppThemeNight : R.style.AppThemeDay);
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
@@ -31,16 +29,13 @@ public class SettingsActivity extends PreferenceActivity {
         setSupportActionBar(toolbar);
         mDelegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        isNight = (SwitchPreference) findPreference("isNight");
-        isNight.setOnPreferenceChangeListener((preference, newValue) -> {
-            reload();
-            return true;
-        });
-    }
-
-    public void reload() {
-        getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-        recreate();
+//        isNight = (SwitchPreference) findPreference("isNight");
+//        isNight.setOnPreferenceChangeListener((preference, newValue) -> {
+//            AppCompatDelegate.setDefaultNightMode(!SpUtil.isNight() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+//            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+//            recreate();
+//            return true;
+//        });
     }
 
 

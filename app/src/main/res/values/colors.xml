@@ -1,30 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="CoverColor">#757575</color>
+    <color name="alpha_white">#FFF5F5F5</color>
+    <color name="white">#ffffff</color>
+    <color name="theme_black_7f">#8f000000</color>
+
+    <color name="backgroundCard">#FFF5F5F5</color>
+    <color name="textColorBg">#eee</color>
+    <color name="textColor">#757575</color>
 
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1565C0</color>
     <color name="colorAccent">#E91E63</color>
 
-    <color name="alpha_white">#FFF5F5F5</color>
-    <color name="white">#ffffff</color>
-
-    <color name="theme_black_7f">#8f000000</color>
-    <color name="yellow">#ff7200</color>
-
-
-    <!--blue-->
-    <color name="md_blue_100">#BBDEFB</color>
-    <color name="md_blue_300">#64B5F6</color>
-    <color name="md_blue_500">#2196F3</color>
-    <color name="md_blue_700">#1976D2</color>
-    <color name="md_blue_900">#0D47A1</color>
-
-    <!--grey-->
-    <color name="md_grey_400">#BDBDBD</color>
-    <color name="md_grey_600">#757575</color>
-    <color name="md_black_1000">#000000</color>
-    <color name="md_white_1000">#ffffff</color>
-    <color name="md_grey">#243447</color>
-    <!--blue grey-->
-    <color name="md_blue_grey_500">#607D8B</color>
 </resources>

@@ -12,6 +12,5 @@
     <SwitchPreference
         android:key="isNight"
         android:summary="开"
-        android:title="夜间"
-        />
+        android:title="缓存" />
 </PreferenceScreen>

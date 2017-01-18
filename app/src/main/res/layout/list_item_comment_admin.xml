@@ -28,7 +28,7 @@
             android:layout_marginTop="10dp"
             android:padding="10dp"
             android:text="@{item.creater.username}"
-            android:textColor="@color/yellow" />
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/tv_content"
