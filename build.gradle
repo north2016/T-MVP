@@ -17,12 +17,6 @@ buildscript {
 
 //apply plugin: 'com.codingbingo.gradletaskrecord'//追踪Gradle任务耗时的插件
 
-allprojects {
-    repositories {
-        jcenter()
-    }
-}
-
 //不加这一句MakeProject会报错，其余都正常无影响
 task compileJava {}
 

@@ -1,3 +1,28 @@
+ ####为兼容linux、ubuntu等系统运行之前需要发布插件到本地  
+###修改点
+　　1.修改maven为本地目录
+```
+     maven{
+            url uri('file:/Users/baixiaokang/Documents/repo/')//改为你本地的仓库地址
+          }
+```
+        
+
+```
+        uploadArchives {
+            repositories.mavenDeployer {
+                repository(url: 'file:/Users/baixiaokang/Documents/repo/')//改为你本地的仓库地址
+                pom.groupId = 'com.app.plugin'
+                pom.artifactId ='gradleplugin'
+                pom.version = '1.0.0'
+            }
+        }        
+                     
+```
+　　2.运行 ./gradlew -p buildsrc clean build uploadArchives --info
+
+
+
 QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>
 
 
@@ -51,15 +76,6 @@ Github：https://github.com/north2016/T-MVP
 
 参考配置：   as:2.2.2    grade:2.2.3       buildTools:24.0.3
 
-apply plugin: com.app.plugin.AspectjPlugin
-apply plugin: com.app.plugin.JavassistPlugin
-这两句话编译不通过千万不要注释掉
-
-对于本例中的Gradle插件mac、win编译都没事，由于我用的是本地的插件，未发布状态。
-有可能你的电脑系统（  linux、ubuntu等）不能识别，但是发布出去肯定是能识别的
-gradle插件发布到本地请看这篇博客 
-
-http://kvh.io/cn/embrace-android-studio-gradle-plugin.html
 
 本demo现阶段处于快速优化迭代状态，只提供idea，暂不提供lib
    
