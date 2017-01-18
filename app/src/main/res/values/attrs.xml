@@ -11,5 +11,6 @@
     <attr name="backgroundCard" format="color" />
     <attr name="textColor" format="color" />
     <attr name="textColorBg" format="color" />
-
+    <attr name="themeType" format="string" />
+    <attr name="themeIcon" format="reference" />
 </resources>

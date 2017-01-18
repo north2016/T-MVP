@@ -7,6 +7,10 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
 
+        <item name="themeType">@string/theme</item>
+
+        <item name="themeIcon">@drawable/icon_theme</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
