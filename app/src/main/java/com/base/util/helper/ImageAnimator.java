@@ -11,7 +11,7 @@ import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 
 public class ImageAnimator {
-    String[] mImages = {
+    private String[] mImages = {
             "http://img-cdn.luoo.net/pics/vol/585800ce78e88.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/58138dab67978.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/5838629f22305.jpg?imageView2/1/w/640/h/452",
@@ -22,8 +22,8 @@ public class ImageAnimator {
             "http://img-cdn.luoo.net/pics/vol/57e2c6fd714e2.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/579255f04b1da.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/581b681b678f1.jpg?imageView2/1/w/640/h/452"};
-    int[] mColors;
-    int[] mColorDay = {
+    private int[] mColors;
+    private int[] mColorDay = {
             Color.parseColor("#F44336"),
             Color.parseColor("#E91E63"),
             Color.parseColor("#9C27B0"),
@@ -36,7 +36,7 @@ public class ImageAnimator {
             Color.parseColor("#4CAF50"),
     };
 
-    int[] mColorNight = {
+    private int[] mColorNight = {
             Color.parseColor("#290502"),
             Color.parseColor("#011e2b"),
             Color.parseColor("#210825"),
@@ -60,9 +60,9 @@ public class ImageAnimator {
     private int mEnd;
 
     private boolean isSkip = false;//是否跳页
-    CollapsingToolbarLayout collapsingToolbar;
+    private CollapsingToolbarLayout collapsingToolbar;
 
-    public ImageAnimator(CollapsingToolbarLayout collapsingToolbar, ImageView targetImage, ImageView outgoingImage) {
+    ImageAnimator(CollapsingToolbarLayout collapsingToolbar, ImageView targetImage, ImageView outgoingImage) {
         this.collapsingToolbar = collapsingToolbar;
         mTargetImage = targetImage;
         mOutgoingImage = outgoingImage;
@@ -129,7 +129,7 @@ public class ImageAnimator {
     }
 
     // 向前滚动, 比如0->1, offset滚动的距离(0->1), 目标渐渐淡出
-    public void forward(int position, float positionOffset) {
+     void forward(int position, float positionOffset) {
         if (isSkip) return;
         // Log.e("DEBUG-WCL", "forward-positionOffset: " + positionOffset);
         int width = mTargetImage.getWidth();
@@ -142,7 +142,7 @@ public class ImageAnimator {
     }
 
     // 向后滚动, 比如1->0, offset滚动的距离(1->0), 目标渐渐淡入
-    public void backwards(int position, float positionOffset) {
+    void backwards(int position, float positionOffset) {
         if (isSkip) return;
         // Log.e("DEBUG-WCL", "backwards-positionOffset: " + positionOffset);
         int width = mTargetImage.getWidth();
@@ -156,7 +156,7 @@ public class ImageAnimator {
     }
 
     // 判断停止
-    public boolean isWithin(int position) {
+     boolean isWithin(int position) {
         return position >= mStart && position < mEnd;
     }
 }

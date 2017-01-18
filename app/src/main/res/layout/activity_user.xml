@@ -30,6 +30,7 @@
                     android:layout_height="200dp"
                     android:fitsSystemWindows="true"
                     app:contentScrim="?attr/colorPrimary"
+                    app:statusBarScrim="?attr/colorPrimary"
                     app:expandedTitleMarginEnd="16dp"
                     app:expandedTitleMarginStart="16dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
@@ -57,7 +58,6 @@
                             android:layout_centerInParent="true"
                             android:layout_gravity="top"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_img"
                             app:layout_behavior="com.view.behavior.UserHeadBehavior"
                             app:layout_collapseMode="parallax" />
 

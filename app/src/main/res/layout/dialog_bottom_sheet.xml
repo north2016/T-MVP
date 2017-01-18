@@ -45,6 +45,7 @@
         　
 
         <ImageView
+            android:id="@+id/im_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

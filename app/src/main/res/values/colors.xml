@@ -10,7 +10,7 @@
     <color name="textColor">#757575</color>
 
     <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorPrimaryDark">#2196F3</color>
     <color name="colorAccent">#E91E63</color>
 
 </resources>

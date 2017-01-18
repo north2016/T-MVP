@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout >
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        app:statusBarScrim="?attr/colorPrimary"
         tools:context="com.ui.article.ArticleActivity">
 
         <android.support.design.widget.AppBarLayout
@@ -42,8 +43,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:title="用户列表"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:title="用户列表" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
