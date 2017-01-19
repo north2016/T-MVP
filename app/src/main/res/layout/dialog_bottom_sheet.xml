@@ -18,7 +18,7 @@
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="TMVP by North"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorWhite"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -45,6 +45,7 @@
         　
 
         <ImageView
+            android:id="@+id/im_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

@@ -57,7 +57,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
         boolean isRefreshable = ta.getBoolean(R.styleable.TRecyclerView_isRefreshable, true);
         ta.recycle();
 
-        View layout = inflate(context, R.layout.layout_list_recyclerview, this);
+        View layout =  inflate(context, R.layout.layout_list_recyclerview, this);
         swipeRefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
         recyclerview = (RecyclerView) layout.findViewById(R.id.recyclerview);
         ll_emptyView = (LinearLayout) layout.findViewById(R.id.ll_emptyview);

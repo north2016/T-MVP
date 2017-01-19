@@ -4,14 +4,16 @@
         android:defaultValue="true"
         android:key="music"
         android:summary="开"
+        android:textColor="?attr/textColor"
         android:title="主题" />
     <CheckBoxPreference
         android:key="hints"
         android:summary="开"
+        android:textColor="?attr/textColor"
         android:title="推送" />
     <SwitchPreference
         android:key="isNight"
         android:summary="开"
-        android:title="夜间"
-        />
+        android:textColor="?attr/textColor"
+        android:title="缓存" />
 </PreferenceScreen>

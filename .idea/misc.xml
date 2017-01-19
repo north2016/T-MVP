@@ -2,6 +2,12 @@
 <project version="4">
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="com.app.annotation.javassist.Bus" />
+      <item index="1" class="java.lang.String" itemvalue="org.aspectj.lang.annotation.Around" />
+      <item index="2" class="java.lang.String" itemvalue="org.aspectj.lang.annotation.Aspect" />
+      <item index="3" class="java.lang.String" itemvalue="org.aspectj.lang.annotation.Pointcut" />
+    </list>
   </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />

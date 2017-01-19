@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.databinding.BindingAdapter;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Html;
@@ -26,6 +27,7 @@ import com.ui.main.R;
 public class BindingUtils {
     @BindingAdapter({"imageUrl"})
     public static void loadImg(ImageView v, String url) {
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -34,6 +36,7 @@ public class BindingUtils {
 
     @BindingAdapter({"roundImageUrl"})
     public static void loadRoundImg(ImageView v, String url) {
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -44,12 +47,12 @@ public class BindingUtils {
 
     @BindingAdapter({"comment"})
     public static void setComment(TextView tv, CommentInfo data) {
-        tv.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.content));
+        tv.setText(Html.fromHtml("<font color='#000000'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.content));
     }
 
     @BindingAdapter({"message"})
     public static void setMessage(TextView tv, MessageInfo data) {
-        tv.setText(Html.fromHtml("<font color='#ff7200'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.message));
+        tv.setText(Html.fromHtml("<font color='#000000'>" + data.creater.username + ":<br/><br/>" + "</font>" + data.message));
     }
 
     @BindingAdapter({"article"})
@@ -70,13 +73,14 @@ public class BindingUtils {
     }
 
     public static void loadRoundAndBgImg(ImageView v, String url, ImageView im_header) {
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new GlideCircleTransform(v.getContext()))
                 .error(R.mipmap.ic_launcher)
                 .into(v);
-
+        im_header.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext()).load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new BlurTransformation(v.getContext(), 100))

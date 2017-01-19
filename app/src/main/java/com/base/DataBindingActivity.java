@@ -1,11 +1,11 @@
 package com.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,12 +29,10 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     private ImageView ivShadow;
     public B mViewBinding;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         isNight = SpUtil.isNight();
-        setTheme(isNight ? R.style.AppThemeNight : R.style.AppThemeDay);
         View rootView = getLayoutInflater().inflate(this.getLayoutId(), null, false);
         mViewBinding = DataBindingUtil.bind(rootView);
         this.setContentView(getLayoutId(), rootView);
@@ -45,7 +43,6 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         initToolBar();
         initView();
     }
-
 
     protected void initPresenter() {
     }
@@ -62,26 +59,11 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (isNight != SpUtil.isNight()) reload(false);
+    public void reload() {
+        AppCompatDelegate.setDefaultNightMode(SpUtil.isNight() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+        getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
+        recreate();
     }
-
-    public void reload(boolean isNeedAnim) {
-        if (isNeedAnim) {
-            getWindow().setWindowAnimations(R.style.WindowAnimationFadeInOut);
-            recreate();
-        } else {
-            Intent intent = getIntent();
-            overridePendingTransition(0, 0);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            finish();
-            overridePendingTransition(0, 0);
-            startActivity(intent);
-        }
-    }
-
 
     public void setContentView(int layoutResID, View rootView) {
         if (layoutResID == R.layout.activity_main || layoutResID == R.layout.activity_flash) {

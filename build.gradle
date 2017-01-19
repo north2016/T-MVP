@@ -2,11 +2,8 @@
 buildscript {
     repositories {
         jcenter()
-       // maven() {
-            //  url 'https://dl.bintray.com/codingbingo/maven'
-       // }
         maven{
-            url PLUGIN_URL
+            url uri('repo')
         }
     }
     dependencies {
@@ -33,3 +30,6 @@ task compileJava {}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+//注意⚠️:   插件修改后运行前需要运行 ./gradlew -p buildsrc clean build uploadArchives --info

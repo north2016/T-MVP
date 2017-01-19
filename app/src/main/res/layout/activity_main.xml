@@ -7,7 +7,6 @@
         android:id="@+id/dl_main_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/alpha_white"
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
@@ -84,8 +83,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         app:tabGravity="fill"
-                        app:tabIndicatorColor="@color/white"
-                        app:tabMode="scrollable" />
+                        app:tabIndicatorColor="?attr/colorWhite"
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="@color/colorWhite"
+                        />
 
                 </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -122,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:background="@color/alpha_white"
+            android:background="?attr/backgroundCard"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer" />

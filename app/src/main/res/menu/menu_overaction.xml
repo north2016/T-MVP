@@ -13,12 +13,12 @@
         android:title="@string/menu_settings"
         app:showAsAction="collapseActionView" />
 
-    <item
-        android:id="@+id/action_settings1"
-        android:menuCategory="secondary"
-        android:orderInCategory="100"
-        android:title="反馈"
-        app:showAsAction="collapseActionView" />
+    <!--<item-->
+    <!--android:id="@+id/action_settings1"-->
+    <!--android:menuCategory="secondary"-->
+    <!--android:orderInCategory="100"-->
+    <!--android:title="反馈"-->
+    <!--app:showAsAction="collapseActionView" />-->
 
 
     <item

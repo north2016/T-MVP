@@ -91,7 +91,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_manage) TRouter.go(C.SETTING);
         else if (item.getItemId() == R.id.nav_share) TRouter.go(C.LOGIN);
-        else if (item.getItemId() == R.id.nav_send) SpUtil.setNight(mContext, !SpUtil.isNight());
+        else if (item.getItemId() == R.id.nav_theme) SpUtil.setNight(mContext, !SpUtil.isNight());
         return true;
     }
 
