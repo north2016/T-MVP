@@ -1,3 +1,6 @@
+import com.app.plugin.AspectjPlugin
+import com.app.plugin.JavassistPlugin
+
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -60,5 +63,5 @@ dependencies {
     annotationProcessor project(':apt')
 }
 
-apply plugin: com.app.plugin.AspectjPlugin
-apply plugin: com.app.plugin.JavassistPlugin
+apply plugin: AspectjPlugin
+apply plugin: JavassistPlugin
