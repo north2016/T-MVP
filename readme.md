@@ -1,27 +1,5 @@
 ####为兼容linux、ubuntu等系统，运行之前需要发布插件到本地  
-###修改点
-　　1.修改maven为本地目录
-app  build.gradle:
-```
-         maven{
-            url uri('file:/Users/baixiaokang/Documents/repo/')//改为你本地的仓库地址
-          }
-```
-   
-buildsrc  build.gradle:
-```
-        uploadArchives {
-            repositories.mavenDeployer {
-                repository(url: 'file:/Users/baixiaokang/Documents/repo/')//改为你本地的仓库地址
-                pom.groupId = 'com.app.plugin'
-                pom.artifactId ='gradleplugin'
-                pom.version = '1.0.0'
-            }
-        }        
-                     
-```
-　　2.运行 ./gradlew -p buildsrc clean build uploadArchives --info
-
+运行前需要运行 ./gradlew -p buildsrc clean build uploadArchives --info
 
 
 QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>

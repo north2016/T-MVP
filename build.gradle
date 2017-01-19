@@ -3,7 +3,7 @@ buildscript {
     repositories {
         jcenter()
         maven{
-            url uri('file:/Users/baixiaokang/Documents/repo/')
+            url uri('repo')
         }
     }
     dependencies {
@@ -30,3 +30,6 @@ task compileJava {}
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+//注意⚠️:   运行前需要运行 ./gradlew -p buildsrc clean build uploadArchives --info
