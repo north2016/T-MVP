@@ -13,4 +13,6 @@
     <attr name="textColorBg" format="color" />
     <attr name="themeType" format="string" />
     <attr name="themeIcon" format="reference" />
+    <attr name="colorWhite" format="color" />
+
 </resources>

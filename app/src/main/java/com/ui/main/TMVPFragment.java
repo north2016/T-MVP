@@ -36,7 +36,7 @@ public class TMVPFragment extends android.support.design.widget.BottomSheetDialo
     public void onStart() {
         super.onStart();
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        imPay.setColorFilter(getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.white), PorterDuff.Mode.MULTIPLY);
+        imPay.setColorFilter(getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
     }
 
     public static TMVPFragment getInstance() {

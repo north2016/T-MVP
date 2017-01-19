@@ -2,7 +2,7 @@
 <resources>
     <color name="CoverColor">#757575</color>
     <color name="alpha_white">#FFF5F5F5</color>
-    <color name="white">#ffffff</color>
+    <color name="colorWhite">#ffffff</color>
     <color name="theme_black_7f">#8f000000</color>
 
     <color name="backgroundCard">#FFF5F5F5</color>

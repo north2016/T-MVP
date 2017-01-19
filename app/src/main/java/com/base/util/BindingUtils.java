@@ -27,7 +27,7 @@ import com.ui.main.R;
 public class BindingUtils {
     @BindingAdapter({"imageUrl"})
     public static void loadImg(ImageView v, String url) {
-        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.white), PorterDuff.Mode.MULTIPLY);
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -36,7 +36,7 @@ public class BindingUtils {
 
     @BindingAdapter({"roundImageUrl"})
     public static void loadRoundImg(ImageView v, String url) {
-        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.white), PorterDuff.Mode.MULTIPLY);
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -73,14 +73,14 @@ public class BindingUtils {
     }
 
     public static void loadRoundAndBgImg(ImageView v, String url, ImageView im_header) {
-        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.white), PorterDuff.Mode.MULTIPLY);
+        v.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext())
                 .load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new GlideCircleTransform(v.getContext()))
                 .error(R.mipmap.ic_launcher)
                 .into(v);
-        im_header.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.white), PorterDuff.Mode.MULTIPLY);
+        im_header.setColorFilter(v.getContext().getResources().getColor(SpUtil.isNight() ? R.color.CoverColor : R.color.colorWhite), PorterDuff.Mode.MULTIPLY);
         Glide.with(v.getContext()).load(getFuckUrl(url))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .transform(new BlurTransformation(v.getContext(), 100))

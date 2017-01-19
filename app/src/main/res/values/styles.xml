@@ -17,6 +17,7 @@
         <item name="backgroundCard">@color/backgroundCard</item>
         <item name="textColor">@color/textColor</item>
         <item name="textColorBg">@color/textColorBg</item>
+        <item name="colorWhite">@color/colorWhite</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
