@@ -1,4 +1,4 @@
-[Apt、AspectJ、Javassisit](http://upload-images.jianshu.io/upload_images/751860-0641778f0bc265ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Apt、AspectJ、Javassisit](http://upload-images.jianshu.io/upload_images/751860-0641778f0bc265ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 If you're confused about Android development, maybe it's time to open the door to  new world .
