@@ -34,9 +34,9 @@ for(var page=0;page<=10;page++)
 				console.log(title)
 
               // 基本存储
-              var TestClass = AV.Object.extend('Image');
-              var testObj = new TestClass();
-              testObj.set({
+              var Image = AV.Object.extend('Image');
+              var mImage = new Image();
+              mImage.set({
               	type:"民谣",
               	author: author,
               	title: title,
@@ -44,7 +44,7 @@ for(var page=0;page<=10;page++)
               	article: article.replace(reg, "")
               });
 
-              testObj.save().then(function () {
+              mImage.save().then(function () {
               	console.log('success');
               }).catch(function (err) {
               	console.log('failed');

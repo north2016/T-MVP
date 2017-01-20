@@ -58,7 +58,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
 
     @SingleClick
     public void onClick(View view) {
-        String comment = mViewBinding.btComment.getText().toString();
+        String comment = mViewBinding.etComment.getText().toString();
         if (TextUtils.isEmpty(comment))
             Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
         else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
