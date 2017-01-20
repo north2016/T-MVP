@@ -13,55 +13,43 @@
         android:allowBackup="true"
         android:icon="@drawable/a"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name="com.ui.home.HomeActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
-
+        android:theme="@style/AppTheme.NoActionBar">
 
         <activity
             android:name="com.ui.main.FlashActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name="com.ui.home.HomeActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name="com.ui.article.ArticleActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
-
-        <activity
-            android:name="com.ui.user.UserActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="com.ui.user.UserActivity" />
         <activity
             android:name="com.ui.main.AboutActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask" />
 
 
         <activity
             android:name="com.ui.main.SettingsActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleTask" />
 
 
         <activity
             android:name="com.ui.login.LoginActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name="com.ui.advise.AdviseActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
     </application>
 </manifest>

@@ -9,7 +9,6 @@ import com.apt.TRouter;
 import com.base.DataBindingActivity;
 import com.base.event.OkBus;
 import com.base.util.AnimationUtil;
-import com.base.util.StatusBarUtil;
 import com.ui.main.databinding.ActivityFlashBinding;
 
 /**
@@ -29,7 +28,7 @@ public class FlashActivity extends DataBindingActivity<ActivityFlashBinding> {
 
     @Bus(EventTags.FLASH_INIT_UI)
     public void initUI() {
-        StatusBarUtil.setTranslucentBackground(this);
+        //StatusBarUtil.setTranslucentBackground(this);
         AlphaAnimation anim = new AlphaAnimation(0.8f, 0.1f);
         anim.setDuration(5000);
         mViewBinding.view.startAnimation(anim);

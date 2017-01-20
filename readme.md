@@ -1,3 +1,41 @@
+[Apt、AspectJ、Javassisit](http://upload-images.jianshu.io/upload_images/751860-0641778f0bc265ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+If you're confused about Android development, maybe it's time to open the door to  new world .
+
+TMVP is a aop architecture with Apt、AspectJ、Javassisit，
+which based on Databinding＋MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS。
+
+Build more complex functions with cleaner code，talk is cheap ，show u the code:
+
+The following code to achieve the list of users to obtain the request, paging, display, 
+ just a sentence to achieve the entire complex module:
+
+```
+    mViewBinding.lvUser.getPresenter().setRepository(ApiFactory::getAllUser).fetch();
+```
+
+The user list itemType is its layoutId, set by attr in xml:
+
+```
+  <com.base.adapter.TRecyclerView
+            android:id="@+id/lv_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:isRefreshable="false"
+            app:itemType="@layout/list_item_user"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+```
+
+maybe u will like it.
+
+
+===============Gorgeous dividing line===================
+
+
+
+===============华丽丽的分界线===================
+
 ####为兼容linux、ubuntu等系统，已发布插件到本地repo文件夹下，如果你对插件内容有所修改，则需要重新发布，运行前需要在Terminal中运行 ./gradlew -p buildsrc clean build uploadArchives --info
 
 QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=14f9009a0276624f6abf3221fe131c57ff05b70b5b4b922ed2c4aa4156155e73"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="AndroidMVP" title="AndroidMVP"></a>

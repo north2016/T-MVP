@@ -21,7 +21,7 @@ public class C {
 
     //==================intent============//
     public static final String TRANSLATE_VIEW = "share_img";
-    public static final String USER_DATA = "user_data";
+    public static final String TYPE = "type";
     public static final String HEAD_DATA = "data";
     public static final String VH_CLASS = "vh";
     public static final int IMAGE_REQUEST_CODE = 100;
@@ -41,7 +41,6 @@ public class C {
     public static final String ABOUT = "about";
     public static final String ADVISE = "advise";
     public static final String SETTING = "setting";
-    public static final String USER_LIST = "userList";
     public static final String USER_INFO = "userInfo";
 
 

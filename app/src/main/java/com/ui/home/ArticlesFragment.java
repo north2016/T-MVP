@@ -1,7 +1,6 @@
-package com.base;
+package com.ui.home;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +9,16 @@ import android.view.ViewGroup;
 import com.C;
 import com.apt.ApiFactory;
 import com.base.adapter.TRecyclerView;
+import com.ui.main.R;
 
 
-public class BaseListFragment extends Fragment {
+public class ArticlesFragment extends Fragment {
     private TRecyclerView mXRecyclerView;
 
-    public static BaseListFragment newInstance(@LayoutRes int res, String type) {
+    public static ArticlesFragment newInstance(String type) {
         Bundle arguments = new Bundle();
-        arguments.putInt(C.VH_CLASS, res);
-        arguments.putString("type", type);
-        BaseListFragment fragment = new BaseListFragment();
+        arguments.putString(C.TYPE, type);
+        ArticlesFragment fragment = new ArticlesFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -27,7 +26,7 @@ public class BaseListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mXRecyclerView = new TRecyclerView(getContext());
-        mXRecyclerView.setViewType(getArguments().getInt(C.VH_CLASS));
+        mXRecyclerView.setViewType(R.layout.list_item_card_main);
         return mXRecyclerView;
     }
 
@@ -37,7 +36,7 @@ public class BaseListFragment extends Fragment {
         if (mXRecyclerView != null) {
             mXRecyclerView.getPresenter()
                     .setRepository(ApiFactory::getAllImages)
-                    .setParam("type", getArguments().getString("type"))
+                    .setParam(C.TYPE, getArguments().getString(C.TYPE))
                     .fetch();
         }
     }

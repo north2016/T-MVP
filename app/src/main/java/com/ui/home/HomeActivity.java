@@ -15,7 +15,6 @@ import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.TRouter;
 import com.base.BaseActivity;
-import com.base.BaseListFragment;
 import com.base.entity.ExtraData;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
@@ -70,7 +69,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     @Override
     public void showTabList(String[] mTabs) {
         Observable.from(mTabs)
-                .map(tab -> BaseListFragment.newInstance(R.layout.list_item_card_main, tab)).toList()
+                .map(ArticlesFragment::newInstance).toList()
                 .map(fragments -> FragmentAdapter.newInstance(getSupportFragmentManager(), fragments, mTabs))
                 .subscribe(mFragmentAdapter -> mViewBinding.viewpager.setAdapter(mFragmentAdapter));
         PagerChangeListener mPagerChangeListener = PagerChangeListener.newInstance(mViewBinding.collapsingToolbar, mViewBinding.toolbarIvTarget, mViewBinding.toolbarIvOutgoing);

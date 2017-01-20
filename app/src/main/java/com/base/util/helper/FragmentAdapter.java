@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.base.BaseListFragment;
+import com.ui.home.ArticlesFragment;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ import java.util.List;
  * Created by baixiaokang on 16/5/8.
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter {
-    private List<BaseListFragment> mFragments;
+    private List<ArticlesFragment> mFragments;
     private String[] mTitles;
 
-    public static FragmentAdapter newInstance(FragmentManager fm, List<BaseListFragment> fragments, String[] titles) {
+    public static FragmentAdapter newInstance(FragmentManager fm, List<ArticlesFragment> fragments, String[] titles) {
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(fm);
         mFragmentAdapter.mFragments = fragments;
         mFragmentAdapter.mTitles = titles;
