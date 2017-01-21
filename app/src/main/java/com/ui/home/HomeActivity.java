@@ -68,7 +68,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public void showTabList(String[] mTabs) {
-        Observable.from(mTabs).map(ArticlesFragment::newInstance).toList()
+        Observable.from(mTabs).map(ArticleFragment::newInstance).toList()
                 .map(fragments -> FragmentAdapter.newInstance(getSupportFragmentManager(), fragments, mTabs))
                 .subscribe(mFragmentAdapter -> mViewBinding.viewpager.setAdapter(mFragmentAdapter));
         PagerChangeListener mPagerChangeListener = PagerChangeListener.newInstance(mViewBinding.collapsingToolbar, mViewBinding.toolbarIvTarget, mViewBinding.toolbarIvOutgoing);

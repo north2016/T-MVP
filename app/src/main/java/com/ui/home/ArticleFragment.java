@@ -15,14 +15,14 @@ import com.base.adapter.TRecyclerView;
 import com.ui.main.R;
 
 
-public class ArticlesFragment extends Fragment {
+public class ArticleFragment extends Fragment {
     private TRecyclerView mXRecyclerView;
     private String type;
 
-    public static ArticlesFragment newInstance(String type) {
+    public static ArticleFragment newInstance(String type) {
         Bundle arguments = new Bundle();
         arguments.putString(C.TYPE, type);
-        ArticlesFragment fragment = new ArticlesFragment();
+        ArticleFragment fragment = new ArticleFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
