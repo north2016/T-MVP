@@ -58,10 +58,10 @@ public class BindingUtils {
     @BindingAdapter({"article"})
     public static void setArticle(TextView tv, String url) {
         String article = url.replace("<br>", "\n").replaceAll(" ", "").replaceAll("//", "");
-        if (!TextUtils.isEmpty(article)) {
+        if (!TextUtils.isEmpty(article) && article.indexOf("&gt;") > 0) {
             article = article.substring(article.indexOf("&gt;") + 4, article.length());
-            tv.setText(article);
         }
+        tv.setText(article);
     }
 
     public static String getFuckUrl(String url) {
