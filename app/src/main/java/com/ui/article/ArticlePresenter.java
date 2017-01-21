@@ -11,6 +11,7 @@ import com.base.util.ApiUtil;
 import com.google.gson.Gson;
 import com.model.Comment;
 import com.model.Image;
+import com.model.ImageInfo;
 import com.model._User;
 
 /**
@@ -20,7 +21,7 @@ import com.model._User;
 public class ArticlePresenter extends ArticleContract.Presenter {
 
     @CheckLogin
-    public void createComment(String content, Image article, _User user) {
+    public void createComment(String content, ImageInfo article, _User user) {
         mCompositeSubscription.add(
                 ApiFactory
                         .createComment(
@@ -35,7 +36,7 @@ public class ArticlePresenter extends ArticleContract.Presenter {
     }
 
     @Override
-    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, Image mArticle) {
+    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, ImageInfo mArticle) {
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
         mAdapterPresenter.setRepository(ApiFactory::getCommentList)
                 .setParam(C.INCLUDE, C.CREATER)

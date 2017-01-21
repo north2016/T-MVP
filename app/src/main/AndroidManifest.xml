@@ -51,5 +51,11 @@
             android:name="com.ui.advise.AdviseActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.ui.release.ReleaseActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" />
+
+
     </application>
 </manifest>

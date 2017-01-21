@@ -86,6 +86,11 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     }
 
     @Override
+    public void onOpenRelease() {
+        mViewBinding.viewpager.setCurrentItem(0);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.nav_manage) TRouter.go(C.SETTING);
         else if (item.getItemId() == R.id.nav_share) TRouter.go(C.LOGIN);
@@ -95,6 +100,13 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @SingleClick
     public void onClick(View v) {
-        TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+        switch (v.getId()) {
+            case R.id.im_face:
+                TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+                break;
+            case R.id.fab:
+                TRouter.go(C.USER_RELEASE, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+                break;
+        }
     }
 }

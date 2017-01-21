@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.model.Image" />
+            type="com.model.ImageInfo" />
     </data>
 
     <android.support.v7.widget.CardView

@@ -12,6 +12,8 @@ public interface HomeContract {
         void showTabList(String[] mTabs);
 
         void initUserInfo(_User user);
+
+        void onOpenRelease();
     }
 
     abstract class Presenter extends BasePresenter<View> {

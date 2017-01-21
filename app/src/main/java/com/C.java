@@ -17,7 +17,7 @@ public class C {
     //==================Base============//
     public static final int PAGE_COUNT = 10;
     public static final int FLAG_MULTI_VH = 0x000001;
-
+    public static final String OPEN_TYPE = "公开";
 
     //==================intent============//
     public static final String TRANSLATE_VIEW = "share_img";
@@ -42,6 +42,7 @@ public class C {
     public static final String ADVISE = "advise";
     public static final String SETTING = "setting";
     public static final String USER_INFO = "userInfo";
+    public static final String USER_RELEASE = "release";
 
 
     //==================static============//

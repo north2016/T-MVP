@@ -3,11 +3,12 @@ package com.api;
 import com.app.annotation.apt.ApiFactory;
 import com.base.entity.CreatedResult;
 import com.base.entity.DataArr;
-import com.model.Comment;
 import com.base.entity.Face;
-import com.model.Message;
 import com.model.Image;
+import com.model.Comment;
 import com.model.CommentInfo;
+import com.model.ImageInfo;
+import com.model.Message;
 import com.model.MessageInfo;
 import com.model._User;
 
@@ -37,8 +38,10 @@ public interface ApiService {
     Observable<DataArr<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
 
     @GET("classes/Image")
-    Observable<DataArr<Image>> getAllImages(@Query("where") String where, @Query("skip") int skip, @Query("limit") int limit, @Query("order") String order);
+    Observable<DataArr<ImageInfo>> getAllImages(@Query("where") String where, @Query("skip") int skip, @Query("limit") int limit, @Query("order") String order);
 
+    @POST("classes/Image")
+    Observable<CreatedResult> createArticle(@Body Image mArticle);
 
     @GET("classes/Comment")
     Observable<DataArr<CommentInfo>> getCommentList(@Query("include") String include, @Query("where") String where, @Query("skip") int skip, @Query("limit") int limit);

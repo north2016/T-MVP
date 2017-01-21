@@ -3,7 +3,7 @@ package com.ui.article;
 import com.base.BasePresenter;
 import com.base.BaseView;
 import com.base.adapter.AdapterPresenter;
-import com.model.Image;
+import com.model.ImageInfo;
 import com.model._User;
 
 
@@ -19,9 +19,9 @@ public interface ArticleContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void createComment(String content, Image article, _User user);
+        public abstract void createComment(String content, ImageInfo article, _User user);
 
-        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, Image article);
+        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, ImageInfo article);
 
         @Override
         public void onAttached() {

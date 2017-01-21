@@ -31,7 +31,7 @@ public class HomePresenter extends HomeContract.Presenter {
 
     @Override
     public void getTabList() {
-        String[] mTabs = {"民谣", "摇滚", "电子", "流行", "爵士", "独立", "故事", "新世纪", "精品推荐", "原声"};
+        String[] mTabs = {"公开", "民谣", "摇滚", "电子", "流行", "爵士", "独立", "故事", "新世纪", "精品推荐", "原声"};
         OkBus.getInstance().onEvent(EventTags.SHOW_TAB_LIST, mTabs);
     }
 
@@ -42,6 +42,11 @@ public class HomePresenter extends HomeContract.Presenter {
 
     @BusRegister
     private void initEvent() {
+    }
+
+    @Bus(EventTags.ON_RELEASE_OPEN)
+    public void onRelease() {
+        mView.onOpenRelease();
     }
 
     @Bus(EventTags.ON_USER_LOGIN)

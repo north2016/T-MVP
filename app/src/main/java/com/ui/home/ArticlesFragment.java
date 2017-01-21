@@ -2,11 +2,14 @@ package com.ui.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
+import com.EventTags;
+import com.app.annotation.javassist.Bus;
 import com.apt.ApiFactory;
 import com.base.adapter.TRecyclerView;
 import com.ui.main.R;
@@ -14,6 +17,7 @@ import com.ui.main.R;
 
 public class ArticlesFragment extends Fragment {
     private TRecyclerView mXRecyclerView;
+    private String type;
 
     public static ArticlesFragment newInstance(String type) {
         Bundle arguments = new Bundle();
@@ -30,14 +34,19 @@ public class ArticlesFragment extends Fragment {
         return mXRecyclerView;
     }
 
+    @Bus(EventTags.ON_RELEASE_OPEN)
+    public void onRelease() {
+        if (TextUtils.equals(type, C.OPEN_TYPE))
+            mXRecyclerView.getPresenter().fetch();
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (mXRecyclerView != null) {
-            mXRecyclerView.getPresenter()
-                    .setRepository(ApiFactory::getAllImages)
-                    .setParam(C.TYPE, getArguments().getString(C.TYPE))
-                    .fetch();
-        }
+        type = getArguments().getString(C.TYPE);
+        mXRecyclerView.getPresenter()
+                .setRepository(ApiFactory::getAllImages)
+                .setParam(C.TYPE, type)
+                .fetch();
     }
 }

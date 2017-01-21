@@ -14,14 +14,14 @@ import com.base.BaseActivity;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ViewUtil;
-import com.model.Image;
+import com.model.ImageInfo;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityDetailBinding;
 
 @Router(C.ARTICLE)
 public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDetailBinding> implements ArticleContract.View, View.OnClickListener {
     @Extra(C.HEAD_DATA)
-    public Image mArticle;
+    public ImageInfo mArticle;
     @SceneTransition(C.TRANSLATE_VIEW)
     public ImageView image;
 

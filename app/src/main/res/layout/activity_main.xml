@@ -85,8 +85,7 @@
                         app:tabGravity="fill"
                         app:tabIndicatorColor="?attr/colorWhite"
                         app:tabMode="scrollable"
-                        app:tabSelectedTextColor="@color/colorWhite"
-                        />
+                        app:tabSelectedTextColor="@color/colorWhite" />
 
                 </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -113,6 +112,7 @@
                 android:layout_gravity="end|bottom"
                 android:layout_margin="@dimen/fab_margin"
                 android:background="@drawable/button_ripple_blue"
+                android:onClick="onClick"
                 app:layout_behavior="com.view.behavior.MyFabBehavior"
                 app:srcCompat="@drawable/ic_add" />
 
