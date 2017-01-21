@@ -10,29 +10,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.apt.TRouter;
 import com.base.util.SpUtil;
 import com.ui.main.R;
 import com.view.widget.SwipeBackLayout;
 
-/**
- * Created by baixiaokang on 17/1/6.
- */
 public abstract class DataBindingActivity<B extends ViewDataBinding> extends AppCompatActivity {
     protected Toolbar toolbar;
-    public boolean isNight;
     public Context mContext;
-    private SwipeBackLayout swipeBackLayout;
-    private ImageView ivShadow;
     public B mViewBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isNight = SpUtil.isNight();
         View rootView = getLayoutInflater().inflate(this.getLayoutId(), null, false);
         mViewBinding = DataBindingUtil.bind(rootView);
         this.setContentView(getLayoutId(), rootView);
@@ -47,8 +38,7 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     protected void initPresenter() {
     }
 
-    //在这里给转场view副值
-    protected void initTransitionView() {
+    protected void initTransitionView() {//在这里给转场view副值
     }
 
     private void initToolBar() {
@@ -66,24 +56,17 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     }
 
     public void setContentView(int layoutResID, View rootView) {
-        if (layoutResID == R.layout.activity_main || layoutResID == R.layout.activity_flash) {
-            super.setContentView(rootView);
-        } else {
-            super.setContentView(getContainer());
-            rootView.setBackgroundColor(getResources().getColor(R.color.alpha_white));
-            swipeBackLayout.addView(rootView);
-        }
+        boolean isNotSwipeBack = layoutResID == R.layout.activity_main || layoutResID == R.layout.activity_flash;
+        super.setContentView(isNotSwipeBack ? rootView : getContainer(rootView));
     }
 
-    private View getContainer() {
-        RelativeLayout container = new RelativeLayout(this);
-        swipeBackLayout = new SwipeBackLayout(this);
+    private View getContainer(View rootView) {
+        rootView.setBackgroundColor(getResources().getColor(R.color.alpha_white));
+        View container = getLayoutInflater().inflate(R.layout.activity_base, null, false);
+        SwipeBackLayout swipeBackLayout = (SwipeBackLayout) container.findViewById(R.id.swipeBackLayout);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
-        ivShadow = new ImageView(this);
-        ivShadow.setBackgroundColor(getResources().getColor(R.color.theme_black_7f));
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        container.addView(ivShadow, params);
-        container.addView(swipeBackLayout);
+        View ivShadow = container.findViewById(R.id.iv_shadow);
+        swipeBackLayout.addView(rootView);
         swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
         return container;
     }
@@ -107,6 +90,4 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     public abstract int getLayoutId();
 
     public abstract void initView();
-
-
 }
