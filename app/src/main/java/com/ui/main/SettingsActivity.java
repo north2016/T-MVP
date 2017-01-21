@@ -2,7 +2,6 @@ package com.ui.main;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
-import android.preference.SwitchPreference;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
@@ -15,7 +14,6 @@ import com.app.annotation.apt.Router;
 @Router(C.SETTING)
 public class SettingsActivity extends PreferenceActivity {
     private AppCompatDelegate mDelegate;
-    SwitchPreference isNight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +26,7 @@ public class SettingsActivity extends PreferenceActivity {
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mDelegate.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

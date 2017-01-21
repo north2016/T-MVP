@@ -31,20 +31,20 @@ public class FireView extends SurfaceView implements SurfaceHolder.Callback {
 
     public FireView(Context context) {
         super(context);
-        intit();
+        init();
     }
 
     public FireView(Context context, AttributeSet att) {
         super(context, att);
-        intit();
+        init();
     }
 
     public FireView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        intit();
+        init();
     }
 
-    private void intit() {
+    private void init() {
         holder = this.getHolder();//获取holder
         holder.addCallback(this);
         mPaint = new Paint();
