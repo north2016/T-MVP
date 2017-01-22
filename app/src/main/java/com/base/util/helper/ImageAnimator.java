@@ -1,17 +1,20 @@
 package com.base.util.helper;
 
-import android.graphics.Color;
+import android.content.res.Resources;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.App;
 import com.base.util.BaseUtils;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
+import com.ui.main.R;
 
 public class ImageAnimator {
     private String[] mImages = {
+            "http://img-cdn.luoo.net/pics/vol/587b3cebef681.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/585800ce78e88.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/58138dab67978.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/5838629f22305.jpg?imageView2/1/w/640/h/452",
@@ -23,32 +26,6 @@ public class ImageAnimator {
             "http://img-cdn.luoo.net/pics/vol/579255f04b1da.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/581b681b678f1.jpg?imageView2/1/w/640/h/452"};
     private int[] mColors;
-    private int[] mColorDay = {
-            Color.parseColor("#F44336"),
-            Color.parseColor("#E91E63"),
-            Color.parseColor("#9C27B0"),
-            Color.parseColor("#673AB7"),
-            Color.parseColor("#3F51B5"),
-            Color.parseColor("#2196F3"),
-            Color.parseColor("#03A9F4"),
-            Color.parseColor("#00BCD4"),
-            Color.parseColor("#009688"),
-            Color.parseColor("#4CAF50"),
-    };
-
-    private int[] mColorNight = {
-            Color.parseColor("#290502"),
-            Color.parseColor("#011e2b"),
-            Color.parseColor("#210825"),
-            Color.parseColor("#10091c"),
-            Color.parseColor("#291f00"),
-            Color.parseColor("#021524"),
-            Color.parseColor("#2a2600"),
-            Color.parseColor("#0e210f"),
-            Color.parseColor("#221400"),
-            Color.parseColor("#19120f"),
-    };
-
     private static final float FACTOR = 0.1f;
 
     private final ImageView mTargetImage; // 原始图片
@@ -67,6 +44,9 @@ public class ImageAnimator {
         mTargetImage = targetImage;
         mOutgoingImage = outgoingImage;
         BindingUtils.loadImg(mTargetImage, mImages[0]);
+        Resources mResources = App.getAppContext().getResources();
+        int[] mColorDay = mResources.getIntArray(R.array.day_color_tab);
+        int[] mColorNight = mResources.getIntArray(R.array.night_color_tab);
         mColors = SpUtil.isNight() ? mColorNight : mColorDay;
         collapsingToolbar.setContentScrimColor(mColors[0]);
         collapsingToolbar.setStatusBarScrimColor(mColors[0]);
@@ -129,7 +109,7 @@ public class ImageAnimator {
     }
 
     // 向前滚动, 比如0->1, offset滚动的距离(0->1), 目标渐渐淡出
-     void forward(int position, float positionOffset) {
+    void forward(int position, float positionOffset) {
         if (isSkip) return;
         // Log.e("DEBUG-WCL", "forward-positionOffset: " + positionOffset);
         int width = mTargetImage.getWidth();
@@ -156,7 +136,7 @@ public class ImageAnimator {
     }
 
     // 判断停止
-     boolean isWithin(int position) {
+    boolean isWithin(int position) {
         return position >= mStart && position < mEnd;
     }
 }
