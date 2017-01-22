@@ -1,10 +1,10 @@
 ![Apt、AspectJ、Javassisit](http://upload-images.jianshu.io/upload_images/751860-0641778f0bc265ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
-If you're confused about Android development, maybe it's time to open the door to  new world .
+If you're confused about Android development, maybe it's time to open the door to  a new world .
 
-TMVP is a aop architecture with Apt、AspectJ、Javassisit，
-which based on Databinding＋MVP+Retrofit+Rxjava+MaterialDesign+LeanCloud+NodeJS。
+TMVP is a Aop Architecture with Apt、AspectJ、Javassisit，
+which based on Databinding＋MVP+Retrofit+Rxjava+MaterialDesign。
 
 Build more complex functions with cleaner code，talk is cheap ，show u the code:
 
@@ -26,8 +26,10 @@ The user list itemType is its layoutId, set by attr in xml:
             app:itemType="@layout/list_item_user"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 ```
+ no Adapter,no ViewHolder,no onRefreshListener，on onLoadMoreListener
+ 
 
-maybe u will like it.
+ maybe u will like it.
 
 
 ===============Gorgeous dividing line===================
@@ -98,7 +100,19 @@ Github：https://github.com/north2016/T-MVP
 ## License
 
 ```
- No Fucking License.  
+Copyright [2016] [north]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```
 
 
