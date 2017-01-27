@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.C;
-import com.base.BaseBean;
 import com.ui.main.BR;
 import com.ui.main.R;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * Created by baixiaokang on 16/12/27.
  */
 
-public class CoreAdapter<M extends BaseBean> extends RecyclerView.Adapter<BaseViewHolder> {
+public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
     private TypeSelector<M> mTypeSelector;
     private List<M> mItemList = new ArrayList<>();
     public boolean isHasMore = true;
@@ -82,7 +81,7 @@ public class CoreAdapter<M extends BaseBean> extends RecyclerView.Adapter<BaseVi
 
     public void setBeans(List<M> data, int begin) {
         if (data == null) data = new ArrayList<>();
-        this.isHasMore = data.size() >= C.PAGE_COUNT;
+        this.isHasMore = data.size() >= C.PAGE_COUNT && (data.size() > 0 && begin > 0);
         if (begin > 1) this.mItemList.addAll(data);
         else this.mItemList = data;
         notifyDataSetChanged();

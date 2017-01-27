@@ -1,13 +1,14 @@
 package com.model;
 
-import com.base.BaseBean;
 import com.base.entity.Pointer;
+
+import java.io.Serializable;
 
 /**
  * Created by baixiaokang on 16/12/24.
  */
 
-public class Message extends BaseBean {
+public class Message implements Serializable {
 
     public Pointer receiver;
     public String message;

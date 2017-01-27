@@ -1,6 +1,7 @@
 package com.ui.user;
 
 import com.C;
+import com.DbFactory;
 import com.EventTags;
 import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.javassist.Bus;
@@ -56,7 +57,9 @@ public class UserPresenter extends UserContract.Presenter {
     @Override
     public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, _User user) {
         String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
-        mAdapterPresenter.setRepository(ApiFactory::getCommentList)
+        mAdapterPresenter.setNetRepository(ApiFactory::getCommentList)
+                .setDbRepository(DbFactory::getUserCommentList)
+                .setParam(C.OBJECT_ID, user.objectId)
                 .setParam(C.INCLUDE, C.ARTICLE)
                 .setParam(C.CREATER, creater)
                 .fetch();

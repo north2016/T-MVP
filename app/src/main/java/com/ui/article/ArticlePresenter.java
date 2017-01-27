@@ -2,6 +2,7 @@ package com.ui.article;
 
 
 import com.C;
+import com.DbFactory;
 import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.CheckLogin;
 import com.apt.ApiFactory;
@@ -38,9 +39,12 @@ public class ArticlePresenter extends ArticleContract.Presenter {
     @Override
     public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, ImageInfo mArticle) {
         String article = new Gson().toJson(new Pointer(Image.class.getSimpleName(), mArticle.objectId));
-        mAdapterPresenter.setRepository(ApiFactory::getCommentList)
+        mAdapterPresenter
+                .setDbRepository(DbFactory::getCommentList)
+                .setNetRepository(ApiFactory::getCommentList)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.ARTICLE, article)
+                .setParam(C.OBJECT_ID, mArticle.objectId)
                 .fetch();
     }
 }

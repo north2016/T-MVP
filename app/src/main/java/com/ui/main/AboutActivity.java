@@ -1,6 +1,7 @@
 package com.ui.main;
 
 import com.C;
+import com.DbFactory;
 import com.app.annotation.apt.Router;
 import com.apt.ApiFactory;
 import com.base.DataBindingActivity;
@@ -24,7 +25,9 @@ public class AboutActivity extends DataBindingActivity<ActivityAboutBinding> {
 
     @Override
     public void initView() {
-        mViewBinding.lvUser.getPresenter().setRepository(ApiFactory::getAllUser).fetch();
+        mViewBinding.lvUser.getPresenter()
+                .setDbRepository(DbFactory::getAllUser)
+                .setNetRepository(ApiFactory::getAllUser).fetch();
         mViewBinding.llHeader.addView(new ChartView(this, Lines, num0, num1));
     }
 }

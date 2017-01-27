@@ -1,13 +1,14 @@
 package com.model;
 
-import com.base.BaseBean;
 import com.base.entity.Pointer;
+
+import java.io.Serializable;
 
 /**
  * Created by baixiaokang on 16/5/4.
  */
 
-public class Comment extends BaseBean {
+public class Comment implements Serializable {
 
     public Pointer article;
     public String content;

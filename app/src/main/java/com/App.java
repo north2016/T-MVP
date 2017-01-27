@@ -11,6 +11,8 @@ import com.base.util.SpUtil;
 import java.util.HashMap;
 import java.util.Stack;
 
+import io.realm.Realm;
+
 /**
  * Created by baixiaokang on 16/4/23.
  */
@@ -23,6 +25,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
+        Realm.init(this);
         SpUtil.init(this);
         AppCompatDelegate.setDefaultNightMode(SpUtil.isNight() ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
         store = new Stack<>();

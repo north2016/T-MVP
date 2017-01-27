@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.C;
+import com.DbFactory;
 import com.EventTags;
 import com.app.annotation.javassist.Bus;
 import com.apt.ApiFactory;
@@ -45,7 +46,8 @@ public class ArticleFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         type = getArguments().getString(C.TYPE);
         mXRecyclerView.getPresenter()
-                .setRepository(ApiFactory::getAllImages)
+                .setDbRepository(DbFactory::getAllImages)
+                .setNetRepository(ApiFactory::getAllImages)
                 .setParam(C.TYPE, type)
                 .fetch();
     }

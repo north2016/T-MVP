@@ -3,9 +3,9 @@ package com.base;
 import java.io.Serializable;
 
 /**
- * Created by baixiaokang on 16/4/26.
+ * Created by baixiaokang on 17/1/24.
  */
-public class BaseBean implements Serializable {
-    public long id;
-    public String objectId;
+
+public interface BaseBean extends Serializable {
+    String getObjectId();
 }

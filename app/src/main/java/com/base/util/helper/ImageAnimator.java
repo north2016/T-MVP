@@ -25,6 +25,7 @@ public class ImageAnimator {
             "http://img-cdn.luoo.net/pics/vol/57e2c6fd714e2.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/579255f04b1da.jpg?imageView2/1/w/640/h/452",
             "http://img-cdn.luoo.net/pics/vol/581b681b678f1.jpg?imageView2/1/w/640/h/452"};
+
     private int[] mColors;
     private static final float FACTOR = 0.1f;
 

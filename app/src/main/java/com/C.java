@@ -43,6 +43,7 @@ public class C {
     public static final String SETTING = "setting";
     public static final String USER_INFO = "userInfo";
     public static final String USER_RELEASE = "release";
+    public static final String OBJECT_ID = "objectId";
 
 
     //==================static============//

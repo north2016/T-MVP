@@ -1,13 +1,14 @@
 package com.model;
 
-import com.base.BaseBean;
 import com.base.entity.Pointer;
+
+import java.io.Serializable;
 
 /**
  * Created by baixiaokang on 17/1/21.
  */
 
-public class Image extends BaseBean {
+public class Image implements Serializable {
     public String image;
     public String article;
     public String author;

@@ -12,20 +12,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.base.BaseBean;
-import com.base.entity.DataArr;
+import com.app.annotation.aspect.DbRealm;
 import com.ui.main.R;
 
 import java.util.List;
 
-
-public class TRecyclerView<M extends BaseBean> extends FrameLayout implements AdapterPresenter.IAdapterView {
+public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IAdapterView {
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerview;
     private LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
     private CoreAdapter<M> mCommAdapter;
-    private AdapterPresenter mCoreAdapterPresenter;
+    private AdapterPresenter<M> mCoreAdapterPresenter;
     private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
     private int headType, footType;
 
@@ -57,11 +55,11 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
         boolean isRefreshable = ta.getBoolean(R.styleable.TRecyclerView_isRefreshable, true);
         ta.recycle();
 
-        View layout =  inflate(context, R.layout.layout_list_recyclerview, this);
+        View layout = inflate(context, R.layout.layout_list_recyclerview, this);
         swipeRefresh = (SwipeRefreshLayout) layout.findViewById(R.id.swiperefresh);
         recyclerview = (RecyclerView) layout.findViewById(R.id.recyclerview);
         ll_emptyView = (LinearLayout) layout.findViewById(R.id.ll_emptyview);
-        mCoreAdapterPresenter = new AdapterPresenter(this);
+        mCoreAdapterPresenter = new AdapterPresenter<>(this);
 
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
         swipeRefresh.setOnRefreshListener(this::reFetch);
@@ -69,7 +67,7 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        mCommAdapter = new CoreAdapter<M>();
+        mCommAdapter = new CoreAdapter<>();
         recyclerview.setAdapter(mCommAdapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastVisibleItem;
@@ -148,14 +146,14 @@ public class TRecyclerView<M extends BaseBean> extends FrameLayout implements Ad
         }
     }
 
-    @Override
-    public void setData(DataArr response, int begin) {
+    @DbRealm
+    public void setData(List data, int begin) {
         swipeRefresh.setRefreshing(false);
-        mCommAdapter.setBeans(response.results, begin);
-        if (begin == 1 && (response.results == null || response.results.size() == 0))
+        mCommAdapter.setBeans(data, begin);
+        if ((begin == 1 || begin == -1) && (data == null || data.size() == 0))
             setEmpty();
         else if (isReverse)
-            recyclerview.scrollToPosition(mCommAdapter.getItemCount() - response.results.size() - 2);
+            recyclerview.scrollToPosition(mCommAdapter.getItemCount() - data.size() - 2);
     }
 
     @Override

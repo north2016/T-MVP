@@ -1,6 +1,7 @@
 package com.ui.advise;
 
 import com.C;
+import com.DbFactory;
 import com.app.annotation.apt.InstanceFactory;
 import com.app.annotation.aspect.CheckLogin;
 import com.apt.ApiFactory;
@@ -32,7 +33,8 @@ public class AdvisePresenter extends AdviseContract.Presenter {
     @CheckLogin
     public void initAdapterPresenter(AdapterPresenter mAdapterPresenter) {
         mAdapterPresenter
-                .setRepository(ApiFactory::getMessageList)
+                .setNetRepository(ApiFactory::getMessageList)
+                .setDbRepository(DbFactory::getMessageList)
                 .setParam(C.INCLUDE, C.CREATER)
                 .setParam(C.UID, SpUtil.getUser().objectId)
                 .fetch();

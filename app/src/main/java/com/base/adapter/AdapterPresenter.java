@@ -3,40 +3,51 @@ package com.base.adapter;
 import android.util.Log;
 
 import com.C;
-import com.base.entity.DataArr;
-import com.base.Repository;
+import com.base.DbRepository;
+import com.base.NetRepository;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by baixiaokang on 16/12/27.
  */
 
-public class AdapterPresenter {
-    private Repository mRepository;//仓库
-    private HashMap<String, Object> param = new HashMap<>();//设置仓库钥匙
+public class AdapterPresenter<M> {
+    private NetRepository mNetRepository;//仓库
+    private HashMap<String, Object> param = new HashMap<>();//设置远程网络仓库钥匙
+    private DbRepository mDbRepository;
     private int begin = 0;
-    private final IAdapterView view;
+    private final IAdapterView<M> view;
 
-    public interface IAdapterView {
+    interface IAdapterView<M> {
         void setEmpty();
 
-        void setData(DataArr response, int begin);
+        void setData(List<M> data, int begin);
 
         void reSetEmpty();
     }
 
-    public AdapterPresenter(IAdapterView mIAdapterViewImpl) {
+    AdapterPresenter(IAdapterView mIAdapterViewImpl) {
         this.view = mIAdapterViewImpl;
     }
 
-    public AdapterPresenter setRepository(Repository repository) {
-        this.mRepository = repository;
+    public HashMap<String, Object> getParam() {
+        return param;
+    }
+
+    public AdapterPresenter setNetRepository(NetRepository netRepository) {
+        this.mNetRepository = netRepository;
         return this;
     }
 
-    public AdapterPresenter setParam(String key, String value) {
+    public AdapterPresenter setParam(String key, Object value) {
         this.param.put(key, value);
+        return this;
+    }
+
+    public AdapterPresenter setDbRepository(DbRepository mDbRepository) {
+        this.mDbRepository = mDbRepository;
         return this;
     }
 
@@ -47,15 +58,25 @@ public class AdapterPresenter {
     public void fetch() {
         begin++;
         view.reSetEmpty();
-        if (mRepository == null) {
-            Log.e("mRepository", "null");
+        if (mNetRepository == null) {
+            Log.e("mNetRepository", "null");
             return;
         }
         param.put(C.PAGE, begin);
-        mRepository
+        mNetRepository
                 .getData(param)
-                .subscribe(
-                        res -> view.setData(res, begin),
-                        e -> view.setEmpty());
+                .subscribe(res -> view.setData(res.results, begin),
+                        err -> getDbData());
+    }
+
+    private void getDbData() {
+        if (mDbRepository != null)
+            mDbRepository
+                    .getData(param)
+                    .asObservable()
+                    .subscribe(
+                            r -> view.setData((List<M>) r, -1),
+                            e -> view.setEmpty());
+        else view.setEmpty();
     }
 }
