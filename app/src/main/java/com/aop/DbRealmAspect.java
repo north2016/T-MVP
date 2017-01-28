@@ -10,7 +10,6 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import rx.Observable;
-import rx.functions.Action0;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -49,11 +48,6 @@ public class DbRealmAspect {
                             @Override
                             public void call(Throwable e) {
                                 e.printStackTrace();
-                            }
-                        }, new Action0() {
-                            @Override
-                            public void call() {
-                                realm.close();
                             }
                         });
     }

@@ -23,7 +23,9 @@ public class AdapterPresenter<M> {
     interface IAdapterView<M> {
         void setEmpty();
 
-        void setData(List<M> data, int begin);
+        void setNetData(List<M> data, int begin);
+
+        void setDBData(List<M> data);
 
         void reSetEmpty();
     }
@@ -65,7 +67,7 @@ public class AdapterPresenter<M> {
         param.put(C.PAGE, begin);
         mNetRepository
                 .getData(param)
-                .subscribe(res -> view.setData(res.results, begin),
+                .subscribe(res -> view.setNetData(res.results, begin),
                         err -> getDbData());
     }
 
@@ -75,7 +77,7 @@ public class AdapterPresenter<M> {
                     .getData(param)
                     .asObservable()
                     .subscribe(
-                            r -> view.setData((List<M>) r, -1),
+                            r -> view.setDBData((List<M>) r),
                             e -> view.setEmpty());
         else view.setEmpty();
     }

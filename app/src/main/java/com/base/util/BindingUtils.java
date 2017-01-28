@@ -57,6 +57,7 @@ public class BindingUtils {
 
     @BindingAdapter({"article"})
     public static void setArticle(TextView tv, String url) {
+        if (TextUtils.isEmpty(url)) return;
         String article = url.replace("<br>", "\n").replaceAll(" ", "").replaceAll("//", "");
         if (!TextUtils.isEmpty(article) && article.indexOf("&gt;") > 0) {
             article = article.substring(article.indexOf("&gt;") + 4, article.length());

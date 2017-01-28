@@ -147,10 +147,20 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
     }
 
     @DbRealm
-    public void setData(List data, int begin) {
+    public void setNetData(List data, int begin) {
         swipeRefresh.setRefreshing(false);
         mCommAdapter.setBeans(data, begin);
-        if ((begin == 1 || begin == -1) && (data == null || data.size() == 0))
+        if ((begin == 1) && (data == null || data.size() == 0))
+            setEmpty();
+        else if (isReverse)
+            recyclerview.scrollToPosition(mCommAdapter.getItemCount() - data.size() - 2);
+    }
+
+    @Override
+    public void setDBData(List data) {
+        swipeRefresh.setRefreshing(false);
+        mCommAdapter.setBeans(data, -1);
+        if ((data == null || data.size() == 0))
             setEmpty();
         else if (isReverse)
             recyclerview.scrollToPosition(mCommAdapter.getItemCount() - data.size() - 2);
