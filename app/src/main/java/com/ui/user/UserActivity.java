@@ -1,6 +1,9 @@
 package com.ui.user;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -9,6 +12,7 @@ import com.C;
 import com.app.annotation.apt.Extra;
 import com.app.annotation.apt.Router;
 import com.app.annotation.apt.SceneTransition;
+import com.app.annotation.aspect.Permission;
 import com.base.BaseActivity;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
@@ -42,23 +46,21 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
         mPresenter.initAdapterPresenter(mViewBinding.lvComment.getPresenter(), user);
         if (SpUtil.getUser() != null && TextUtils.equals(user.objectId, SpUtil.getUser().objectId)) {
             mViewBinding.fab.setImageResource(R.drawable.ic_menu_camera);
-            mViewBinding.fab.setOnClickListener(
-                    v -> startActivityForResult(new Intent().setType("image/*").setAction(Intent.ACTION_GET_CONTENT), C.IMAGE_REQUEST_CODE));
+            mViewBinding.fab.setOnClickListener(v -> takePhoto());
         } else mViewBinding.fab.setOnClickListener(v -> ToastUtil.show("ok"));
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent mdata) {
-        if (mdata != null && requestCode == C.IMAGE_REQUEST_CODE) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent mdata){
             try {
-                File file = new File(BindingUtils.getUrlByIntent(mContext, mdata));
+                File file = new File(getExternalCacheDir() + "user_photo.png");
+                if (!file.exists()) file = new File(BindingUtils.getUrlByIntent(mContext, mdata));
                 if (file.exists()) mPresenter.upLoadFace(file);
                 else showMsg("照片无法打开");
             } catch (Exception e) {
                 e.printStackTrace();
                 showMsg("照片无法打开");
             }
-        }
     }
 
     @Override
@@ -70,5 +72,14 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     public void initUser(_User user) {
         BindingUtils.loadRoundAndBgImg(image, user.face, mViewBinding.imHeader);
         setTitle(user.username);
+    }
+
+    @Permission(Manifest.permission.CAMERA)
+    public void takePhoto() {
+        startActivityForResult(
+                new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                        .putExtra(MediaStore.EXTRA_OUTPUT,
+                                Uri.fromFile(new File(getExternalCacheDir()+ "user_photo.png"))),
+                C.IMAGE_REQUEST_CODE);
     }
 }

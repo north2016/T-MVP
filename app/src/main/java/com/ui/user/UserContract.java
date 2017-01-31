@@ -16,6 +16,8 @@ public interface UserContract {
         void showMsg(String msg);
 
         void initUser(_User user);
+
+        void takePhoto();
     }
 
     abstract class Presenter extends BasePresenter<View> {

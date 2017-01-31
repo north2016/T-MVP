@@ -29,6 +29,7 @@ public class UserPresenter extends UserContract.Presenter {
 
     @Override
     public void upLoadFace(File file) {
+        mView.showMsg("正在上传!");
         mCompositeSubscription.add(
                 ApiFactory.upFile(file.getName(),
                         RequestBody.create(MediaType.parse("image/*"), file))

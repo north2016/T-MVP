@@ -45,6 +45,8 @@ QQ群：AndroidMVP   555343041 <a target="_blank" href="http://shang.qq.com/wpa/
 
 #更新日志：
 
+2017/1／31：AOP新增SysPermissionAspect支持动态申请系统权限切片，轻松适配6.0+
+
 2017/1／27：AOP新增DbRealmAspect支持Realm数据库，数据库突破你想像的简单(年夜特供)
 
 2017/1／9： AOP新增CheckLoginAspect切片拦截未登陆用户，控制未登陆用户的操作权限
