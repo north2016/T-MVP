@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Created by baixiaokang on 17/1/24.
+ * 数据库存库注解
  */
 
 @Retention(RetentionPolicy.CLASS)

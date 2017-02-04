@@ -11,6 +11,7 @@ import com.apt.ApiFactory;
 import com.base.adapter.AdapterPresenter;
 import com.base.entity.Pointer;
 import com.base.event.OkBus;
+import com.base.util.BaseUtils;
 import com.base.util.SpUtil;
 import com.google.gson.Gson;
 import com.base.entity.Face;
@@ -32,7 +33,7 @@ public class UserPresenter extends UserContract.Presenter {
         mView.showMsg("正在上传!");
         mCompositeSubscription.add(
                 ApiFactory.upFile(file.getName(),
-                        RequestBody.create(MediaType.parse("image/*"), file))
+                        RequestBody.create(MediaType.parse("image/*"), BaseUtils.getUpLoadimage(file.getAbsolutePath())))
                         .subscribe(
                                 res -> upUserInfo(res.url),
                                 e -> mView.showMsg("上传失败!")));

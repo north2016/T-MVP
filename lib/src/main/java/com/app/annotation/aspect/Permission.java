@@ -2,6 +2,7 @@ package com.app.annotation.aspect;
 
 /**
  * Created by baixiaokang on 17/1/31.
+ * 申请系统权限注解
  */
 
 import java.lang.annotation.ElementType;
