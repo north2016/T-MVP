@@ -9,12 +9,11 @@ import com.app.annotation.javassist.BusRegister;
 import com.app.annotation.javassist.BusUnRegister;
 import com.apt.ApiFactory;
 import com.base.adapter.AdapterPresenter;
+import com.base.entity.Face;
 import com.base.entity.Pointer;
 import com.base.event.OkBus;
-import com.base.util.BaseUtils;
 import com.base.util.SpUtil;
 import com.google.gson.Gson;
-import com.base.entity.Face;
 import com.model._User;
 
 import java.io.File;
@@ -33,7 +32,7 @@ public class UserPresenter extends UserContract.Presenter {
         mView.showMsg("正在上传!");
         mCompositeSubscription.add(
                 ApiFactory.upFile(file.getName(),
-                        RequestBody.create(MediaType.parse("image/*"), BaseUtils.getUpLoadimage(file.getAbsolutePath())))
+                        RequestBody.create(MediaType.parse("image/*"), file))
                         .subscribe(
                                 res -> upUserInfo(res.url),
                                 e -> mView.showMsg("上传失败!")));
