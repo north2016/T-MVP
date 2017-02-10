@@ -63,6 +63,7 @@ dependencies {
 
     compile project(':lib')
     annotationProcessor project(':apt')
+    provided "org.projectlombok:lombok:1.12.6"
 }
 
 apply plugin: AspectjPlugin

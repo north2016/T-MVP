@@ -75,7 +75,6 @@ public class AdapterPresenter<M> {
         if (mDbRepository != null)
             mDbRepository
                     .getData(param)
-                    .asObservable()
                     .subscribe(
                             r -> view.setDBData((List<M>) r),
                             e -> view.setEmpty());

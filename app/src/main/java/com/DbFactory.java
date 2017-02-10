@@ -8,42 +8,43 @@ import com.model._User;
 import java.util.HashMap;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
+import rx.Observable;
 
 /**
  * Created by baixiaokang on 17/1/25.
  */
 
 public class DbFactory {
-    public static RealmResults getAllImages(HashMap<String, Object> param) {
-        return Realm.getDefaultInstance()
+    public static Observable getAllImages(HashMap<String, Object> param) {
+        return Observable.defer(() -> Realm.getDefaultInstance()
                 .where(ImageInfo.class)
                 .equalTo(C.TYPE, (String) param.get(C.TYPE))
-                .findAll();
+                .findAll().asObservable());
     }
 
-    public static RealmResults getCommentList(HashMap<String, Object> param) {
-        return Realm.getDefaultInstance()
+    public static Observable getCommentList(HashMap<String, Object> param) {
+        return Observable.defer(() -> Realm.getDefaultInstance()
                 .where(CommentInfo.class)
                 .equalTo("article.objectId", (String) param.get(C.OBJECT_ID))
-                .findAll();
+                .findAll().asObservable());
     }
 
-    public static RealmResults getAllUser(HashMap<String, Object> param) {
-        return Realm.getDefaultInstance().where(_User.class).findAll();
+    public static Observable getAllUser(HashMap<String, Object> param) {
+        return Observable.defer(() ->
+                Realm.getDefaultInstance().where(_User.class).findAll().asObservable());
     }
 
-    public static RealmResults getUserCommentList(HashMap<String, Object> param) {
-        return Realm.getDefaultInstance()
+    public static Observable getUserCommentList(HashMap<String, Object> param) {
+        return Observable.defer(() -> Realm.getDefaultInstance()
                 .where(CommentInfo.class)
                 .equalTo("creater.objectId", (String) param.get(C.OBJECT_ID))
-                .findAll();
+                .findAll().asObservable());
     }
 
-    public static RealmResults getMessageList(HashMap<String, Object> param) {
-        return Realm.getDefaultInstance()
+    public static Observable getMessageList(HashMap<String, Object> param) {
+        return Observable.defer(() -> Realm.getDefaultInstance()
                 .where(MessageInfo.class)
                 .equalTo(C.UID, (String) param.get(C.UID))
-                .findAll();
+                .findAll().asObservable());
     }
 }
