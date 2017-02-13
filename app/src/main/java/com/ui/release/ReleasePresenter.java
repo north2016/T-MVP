@@ -19,7 +19,7 @@ import com.model._User;
  * Created by baixiaokang on 17/1/21.
  */
 
-public class ReleasePresenter extends ReleaseContract.Presenter {
+public class ReleasePresenter extends MyReleaseContract.Presenter {
 
     @CheckLogin
     public void upArticle(String url, String title, String content) {

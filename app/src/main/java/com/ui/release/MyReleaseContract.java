@@ -7,14 +7,14 @@ import com.base.BaseView;
  * Created by baixiaokang on 17/1/21.
  */
 
-public interface ReleaseContract {
+public interface MyReleaseContract {
     interface View extends BaseView {
         void showMsg(String msg);
 
         void releaseSuc();
     }
 
-    abstract class Presenter extends BasePresenter<ReleaseContract.View> {
+    abstract class Presenter extends BasePresenter<MyReleaseContract.View> {
 
         public abstract void upArticle(String url, String title, String content);
 
