@@ -13,7 +13,7 @@ import com.ui.main.databinding.ActivityReleaseBinding;
 
 
 @Router(C.USER_RELEASE)
-public class ReleaseActivity extends BaseActivity<ReleasePresenter, ActivityReleaseBinding> implements MyReleaseContract.View {
+public class ReleaseActivity extends BaseActivity<ReleasePresenter, ActivityReleaseBinding> implements ReleaseContract.View {
     @Override
     public int getLayoutId() {
         return R.layout.activity_release;
