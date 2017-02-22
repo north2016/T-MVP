@@ -15,7 +15,7 @@ import com.app.annotation.apt.Router;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.TRouter;
 import com.base.BaseActivity;
-import com.base.entity.ExtraData;
+import com.base.entity.DataExtra;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.helper.FragmentAdapter;
@@ -102,10 +102,10 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.im_face:
-                TRouter.go(C.USER_INFO, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+                TRouter.go(C.USER_INFO, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
                 break;
             case R.id.fab:
-                TRouter.go(C.USER_RELEASE, new ExtraData(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+                TRouter.go(C.USER_RELEASE, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
                 break;
         }
     }

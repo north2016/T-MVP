@@ -5,7 +5,7 @@
 
         <import type="com.base.util.helper.RouterHelper" />
 
-        <import type="com.base.entity.ExtraData" />
+        <import type="com.base.entity.DataExtra" />
 
         <import type="com.C" />
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:onClick="@{()->RouterHelper.go(C.ARTICLE,ExtraData.getExtra(C.HEAD_DATA,item.article),imArticle)}"
+            android:onClick="@{()->RouterHelper.go(C.ARTICLE,DataExtra.getExtra(C.HEAD_DATA,item.article),imArticle)}"
             android:orientation="horizontal">
 
             <ImageView

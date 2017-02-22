@@ -5,7 +5,7 @@
 
         <import type="com.base.util.helper.RouterHelper" />
 
-        <import type="com.base.entity.ExtraData" />
+        <import type="com.base.entity.DataExtra" />
 
         <import type="com.C" />
 
@@ -27,7 +27,7 @@
             android:id="@+id/image"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:onClick="@{()->RouterHelper.go(C.USER_INFO,ExtraData.getExtra(C.HEAD_DATA,item.creater),image)}"
+            android:onClick="@{()->RouterHelper.go(C.USER_INFO,DataExtra.getExtra(C.HEAD_DATA,item.creater),image)}"
             app:roundImageUrl="@{item.creater.face}" />
 
         <TextView

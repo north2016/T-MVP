@@ -5,7 +5,7 @@
 
         <import type="com.base.util.helper.RouterHelper" />
 
-        <import type="com.base.entity.ExtraData" />
+        <import type="com.base.entity.DataExtra" />
 
         <import type="com.C" />
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
         android:foreground="?attr/selectableItemBackground"
-        android:onClick="@{()->RouterHelper.go(C.ARTICLE,ExtraData.getExtra(C.HEAD_DATA,item),image)}"
+        android:onClick="@{()->RouterHelper.go(C.ARTICLE,DataExtra.getExtra(C.HEAD_DATA,item),image)}"
         android:paddingLeft="8dp"
         android:background="?attr/backgroundCard"
         android:paddingRight="8dp"
