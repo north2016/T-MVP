@@ -2,9 +2,11 @@ package com.base.adapter;
 
 import android.util.Log;
 
+import com.App;
 import com.C;
 import com.base.DbRepository;
 import com.base.NetRepository;
+import com.base.util.NetWorkUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +60,10 @@ public class AdapterPresenter<M> {
     }
 
     public void fetch() {
+        if (!NetWorkUtil.isNetConnected(App.getAppContext())) {
+            getDbData();
+            return;
+        }
         begin++;
         view.reSetEmpty();
         if (mNetRepository == null) {

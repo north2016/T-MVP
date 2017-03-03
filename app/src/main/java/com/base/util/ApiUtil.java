@@ -31,6 +31,11 @@ public class ApiUtil {
         return new Pointer(obj.getClass().getSimpleName(), obj.getObjectId());
     }
 
+    public static <T extends Serializable> Pointer getPointer(String className,BaseBean obj) {
+        return new Pointer(className, obj.getObjectId());
+    }
+
+
     public static String getInclude(Map<String, Object> param) {
         return (String) param.get("include");
     }

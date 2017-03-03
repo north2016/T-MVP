@@ -27,7 +27,7 @@ public class ArticlePresenter extends ArticleContract.Presenter {
                 ApiFactory
                         .createComment(
                                 new Comment(
-                                        ApiUtil.getPointer(article),
+                                        ApiUtil.getPointer(Image.class.getSimpleName(), article),
                                         content,
                                         ApiUtil.getPointer(user)))
                         .subscribe(
