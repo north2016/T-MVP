@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.C;
 import com.app.annotation.apt.Router;
+import com.app.annotation.aspect.CheckLogin;
 import com.app.annotation.aspect.SingleClick;
 import com.apt.TRouter;
 import com.base.BaseActivity;
@@ -99,6 +100,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     }
 
     @SingleClick
+    @CheckLogin
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.im_face:
