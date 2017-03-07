@@ -33,4 +33,4 @@ task clean(type: Delete) {
 }
 
 
-//注意⚠️:   插件修改后运行前需要运行 ./gradlew -p buildsrc clean build uploadArchives --info
+//注意⚠️:   插件修改后运行前需要运行 ./gradlew -p plugin clean build uploadArchives --info

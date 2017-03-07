@@ -12,7 +12,7 @@ uploadArchives {
     repositories.mavenDeployer {
         repository(url: uri('../repo'))
         pom.groupId = 'com.app.plugin'
-        pom.artifactId ='gradleplugin'
+        pom.artifactId = 'gradleplugin'
         pom.version = '1.0.0'
     }
 }
@@ -20,3 +20,5 @@ uploadArchives {
 repositories {
     jcenter()
 }
+
+//注意⚠️:   插件修改后运行前需要重新发布: ./gradlew -p plugin clean build uploadArchives --info

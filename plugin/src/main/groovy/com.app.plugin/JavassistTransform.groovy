@@ -44,6 +44,7 @@ public class JavassistTransform extends Transform {
                    Collection<TransformInput> referencedInputs,
                    TransformOutputProvider outputProvider, boolean isIncremental)
             throws IOException, TransformException, InterruptedException {
+        def startTime = System.currentTimeMillis();
         // Transform的inputs有两种类型，一种是目录，一种是jar包，要分开遍历
         inputs.each { TransformInput input ->
             try {
@@ -70,5 +71,6 @@ public class JavassistTransform extends Transform {
             }
         }
         ClassPool.getDefault().clearImportedPackages();
+        project.logger.error("JavassistTransform cast :" + (System.currentTimeMillis() - startTime) / 1000 + " secs");
     }
 }

@@ -6,5 +6,6 @@
 .DS_Store
 /build
 /captures
-/buildsrc/build
+/plugin/build
 /lib/build
+.gitignore
