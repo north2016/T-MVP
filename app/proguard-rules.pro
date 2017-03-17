@@ -120,4 +120,14 @@
     public void *(android.webkit.webView, jav.lang.String);
 }
 #----------------------------------------------------------------------------
+
+
+#-----------------AOP----------------------------------------------------------------------------------
+
+-adaptclassstrings
+-keepattributes InnerClasses, EnclosingMethod, Signature, *Annotation*
+
+-keepnames @org.aspectj.lang.annotation.Aspect class * {
+    ajc* <methods>;
+}
 #---------------------------------------------------------------------------------------------------
