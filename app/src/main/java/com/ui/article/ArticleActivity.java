@@ -26,11 +26,6 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public ImageView image;
 
     @Override
-    protected void initTransitionView() {
-        image = mViewBinding.image;
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.activity_detail;
     }

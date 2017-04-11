@@ -126,7 +126,7 @@ public class RouterProcessor implements IProcessor {
 
                     blockBuilderBind.add(
                             "$T.setTransitionName(" +//2
-                                    "(($T)mContext)." +//3
+                                    "(($T)mContext).mViewBinding." +//3
                                     "$L, " +//4
                                     "$S);\n",//5
                             ClassName.get("android.support.v4.view", "ViewCompat"),//2

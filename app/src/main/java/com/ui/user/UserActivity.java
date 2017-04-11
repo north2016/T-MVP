@@ -36,11 +36,6 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     }
 
     @Override
-    protected void initTransitionView() {
-        image = mViewBinding.image;
-    }
-
-    @Override
     public void initView() {
         initUser(user);
         mPresenter.initAdapterPresenter(mViewBinding.lvComment.getPresenter(), user);
@@ -70,7 +65,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
 
     @Override
     public void initUser(_User user) {
-        BindingUtils.loadRoundAndBgImg(image, user.face, mViewBinding.imHeader);
+        BindingUtils.loadRoundAndBgImg(mViewBinding.image, user.face, mViewBinding.imHeader);
         setTitle(user.username);
     }
 

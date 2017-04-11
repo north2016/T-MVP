@@ -23,13 +23,16 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     public Context mContext;
     public B mViewBinding;
 
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View rootView = getLayoutInflater().inflate(this.getLayoutId(), null, false);
         mViewBinding = DataBindingUtil.bind(rootView);
         this.setContentView(getLayoutId(), rootView);
-        initTransitionView();
         TRouter.bind(this);
         mContext = this;
         initPresenter();
@@ -38,9 +41,6 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
     }
 
     protected void initPresenter() {
-    }
-
-    protected void initTransitionView() {//在这里给转场view副值
     }
 
     private void initToolBar() {
