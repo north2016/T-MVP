@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatDelegate;
 import com.app.annotation.aspect.TimeLog;
 import com.base.util.SpUtil;
 
-import java.util.HashMap;
 import java.util.Stack;
 
 import io.realm.Realm;
@@ -19,7 +18,6 @@ import io.realm.Realm;
 public class App extends Application {
     private static App mApp;
     public Stack<Activity> store;
-    public HashMap<String, Object> mCurActivityExtra;
 
     @TimeLog
     public void onCreate() {

@@ -5,7 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.LayoutRes;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -21,7 +21,7 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerview;
     private LinearLayout ll_emptyView;
-    private GridLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
     private CoreAdapter<M> mCommAdapter;
     private AdapterPresenter<M> mCoreAdapterPresenter;
     private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
@@ -64,7 +64,7 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
         swipeRefresh.setColorSchemeResources(android.R.color.holo_blue_bright);
         swipeRefresh.setOnRefreshListener(this::reFetch);
         recyclerview.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(context, 1);
+        mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         mCommAdapter = new CoreAdapter<>();
@@ -86,17 +86,6 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
             public void onScrolled(RecyclerView recyclerView, int arg0, int arg1) {
                 super.onScrolled(recyclerView, arg0, arg1);
                 lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-            }
-        });
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                int itemViewType = recyclerview.getAdapter().getItemViewType(position);
-                if (itemViewType == R.layout.list_footer_view) {
-                    return 1;
-                } else {
-                    return 1;
-                }
             }
         });
         ll_emptyView.setOnClickListener((view -> {

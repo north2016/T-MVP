@@ -9,8 +9,10 @@ import com.app.apt.inter.IProcessor;
 import com.app.apt.util.Utils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.util.List;
 import javax.annotation.processing.FilerException;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.ElementFilter;
 
@@ -38,6 +41,12 @@ public class RouterProcessor implements IProcessor {
     public void process(RoundEnvironment roundEnv, AnnotationProcessor mAbstractProcessor) {
         String CLASS_NAME = "TRouter";
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 全局路由器 此类由apt自动生成");
+
+        FieldSpec extraField = FieldSpec.builder(ParameterizedTypeName.get(HashMap.class, String.class,Object.class), "mCurActivityExtra")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .build();
+        tb.addField(extraField);
+
         MethodSpec.Builder methodBuilder1 = MethodSpec.methodBuilder("go")
                 .addJavadoc("@此方法由apt自动生成")
                 .addModifiers(PUBLIC, STATIC)
@@ -53,7 +62,7 @@ public class RouterProcessor implements IProcessor {
         CodeBlock.Builder blockBuilderGo = CodeBlock.builder();
         CodeBlock.Builder blockBuilderBind = CodeBlock.builder();
         ClassName appClassName = ClassName.get("com", "App");
-        blockBuilderGo.addStatement("$T.getAppContext().mCurActivityExtra=extra", appClassName);
+        blockBuilderGo.addStatement("mCurActivityExtra=extra");
         blockBuilderGo.addStatement("Activity mContext=$T.getAppContext().getCurActivity()", appClassName);
         blockBuilderGo.beginControlFlow(" switch (name)");//括号开始
         blockBuilderBind.beginControlFlow(" switch (mContext.getClass().getSimpleName())");//括号开始
@@ -101,12 +110,11 @@ public class RouterProcessor implements IProcessor {
                         blockBuilderBind.add("(($T)mContext)." +//1
                                         "$L" +//2
                                         "= ($T) " +//3
-                                        "$T.getAppContext().mCurActivityExtra.get(" +//4
+                                        "mCurActivityExtra.get(" +//4
                                         "$S);\n",//5
                                 item.getElement(),//1
                                 mFiled,//2
                                 mFiled,//3
-                                appClassName,//4
                                 item.getExtraElementKeys().get(i)//5
                         );//5
                     }
