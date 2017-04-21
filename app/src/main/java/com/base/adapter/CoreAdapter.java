@@ -21,12 +21,19 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
     private TypeSelector<M> mTypeSelector;
     private List<M> mItemList = new ArrayList<>();
     public boolean isHasMore = true;
-    private int viewType, isHasFooter = 1, isHasHeader = 0, mHeadViewType, mFooterViewType = R.layout.list_footer_view;
-    private Object mHeadData, mFootData;
+    private List<Item> mHeadTypeDatas = new ArrayList<>();
+    private List<Item> mFootTypeDatas = new ArrayList<>();
+    private int viewType;
+    private Item mFooterItem;
+    private int mFooterViewType = R.layout.list_footer_view;
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new BaseViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), viewType, parent, false));
+    }
+
+    CoreAdapter() {
+        mFootTypeDatas.add(new Item(R.layout.list_footer_view, true));
     }
 
     @Override
@@ -45,38 +52,41 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     public void setHeadViewType(@LayoutRes int i, Object data) {
-        this.isHasHeader = i == 0 ? 0 : 1;
-        if (isHasHeader == 1) {
-            this.isHasHeader = 1;
-            this.mHeadViewType = i;
-            this.mHeadData = data;
-        }
+        mHeadTypeDatas.add(new Item(i, data));
     }
 
     public void setFooterViewType(@LayoutRes int i, Object data) {
-        this.isHasFooter = i == 0 ? 0 : 1;
-        if (isHasFooter == 1) {
-            this.mFootData = data;
-            this.isHasFooter = 1;
-            this.mFooterViewType = i;
-        }
+        mFootTypeDatas.add(mFootTypeDatas.size() - 1, new Item(i, data));
     }
 
     public Object getItem(int position) {
-        return isHasFooter == 1 && position + 1 == getItemCount()
-                ? (mFootData == null ? isHasMore : mFootData)
-                : isHasHeader == 1 && position == 0 ? mHeadData : mItemList.get(position - isHasHeader);
+        if (position < mHeadTypeDatas.size()) {
+            return mHeadTypeDatas.get(position).data;
+        } else if (position >= (mHeadTypeDatas.size() + mItemList.size())) {
+            int index = position - (mHeadTypeDatas.size() + mItemList.size());
+            if (mFootTypeDatas.get(index).type == mFooterViewType && !isHasMore) return false;
+            else return mFootTypeDatas.get(index).data;
+        } else {
+            return mItemList.get(position - mHeadTypeDatas.size());
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return isHasHeader == 1 && position == 0 ? mHeadViewType : (isHasFooter == 1 && position + 1 == getItemCount() ? mFooterViewType :
-                viewType == C.FLAG_MULTI_VH ? mTypeSelector.getType((M) getItem(position)) : viewType);
+        if (position < mHeadTypeDatas.size()) {
+            return mHeadTypeDatas.get(position).type;
+        } else if (position >= (mHeadTypeDatas.size() + mItemList.size())) {
+            return mFootTypeDatas.get(position - (mHeadTypeDatas.size() + mItemList.size())).type;
+        } else {
+            return viewType == C.FLAG_MULTI_VH ?
+                    mTypeSelector.getType((M) getItem(position)) :
+                    viewType;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mItemList.size() + isHasFooter + isHasHeader;
+        return mItemList.size() + mHeadTypeDatas.size() + mFootTypeDatas.size();
     }
 
     public void setBeans(List<M> data, int begin) {
@@ -85,5 +95,15 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
         if (begin > 1) this.mItemList.addAll(data);
         else this.mItemList = data;
         notifyDataSetChanged();
+    }
+
+    public class Item {
+        int type;
+        Object data;
+
+        public Item(int type, Object data) {
+            this.type = type;
+            this.data = data;
+        }
     }
 }

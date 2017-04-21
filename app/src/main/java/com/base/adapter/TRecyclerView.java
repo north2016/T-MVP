@@ -22,7 +22,7 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
     private RecyclerView recyclerview;
     private LinearLayout ll_emptyView;
     private LinearLayoutManager mLayoutManager;
-    private CoreAdapter<M> mCommAdapter;
+    public CoreAdapter<M> mCommAdapter;
     private AdapterPresenter<M> mCoreAdapterPresenter;
     private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
     private int headType, footType;
