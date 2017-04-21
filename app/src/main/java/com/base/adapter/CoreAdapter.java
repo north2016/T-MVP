@@ -51,11 +51,11 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
         this.viewType = C.FLAG_MULTI_VH;
     }
 
-    public void setHeadViewType(@LayoutRes int i, Object data) {
+    public void addHeadViewType(@LayoutRes int i, Object data) {
         mHeadTypeDatas.add(new Item(i, data));
     }
 
-    public void setFooterViewType(@LayoutRes int i, Object data) {
+    public void addFooterViewType(@LayoutRes int i, Object data) {
         mFootTypeDatas.add(mFootTypeDatas.size() - 1, new Item(i, data));
     }
 

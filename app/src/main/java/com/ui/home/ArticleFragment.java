@@ -48,16 +48,16 @@ public class ArticleFragment extends Fragment {
         /**
          * 测试多head type
          */
-        mXRecyclerView.mCommAdapter.setHeadViewType(R.layout.list_item_comment_user, C.getAdminMsg());
-        mXRecyclerView.mCommAdapter.setHeadViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
-        mXRecyclerView.mCommAdapter.setHeadViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addHeadViewType(R.layout.list_item_comment_user, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addHeadViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addHeadViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
 
         /**
          * 测试多foot type
          */
-        mXRecyclerView.mCommAdapter.setFooterViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
-        mXRecyclerView.mCommAdapter.setFooterViewType(R.layout.list_item_comment_user, C.getAdminMsg());
-        mXRecyclerView.mCommAdapter.setFooterViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addFooterViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addFooterViewType(R.layout.list_item_comment_user, C.getAdminMsg());
+        mXRecyclerView.mCommAdapter.addFooterViewType(R.layout.list_item_comment_admin, C.getAdminMsg());
 
         mXRecyclerView.getPresenter()
                 .setDbRepository(DbFactory::getAllImages)

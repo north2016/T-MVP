@@ -111,13 +111,13 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
 
     public TRecyclerView<M> setFootData(Object data) {
         isHasFootView = footType != 0;
-        this.mCommAdapter.setFooterViewType(footType, data);
+        this.mCommAdapter.addFooterViewType(footType, data);
         return this;
     }
 
     public TRecyclerView<M> setHeadData(Object data) {
         isHasHeadView = headType != 0;
-        this.mCommAdapter.setHeadViewType(headType, data);
+        this.mCommAdapter.addHeadViewType(headType, data);
         return this;
     }
 
