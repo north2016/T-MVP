@@ -24,7 +24,6 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
     private List<Item> mHeadTypeDatas = new ArrayList<>();
     private List<Item> mFootTypeDatas = new ArrayList<>();
     private int viewType;
-    private Item mFooterItem;
     private int mFooterViewType = R.layout.list_footer_view;
 
     @Override
@@ -33,7 +32,7 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
     }
 
     CoreAdapter() {
-        mFootTypeDatas.add(new Item(R.layout.list_footer_view, true));
+        mFootTypeDatas.add(new Item(mFooterViewType, true));
     }
 
     @Override

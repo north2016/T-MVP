@@ -44,7 +44,7 @@ public class MyFabBehavior extends CoordinatorLayout.Behavior<View> {
 
         if (dy >= 0 && !isAnimate && child.getVisibility() == View.VISIBLE) {
             hide(child);
-        } else if (dy < 0 && !isAnimate && child.getVisibility() == View.GONE) {
+        } else if (dy < 0 && !isAnimate && child.getVisibility() == View.INVISIBLE) {
             show(child);
         }
     }
@@ -61,7 +61,7 @@ public class MyFabBehavior extends CoordinatorLayout.Behavior<View> {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                view.setVisibility(View.GONE);
+                view.setVisibility(View.INVISIBLE);
                 isAnimate = false;
             }
 

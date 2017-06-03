@@ -89,7 +89,7 @@
             android:background="?attr/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_behavior="com.view.behavior.MyCommentBehavior">
 
 
