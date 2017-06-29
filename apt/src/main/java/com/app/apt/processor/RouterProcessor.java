@@ -42,7 +42,7 @@ public class RouterProcessor implements IProcessor {
         String CLASS_NAME = "TRouter";
         TypeSpec.Builder tb = classBuilder(CLASS_NAME).addModifiers(PUBLIC, FINAL).addJavadoc("@ 全局路由器 此类由apt自动生成");
 
-        FieldSpec extraField = FieldSpec.builder(ParameterizedTypeName.get(HashMap.class, String.class,Object.class), "mCurActivityExtra")
+        FieldSpec extraField = FieldSpec.builder(ParameterizedTypeName.get(HashMap.class, String.class, Object.class), "mCurActivityExtra")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .build();
         tb.addField(extraField);
@@ -65,6 +65,7 @@ public class RouterProcessor implements IProcessor {
         blockBuilderGo.addStatement("mCurActivityExtra=extra");
         blockBuilderGo.addStatement("Activity mContext=$T.getAppContext().getCurActivity()", appClassName);
         blockBuilderGo.beginControlFlow(" switch (name)");//括号开始
+        blockBuilderBind.addStatement("if(mCurActivityExtra==null) return");
         blockBuilderBind.beginControlFlow(" switch (mContext.getClass().getSimpleName())");//括号开始
 
         List<RouterActivityModel> mRouterActivityModels = new ArrayList<>();

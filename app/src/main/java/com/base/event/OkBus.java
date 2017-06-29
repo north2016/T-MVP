@@ -8,9 +8,8 @@ import android.util.SparseArray;
 import com.app.annotation.javassist.Bus;
 import com.base.util.LogUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -19,7 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 
 public class OkBus {
-    private ConcurrentHashMap<Integer, List<SparseArray<Event>>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
+    private ConcurrentHashMap<Integer, CopyOnWriteArrayList<SparseArray<Event>>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
     private ConcurrentHashMap<Integer, Object> mStickyEventList = new ConcurrentHashMap<>();//存储粘连事件ID以及其数据
     private ScheduledExecutorService mPool = Executors.newScheduledThreadPool(5);
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -46,7 +45,7 @@ public class OkBus {
         if (mEventList.get(tag) != null) {
             mEventList.get(tag).add(mEvent);
         } else {
-            List<SparseArray<Event>> mList = new ArrayList<>();
+            CopyOnWriteArrayList<SparseArray<Event>> mList = new CopyOnWriteArrayList<>();
             mList.add(mEvent);
             mEventList.put(tag, mList);
         }
@@ -73,6 +72,26 @@ public class OkBus {
                 mPool.execute(() -> ev.call(msg));
                 break;
         }
+    }
+
+    /**
+     * 一次性注销所有当前事件监听器
+     *
+     * @param ev
+     * @return
+     */
+    public OkBus unRegister(Event ev) {
+        for (int i = 0; i < mEventList.values().size(); i++) {
+            CopyOnWriteArrayList<SparseArray<Event>> list = (CopyOnWriteArrayList<SparseArray<Event>>) mEventList.values().toArray()[i];
+            int key = (int) mEventList.keySet().toArray()[i];
+            for (SparseArray<Event> item : list) {
+                if (item.indexOfValue(ev) >= 0) {
+                    list.remove(item);
+                    LogUtils.e("remove Event", "key :" + key + "   keys:" + item.toString());
+                }
+            }
+        }
+        return this;
     }
 
     public OkBus unRegister(int tag) {

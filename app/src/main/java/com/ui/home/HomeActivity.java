@@ -102,13 +102,9 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     @SingleClick
     @CheckLogin
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.im_face:
-                TRouter.go(C.USER_INFO, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
-                break;
-            case R.id.fab:
-                TRouter.go(C.USER_RELEASE, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
-                break;
-        }
+        if (v.getId() == R.id.im_face)
+            TRouter.go(C.USER_INFO, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
+        else if (v.getId() == R.id.fab)
+            TRouter.go(C.USER_RELEASE, new DataExtra(C.HEAD_DATA, SpUtil.getUser()).build(), v);
     }
 }

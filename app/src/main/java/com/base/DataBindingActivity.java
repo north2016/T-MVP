@@ -66,10 +66,9 @@ public abstract class DataBindingActivity<B extends ViewDataBinding> extends App
         rootView.setBackgroundColor(getResources().getColor(R.color.alpha_white));
         View container = getLayoutInflater().inflate(R.layout.activity_base, null, false);
         SwipeBackLayout swipeBackLayout = (SwipeBackLayout) container.findViewById(R.id.swipeBackLayout);
-        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
         View ivShadow = container.findViewById(R.id.iv_shadow);
         swipeBackLayout.addView(rootView);
-        swipeBackLayout.setOnSwipeBackListener((fa, fs) -> ivShadow.setAlpha(1 - fs));
+        swipeBackLayout.setOnScroll((fs) -> ivShadow.setAlpha(1 - fs));
         return container;
     }
 

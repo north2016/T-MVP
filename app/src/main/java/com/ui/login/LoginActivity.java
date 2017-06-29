@@ -1,14 +1,13 @@
 package com.ui.login;
 
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.C;
 import com.app.annotation.apt.Router;
+import com.apt.TRouter;
 import com.base.BaseActivity;
-import com.ui.home.HomeActivity;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityLoginBinding;
 
@@ -46,7 +45,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, ActivityLoginBin
 
     @Override
     public void loginSuccess() {
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        TRouter.go(C.HOME);
     }
 
     @Override

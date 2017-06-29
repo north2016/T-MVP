@@ -2,6 +2,8 @@ package com.ui.article;
 
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -24,6 +26,8 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public ImageInfo mArticle;
     @SceneTransition(C.TRANSLATE_VIEW)
     public ImageView image;
+    private Menu collapsedMenu;
+    private boolean appBarExpanded;
 
     @Override
     public int getLayoutId() {
@@ -36,6 +40,13 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
         setTitle(mArticle.title);
         mViewBinding.lvComment.setHeadData(mArticle);
         mPresenter.initAdapterPresenter(mViewBinding.lvComment.getPresenter(), mArticle);
+        mViewBinding.appbar.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            boolean newAppBarExpanded = Math.abs(verticalOffset) <= 200;
+            if (appBarExpanded != newAppBarExpanded) {
+                appBarExpanded = newAppBarExpanded;
+                invalidateOptionsMenu();
+            }
+        });
     }
 
     @Override
@@ -57,5 +68,19 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
         if (TextUtils.isEmpty(comment))
             Snackbar.make(mViewBinding.fab, "评论不能为空!", Snackbar.LENGTH_LONG).show();
         else mPresenter.createComment(comment, mArticle, SpUtil.getUser());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        collapsedMenu = menu;
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (collapsedMenu != null && !appBarExpanded)
+            collapsedMenu.add("Add").setIcon(R.drawable.ic_menu_send).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        return super.onPrepareOptionsMenu(collapsedMenu);
     }
 }
