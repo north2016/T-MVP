@@ -4,7 +4,7 @@
 If you're confused about Android development, maybe it's time to open the door to  a new world .
 
 TMVP is a Aop Architecture with Apt、AspectJ、Javassisit，
-which based on Realm＋Databinding＋MVP+Retrofit+Rxjava+MaterialDesign。
+which based on Realm＋Databinding＋MVP+Retrofit+Rxjava2+MaterialDesign。
 
 Build more complex functions with cleaner code，talk is cheap ，show u the code:
 
