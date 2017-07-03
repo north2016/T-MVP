@@ -45,13 +45,16 @@ android {
 dependencies {
 
     compile 'com.github.todou:appbarspring:1.0.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
-    compile 'com.google.code.gson:gson:2.7'
+    compile "io.reactivex.rxjava2:rxjava:$rootProject.ext.rxjava2Version"
+
+
+    compile "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit2Version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.retrofit2Version"
+    compile "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit2Version"
+    compile "com.google.code.gson:gson: $rootProject.ext.gsonVersion"
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'org.aspectj:aspectjrt:1.8.9'
 

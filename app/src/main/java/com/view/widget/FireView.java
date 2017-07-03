@@ -15,7 +15,8 @@ import com.base.util.BaseUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * 火焰类
@@ -107,7 +108,7 @@ public class FireView extends SurfaceView implements SurfaceHolder.Callback {
         } else {
             mFirePices.remove(0);
         }
-        Observable.from(mFirePices).subscribe(mFirePice -> mFirePice.draw(canvas));
+        Observable.fromIterable(mFirePices).subscribe(mFirePice -> mFirePice.draw(canvas));
         fireHeight = fireHeight - fireWidth / 6;
         Path mpath1 = new Path();
         mpath1.moveTo(halfWidth - fireWidth * 3 / 4, fireHeight - 2 * distance);

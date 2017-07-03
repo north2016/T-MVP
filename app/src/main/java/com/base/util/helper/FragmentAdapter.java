@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class FragmentAdapter extends FragmentStatePagerAdapter {
     private List<ArticleFragment> mFragments;
-    private String[] mTitles;
+    private List<String> mTitles;
 
-    public static FragmentAdapter newInstance(FragmentManager fm, List<ArticleFragment> fragments, String[] titles) {
+    public static FragmentAdapter newInstance(FragmentManager fm, List<ArticleFragment> fragments, List<String> titles) {
         FragmentAdapter mFragmentAdapter = new FragmentAdapter(fm);
         mFragmentAdapter.mFragments = fragments;
         mFragmentAdapter.mTitles = titles;
@@ -38,6 +38,6 @@ public class FragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles[position];
+        return mTitles.get(position);
     }
 }

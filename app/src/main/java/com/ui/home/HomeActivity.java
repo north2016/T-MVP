@@ -26,7 +26,10 @@ import com.ui.main.R;
 import com.ui.main.TMVPFragment;
 import com.ui.main.databinding.ActivityMainBinding;
 
-import rx.Observable;
+import java.util.List;
+
+import io.reactivex.Observable;
+
 
 @Router(C.HOME)
 public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBinding> implements HomeContract.View, NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -50,7 +53,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) TRouter.go(C.ABOUT);
+        if (item.getItemId() == R.id.action_sort) TRouter.go(C.TAB);
+        else if (item.getItemId() == R.id.action_settings) TRouter.go(C.ABOUT);
         else if (item.getItemId() == R.id.action_feedback) TRouter.go(C.ADVISE);
         else if (item.getItemId() == R.id.action_about)
             TMVPFragment.getInstance().start(getSupportFragmentManager());
@@ -68,8 +72,8 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     }
 
     @Override
-    public void showTabList(String[] mTabs) {
-        Observable.from(mTabs).map(ArticleFragment::newInstance).toList()
+    public void showTabList(List<String> mTabs) {
+        Observable.fromIterable(mTabs).map(ArticleFragment::newInstance).toList()
                 .map(fragments -> FragmentAdapter.newInstance(getSupportFragmentManager(), fragments, mTabs))
                 .subscribe(mFragmentAdapter -> mViewBinding.viewpager.setAdapter(mFragmentAdapter));
         PagerChangeListener mPagerChangeListener = PagerChangeListener.newInstance(mViewBinding.collapsingToolbar, mViewBinding.toolbarIvTarget, mViewBinding.toolbarIvOutgoing);

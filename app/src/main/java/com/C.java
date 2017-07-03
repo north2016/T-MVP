@@ -36,6 +36,7 @@ public class C {
 
     //==================Router============//
     public static final String HOME = "home";
+    public static final String TAB = "tab";
     public static final String ARTICLE = "article";
     public static final String LOGIN = "login";
     public static final String ABOUT = "about";
@@ -57,4 +58,7 @@ public class C {
         mMessageInfo.creater = admin;
         return mMessageInfo;
     }
+
+    public static String[] HOME_TABS = {"公开", "民谣", "摇滚", "电子", "流行", "爵士", "独立", "故事", "新世纪", "精品推荐", "原声"};
+
 }

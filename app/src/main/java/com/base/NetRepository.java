@@ -4,11 +4,11 @@ import com.base.entity.DataArr;
 
 import java.util.HashMap;
 
-import rx.Observable;
+import io.reactivex.Flowable;
 
 /**
  * Created by baixiaokang on 16/7/19.
  */
 public interface NetRepository {
-    Observable<DataArr> getData(HashMap<String, Object> param);
+    Flowable<DataArr> getData(HashMap<String, Object> param);
 }

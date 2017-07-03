@@ -7,11 +7,11 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
 import io.realm.Realm;
 import io.realm.RealmObject;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 
 /**
  * 数据库切片，根据注解DbRealm，缓存方法中含有需要缓存到数据库的RealmObject的参数
@@ -28,25 +28,25 @@ public class DbRealmAspect {
     public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
         joinPoint.proceed();//执行原方法
         Realm realm = Realm.getDefaultInstance();
-        Observable.from(joinPoint.getArgs())
-                .filter(new Func1<Object, Boolean>() {
+        Observable.fromArray(joinPoint.getArgs())
+                .filter(new Predicate<Object>() {
                     @Override
-                    public Boolean call(Object obj) {
+                    public boolean test(Object obj) {
                         return obj instanceof RealmObject || obj instanceof List;
                     }
                 })
                 .subscribe(
-                        new Action1<Object>() {
+                        new Consumer<Object>() {
                             @Override
-                            public void call(Object obj) {
+                            public void accept(Object obj) {
                                 realm.beginTransaction();
                                 if (obj instanceof List) realm.copyToRealmOrUpdate((List) obj);
                                 else realm.copyToRealmOrUpdate((RealmObject) obj);
                                 realm.commitTransaction();
                             }
-                        }, new Action1<Throwable>() {
+                        }, new Consumer<Throwable>() {
                             @Override
-                            public void call(Throwable e) {
+                            public void accept(Throwable e) {
                                 e.printStackTrace();
                             }
                         });

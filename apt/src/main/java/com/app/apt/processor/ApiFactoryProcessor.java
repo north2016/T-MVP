@@ -50,7 +50,7 @@ public class ApiFactoryProcessor implements IProcessor {
                                     .addModifiers(PUBLIC, STATIC);
 
                     if (TypeName.get(executableElement.getReturnType()).toString().contains(DATA_ARR_CLASS)) {//返回列表数据
-                        methodBuilder.returns(ClassName.get("rx", "Observable"));
+                        methodBuilder.returns(ClassName.get("io.reactivex", "Flowable"));
                         Map<String, Object> params = new HashMap<>();
                         methodBuilder.addParameter(params.getClass(), "param");
                         ClassName apiUtil = ClassName.get("com.base.util", "ApiUtil");

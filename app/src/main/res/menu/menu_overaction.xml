@@ -13,27 +13,26 @@
         android:title="@string/menu_settings"
         app:showAsAction="collapseActionView" />
 
-    <!--<item-->
-    <!--android:id="@+id/action_settings1"-->
-    <!--android:menuCategory="secondary"-->
-    <!--android:orderInCategory="100"-->
-    <!--android:title="反馈"-->
-    <!--app:showAsAction="collapseActionView" />-->
 
-
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_tab"
+        android:orderInCategory="400"
+        android:title="@string/sort"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_feedback"
         android:icon="@drawable/ic_whilte_send"
         android:orderInCategory="300"
         android:title="反馈"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_menu_info"
         android:orderInCategory="200"
         android:title="关于"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 
 </menu>
