@@ -83,7 +83,7 @@
                     android:maxLines="2"
                     android:text="@{item.type}"
                     android:textColor="?attr/textColor"
-                    android:textColorHint="@color/bluegrey300"
+                    android:textColorHint="@color/bluegrey200"
                     android:textSize="18sp" />
 
                 <TextView
