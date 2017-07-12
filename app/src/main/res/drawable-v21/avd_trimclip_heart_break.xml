@@ -1,0 +1,46 @@
+<animated-vector
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:aapt="http://schemas.android.com/aapt"
+  android:drawable="@drawable/vd_trimclip_heart_break">
+
+  <!-- Rotate and fade out the two broken-halves. -->
+  <target android:name="broken_heart_left_group">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/linear_out_slow_in"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="-20"/>
+    </aapt:attr>
+  </target>
+
+  <target
+    android:name="broken_heart_left"
+    android:animation="@anim/trimclip_heart_fade_out"/>
+
+  <target android:name="broken_heart_right_group">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="400"
+        android:interpolator="@android:interpolator/linear_out_slow_in"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="20"/>
+    </aapt:attr>
+  </target>
+
+  <target
+    android:name="broken_heart_right"
+    android:animation="@anim/trimclip_heart_fade_out"/>
+
+  <!-- Re-draw the stroke. -->
+  <target
+    android:name="heart_stroke_left_atrium"
+    android:animation="@anim/trimclip_heart_draw_stroke"/>
+
+  <target
+    android:name="heart_stroke_right_atrium"
+    android:animation="@anim/trimclip_heart_draw_stroke"/>
+
+</animated-vector>

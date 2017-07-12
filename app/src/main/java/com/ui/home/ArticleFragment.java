@@ -30,7 +30,7 @@ public class ArticleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mXRecyclerView = new TRecyclerView(getContext());
+        mXRecyclerView = new TRecyclerView(getContext(),true);
         mXRecyclerView.setViewType(R.layout.list_item_card_main);
         return mXRecyclerView;
     }

@@ -18,10 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
+        android:background="?attr/backgroundCard"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{()->RouterHelper.go(C.ARTICLE,DataExtra.getExtra(C.HEAD_DATA,item),image)}"
         android:paddingLeft="8dp"
-        android:background="?attr/backgroundCard"
         android:paddingRight="8dp"
         android:paddingTop="8dp">
 
@@ -30,25 +30,23 @@
             android:layout_height="wrap_content"
             android:background="?attr/backgroundCard"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:padding="8dp">
 
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:gravity="center"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="120dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    app:imageUrl="@{item.image}" />
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/bluegrey200"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{item.image}" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:orientation="vertical">
 
@@ -56,9 +54,11 @@
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="▆▆▆▆▆▆▆▆▆▆▆▆▆"
                     android:minLines="2"
                     android:text="@{item.title}"
                     android:textColor="?attr/textColor"
+                    android:textColorHint="@color/bluegrey200"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -67,8 +67,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:hint="▆▆▆▆▆"
                     android:text="@{item.author}"
                     android:textColor="?attr/textColor"
+                    android:textColorHint="@color/bluegrey200"
                     android:textSize="12sp" />
 
                 <TextView
@@ -77,9 +79,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:ellipsize="end"
+                    android:hint="▆▆▆▆▆"
                     android:maxLines="2"
                     android:text="@{item.type}"
                     android:textColor="?attr/textColor"
+                    android:textColorHint="@color/bluegrey300"
                     android:textSize="18sp" />
 
                 <TextView
@@ -87,8 +91,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:hint="▆▆▆▆▆▆▆▆▆▆▆▆▆▆▆"
                     android:text="@{item.createdAt}"
-                    android:textColor="?attr/textColor" />
+                    android:textColor="?attr/textColor"
+                    android:textColorHint="@color/bluegrey200" />
             </LinearLayout>
 
 

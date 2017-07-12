@@ -16,8 +16,9 @@ import java.util.List;
 /**
  * Created by baixiaokang on 16/12/27.
  */
-
+@SuppressWarnings("unchecked")
 public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
+    private final boolean needHint;
     private TypeSelector<M> mTypeSelector;
     private List<M> mItemList = new ArrayList<>();
     public boolean isHasMore = true;
@@ -31,14 +32,25 @@ public class CoreAdapter<M> extends RecyclerView.Adapter<BaseViewHolder> {
         return new BaseViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), viewType, parent, false));
     }
 
-    CoreAdapter() {
+    CoreAdapter(boolean needHint) {
+        this.needHint = needHint;
         mFootTypeDatas.add(new Item(mFooterViewType, true));
     }
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        holder.mViewDataBinding.setVariable(BR.item, getItem(position));
-        holder.mViewDataBinding.executePendingBindings();
+        Object item = getItem(position);
+        if (needHint && holder.itemView.getTag() == null) {
+            holder.itemView.setTag(item);
+            holder.itemView.postDelayed(() -> {
+                holder.mViewDataBinding.setVariable(BR.item, holder.itemView.getTag());
+                holder.mViewDataBinding.executePendingBindings();
+            }, 800);
+        } else {
+            if (needHint) holder.itemView.setTag(item);
+            holder.mViewDataBinding.setVariable(BR.item, item);
+            holder.mViewDataBinding.executePendingBindings();
+        }
     }
 
     public void setViewType(@LayoutRes int type) {

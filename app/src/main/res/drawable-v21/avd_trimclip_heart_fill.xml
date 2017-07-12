@@ -1,0 +1,18 @@
+<animated-vector
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:aapt="http://schemas.android.com/aapt"
+  android:drawable="@drawable/vd_trimclip_heart_full">
+
+  <target android:name="clip">
+    <aapt:attr name="android:animation">
+      <objectAnimator
+        android:duration="@android:integer/config_mediumAnimTime"
+        android:interpolator="@android:interpolator/fast_out_slow_in"
+        android:propertyName="pathData"
+        android:valueFrom="@string/heart_clip_hidden"
+        android:valueTo="@string/heart_clip_shown"
+        android:valueType="pathType"/>
+    </aapt:attr>
+  </target>
+
+</animated-vector>

@@ -24,11 +24,17 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
     private LinearLayoutManager mLayoutManager;
     public CoreAdapter<M> mCommAdapter;
     private AdapterPresenter<M> mCoreAdapterPresenter;
-    private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false;
+    private boolean isHasHeadView = false, isHasFootView = false, isEmpty = false, isReverse = false, needHint = false;
     private int headType, footType;
 
     public TRecyclerView(Context context) {
         super(context);
+        init(context, null);
+    }
+
+    public TRecyclerView(Context context, boolean needHint) {
+        super(context);
+        this.needHint = needHint;
         init(context, null);
     }
 
@@ -52,6 +58,7 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
         int itemType = ta.getResourceId(R.styleable.TRecyclerView_itemType, 0);
         footType = ta.getResourceId(R.styleable.TRecyclerView_footType, 0);
         isReverse = ta.getBoolean(R.styleable.TRecyclerView_isReverse, false);
+        if (!needHint) needHint = ta.getBoolean(R.styleable.TRecyclerView_needHint, false);
         boolean isRefreshable = ta.getBoolean(R.styleable.TRecyclerView_isRefreshable, true);
         ta.recycle();
 
@@ -67,7 +74,7 @@ public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IA
         mLayoutManager = new LinearLayoutManager(context);
         recyclerview.setLayoutManager(mLayoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-        mCommAdapter = new CoreAdapter<>();
+        mCommAdapter = new CoreAdapter<>(needHint);
         recyclerview.setAdapter(mCommAdapter);
         recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int lastVisibleItem;

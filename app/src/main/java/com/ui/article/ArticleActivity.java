@@ -28,6 +28,7 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
     public ImageView image;
     private Menu collapsedMenu;
     private boolean appBarExpanded;
+    private boolean isChecked;
 
     @Override
     public int getLayoutId() {
@@ -46,6 +47,11 @@ public class ArticleActivity extends BaseActivity<ArticlePresenter, ActivityDeta
                 appBarExpanded = newAppBarExpanded;
                 invalidateOptionsMenu();
             }
+        });
+        mViewBinding.liked.setOnClickListener(v->{
+            isChecked = !isChecked;
+            final int[] stateSet = {android.R.attr.state_checked * (isChecked ? 1 : -1)};
+            mViewBinding.liked.setImageState(stateSet, true);
         });
     }
 

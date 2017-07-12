@@ -1,0 +1,50 @@
+<vector
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="24dp"
+  android:height="24dp"
+  android:tint="?attr/colorControlNormal"
+  android:viewportHeight="56"
+  android:viewportWidth="56">
+
+  <!-- Stroked heart, 2 paths so can 'draw' them concurrently by animating trim. Initially hidden -->
+  <path
+    android:name="heart_stroke_left_atrium"
+    android:pathData="@string/heart_stroke_left"
+    android:strokeColor="@android:color/white"
+    android:strokeWidth="2"
+    android:trimPathEnd="0"/>
+
+  <path
+    android:name="heart_stroke_right_atrium"
+    android:pathData="@string/heart_stroke_right"
+    android:strokeColor="@android:color/white"
+    android:strokeWidth="2"
+    android:trimPathEnd="0"/>
+
+  <!-- Left broken heart, need group to set pivot for rotation anim. -->
+  <group
+    android:name="broken_heart_left_group"
+    android:pivotX="28"
+    android:pivotY="37.3">
+
+    <path
+      android:name="broken_heart_left"
+      android:fillColor="@android:color/white"
+      android:pathData="M28.0307583,21.0541825 C28.020455,21.0660803 28.0102021,21.0780196 28,21.09 C26.91,19.81 25.24,19 23.5,19 C20.42,19 18,21.42 18,24.5 C18,28.28 21.4,31.36 26.55,36.03 L28,37.35 L28.0022188,37.3479954 L27.7813721,36.988221 L28.4886923,36.0733956 L27.5061678,34.7635697 L28.7816611,33.0267266 L26.9441528,31.0075072 L29.1486431,28.7245062 L27.1169819,27.143298 L29.1486431,25.0178865 L26.4880371,22.9773849 L28.0307583,21.0541825 L28.0307583,21.0541825 Z"/>
+
+  </group>
+
+  <!-- Right broken heart. -->
+  <group
+    android:name="broken_heart_right_group"
+    android:pivotX="28"
+    android:pivotY="37.3">
+
+    <path
+      android:name="broken_heart_right"
+      android:fillColor="@android:color/white"
+      android:pathData="M28.0307583,21.0541825 C28.1689169,20.8946428 28.3161363,20.7425565 28.4714083,20.5985959 L28.9146818,20.226173 C29.9263704,19.4567073 31.193451,19 32.5,19 C35.58,19 38,21.42 38,24.5 C38,28.28 34.6,31.36 29.45,36.04 L28.0022188,37.3479954 L27.7813721,36.988221 L28.4886923,36.0733956 L27.5061678,34.7635697 L28.7816611,33.0267266 L26.9441528,31.0075072 L29.1486431,28.7245062 L27.1169819,27.143298 L29.1486431,25.0178865 L26.4880371,22.9773849 L28.0307583,21.0541825 L28.0307583,21.0541825 Z"/>
+
+  </group>
+
+</vector>
