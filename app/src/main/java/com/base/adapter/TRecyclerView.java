@@ -16,7 +16,7 @@ import com.app.annotation.aspect.DbRealm;
 import com.ui.main.R;
 
 import java.util.List;
-
+@SuppressWarnings("unchecked")
 public class TRecyclerView<M> extends FrameLayout implements AdapterPresenter.IAdapterView {
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView recyclerview;

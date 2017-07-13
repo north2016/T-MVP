@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by baixiaokang on 16/12/27.
  */
-
+@SuppressWarnings("unchecked")
 public class AdapterPresenter<M> {
     private NetRepository mNetRepository;//仓库
     private HashMap<String, Object> param = new HashMap<>();//设置远程网络仓库钥匙

@@ -16,7 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * Created by baixiaokang on 16/11/15.
  */
-
+@SuppressWarnings("unchecked")
 public class OkBus {
     private ConcurrentHashMap<Integer, CopyOnWriteArrayList<SparseArray<Event>>> mEventList = new ConcurrentHashMap<>();//存储所有事件ID以及其回调
     private ConcurrentHashMap<Integer, Object> mStickyEventList = new ConcurrentHashMap<>();//存储粘连事件ID以及其数据

@@ -10,6 +10,7 @@ import java.lang.reflect.ParameterizedType;
 /**
  * Created by Administrator on 2016/4/5.
  */
+@SuppressWarnings("unchecked")
 public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBinding> extends DataBindingActivity<B> {
     public P mPresenter;
 
@@ -21,7 +22,7 @@ public abstract class BaseActivity<P extends BasePresenter, B extends ViewDataBi
             Class mPresenterClass = (Class) ((ParameterizedType) (this.getClass()
                     .getGenericSuperclass())).getActualTypeArguments()[0];
             mPresenter = InstanceUtil.getInstance(mPresenterClass);
-            mPresenter.setView(this);
+            if (mPresenter != null) mPresenter.setView(this);
         }
     }
 

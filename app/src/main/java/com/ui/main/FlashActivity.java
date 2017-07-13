@@ -28,7 +28,6 @@ public class FlashActivity extends DataBindingActivity<ActivityFlashBinding> {
 
     @Bus(EventTags.FLASH_INIT_UI)
     public void initUI() {
-        //StatusBarUtil.setTranslucentBackground(this);
         AlphaAnimation anim = new AlphaAnimation(0.8f, 0.1f);
         anim.setDuration(5000);
         mViewBinding.view.startAnimation(anim);

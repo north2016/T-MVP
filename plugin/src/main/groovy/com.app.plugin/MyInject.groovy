@@ -47,7 +47,7 @@ public class MyInject {
                                 if (mAnnotation.annotationType().canonicalName.equals(BusHelper.OkBusUnRegisterAnnotation))
                                     mBusInfo.setBusUnRegisterMethod(ctmethod)
                                 if (mAnnotation.annotationType().canonicalName.equals(BusHelper.OkBusAnnotation)) {
-                                    project.logger.error " method:" + c.getName() + " -" + ctmethod.getName()
+                                    project.logger.info " method:" + c.getName() + " -" + ctmethod.getName()
                                     mBusInfo.methods.add(ctmethod)
                                     mBusInfo.annotations.add(mAnnotation)
                                     if (!isAnnotationByBus) isAnnotationByBus = true

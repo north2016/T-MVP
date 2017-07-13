@@ -18,6 +18,7 @@
     <string name="theme">夜间</string>
     <string name="release">发布</string>
     <string name="sort">排序</string>
+
     <string name="hint_long">▆▆▆▆▆▆▆▆▆▆▆▆▆</string>
     <string name="hint_short">▆▆▆▆▆</string>
 </resources>

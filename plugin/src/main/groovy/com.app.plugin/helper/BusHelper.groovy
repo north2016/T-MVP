@@ -42,30 +42,30 @@ public class BusHelper {
     static void intBus(BusInfo mBusInfo, String path) {
         if (mBusInfo.clazz.isFrozen()) mBusInfo.clazz.defrost()//解冻
         if (mBusInfo.BusRegisterMethod != null) {//有被BusRegister注解的方法
-            mBusInfo.project.logger.error "BusRegisterMethod not null" +
+            mBusInfo.project.logger.quiet "BusRegisterMethod not null" +
             mBusInfo.BusRegisterMethod.insertAfter(getRegisterEventMethodStr(mBusInfo));
         } else if (mBusInfo.getOnCreateMethod() == null) {//没有OnCreateMethod，创建并加上新代码
-            mBusInfo.project.logger.error "getOnCreateMethod  null "  + mBusInfo.isActivity
+            mBusInfo.project.logger.quiet "getOnCreateMethod  null "  + mBusInfo.isActivity
             String pre_create_str = mBusInfo.isActivity ? Activity_OnCreate : Fragment_OnCreate;
             String m = pre_create_str + getRegisterEventMethodStr(mBusInfo) + "}"
-            mBusInfo.project.logger.error m
+            mBusInfo.project.logger.quiet m
             CtMethod mInitEventMethod = CtNewMethod.make(m, mBusInfo.clazz);
             mBusInfo.clazz.addMethod(mInitEventMethod)
         } else {//有OnCreateMethod，直接插入新代码
-            mBusInfo.project.logger.error "OnCreateMethod not null"
+            mBusInfo.project.logger.quiet "OnCreateMethod not null"
             mBusInfo.OnCreateMethod.insertAfter(getRegisterEventMethodStr(mBusInfo));
         }
         if (mBusInfo.BusUnRegisterMethod != null) {//有被BusUnRegister注解的方法
-            mBusInfo.project.logger.error "BusUnRegisterMethod not null"
+            mBusInfo.project.logger.quiet "BusUnRegisterMethod not null"
             mBusInfo.BusUnRegisterMethod.insertAfter(getUnRegisterEventMethodStr(mBusInfo));
         } else if (mBusInfo.OnDestroyMethod == null) {
-            mBusInfo.project.logger.error "OnDestroyMethod null"
+            mBusInfo.project.logger.quiet "OnDestroyMethod null"
             String m = Pre_OnDestroy + getUnRegisterEventMethodStr(mBusInfo) + "}";
-            mBusInfo.project.logger.error m
+            mBusInfo.project.logger.quiet m
             CtMethod destroyMethod = CtNewMethod.make(m, mBusInfo.clazz)
             mBusInfo.clazz.addMethod(destroyMethod)
         } else {
-            mBusInfo.project.logger.error "OnDestroyMethod not null"
+            mBusInfo.project.logger.quiet "OnDestroyMethod not null"
             mBusInfo.OnDestroyMethod.insertAfter(getUnRegisterEventMethodStr(mBusInfo));
         }
 
@@ -124,7 +124,7 @@ public class BusHelper {
                     case "short": mParameterType = "Short"; isBaseType = true; break;
                     case "double": mParameterType = "Double"; isBaseType = true; break;
                 }
-                mBusInfo.project.logger.error "name:" + mParameterType
+                mBusInfo.project.logger.quiet "name:" + mParameterType
                 packageName = isBaseType ? "java.lang." + mParameterType : mParameterType;
                 mBusInfo.clazz.classPool.importPackage(packageName)
             }//如果是基本数据类型，需要手动拆箱，否则会报错
@@ -134,7 +134,7 @@ public class BusHelper {
                     "(" + (one ? ParamStr : "") + ");\n break;\n"
         }
         String m = SwitchStr + "}\n}"
-        mBusInfo.project.logger.error m
+        mBusInfo.project.logger.quiet m
         CtMethod mDispatchEventMethod = CtMethod.make(m, mBusInfo.clazz);
         mBusInfo.clazz.addMethod(mDispatchEventMethod)
     }
