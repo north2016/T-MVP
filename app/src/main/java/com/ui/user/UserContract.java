@@ -3,7 +3,7 @@ package com.ui.user;
 import com.base.BasePresenter;
 import com.base.BaseView;
 import com.base.adapter.AdapterPresenter;
-import com.model._User;
+import com.model.User;
 
 import java.io.File;
 
@@ -15,7 +15,7 @@ public interface UserContract {
     interface View extends BaseView {
         void showMsg(String msg);
 
-        void initUser(_User user);
+        void initUser(User user);
 
         void takePhoto();
     }
@@ -26,6 +26,6 @@ public interface UserContract {
 
         public abstract void upUserInfo(String face);
 
-        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, _User user);
+        public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, User user);
     }
 }

@@ -2,7 +2,7 @@ package com.ui.home;
 
 import com.base.BasePresenter;
 import com.base.BaseView;
-import com.model._User;
+import com.model.User;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public interface HomeContract {
     interface View extends BaseView {
         void showTabList(List<String> mTabs);
 
-        void initUserInfo(_User user);
+        void initUserInfo(User user);
 
         void onOpenRelease();
     }

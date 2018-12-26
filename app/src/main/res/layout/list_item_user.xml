@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.model._User" />
+            type="com.model.User" />
     </data>
 
     <LinearLayout

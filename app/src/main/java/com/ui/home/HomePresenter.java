@@ -12,7 +12,7 @@ import com.base.event.OkBus;
 import com.base.util.SpUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.model._User;
+import com.model.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ public class HomePresenter extends HomeContract.Presenter {
 
     @Override
     public void getUserInfo() {
-        _User user = SpUtil.getUser();
+        User user = SpUtil.getUser();
         if (user != null)
             mView.initUserInfo(user);
     }
@@ -66,7 +66,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Bus(EventTags.ON_USER_LOGIN)
-    public void OnLogin(_User user) {
+    public void OnLogin(User user) {
         mView.initUserInfo(user);
     }
 

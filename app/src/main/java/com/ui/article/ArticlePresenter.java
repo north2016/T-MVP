@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.model.Comment;
 import com.model.Image;
 import com.model.ImageInfo;
-import com.model._User;
+import com.model.User;
 
 /**
  * Created by baixiaokang on 16/5/4.
@@ -22,7 +22,7 @@ import com.model._User;
 public class ArticlePresenter extends ArticleContract.Presenter {
 
     @CheckLogin
-    public void createComment(String content, ImageInfo article, _User user) {
+    public void createComment(String content, ImageInfo article, User user) {
         mCompositeSubscription.add(
                 ApiFactory
                         .createComment(

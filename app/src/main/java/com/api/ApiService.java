@@ -10,7 +10,7 @@ import com.model.Image;
 import com.model.ImageInfo;
 import com.model.Message;
 import com.model.MessageInfo;
-import com.model._User;
+import com.model.User;
 
 import io.reactivex.Flowable;
 import okhttp3.RequestBody;
@@ -29,13 +29,13 @@ import retrofit2.http.Query;
 @ApiFactory
 public interface ApiService {
     @GET("login")
-    Flowable<_User> login(@Query("username") String username, @Query("password") String password);
+    Flowable<User> login(@Query("username") String username, @Query("password") String password);
 
     @POST("users")
-    Flowable<CreatedResult> createUser(@Body _User user);
+    Flowable<CreatedResult> createUser(@Body User user);
 
     @GET("users")
-    Flowable<DataArr<_User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
+    Flowable<DataArr<User>> getAllUser(@Query("skip") int skip, @Query("limit") int limit);
 
     @GET("classes/Image")
     Flowable<DataArr<ImageInfo>> getAllImages(@Query("where") String where, @Query("skip") int skip, @Query("limit") int limit, @Query("order") String order);

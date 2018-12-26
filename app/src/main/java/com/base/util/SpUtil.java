@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.base.BaseActivity;
-import com.model._User;
+import com.model.User;
 import com.google.gson.Gson;
 
 /**
@@ -32,11 +32,11 @@ public class SpUtil {
             ((BaseActivity) context).reload();
     }
 
-    public static _User getUser() {
-        return new Gson().fromJson(prefs.getString("user", ""), _User.class);
+    public static User getUser() {
+        return new Gson().fromJson(prefs.getString("user", ""), User.class);
     }
 
-    public static void setUser(_User user) {
+    public static void setUser(User user) {
         prefs.edit().putString("user", new Gson().toJson(user)).apply();
     }
 
