@@ -16,7 +16,7 @@ public class AspectjPlugin implements Plugin<Project> {
 
     void apply(Project project) {
         project.dependencies {
-            compile 'org.aspectj:aspectjrt:1.8.9'
+            api 'org.aspectj:aspectjrt:1.8.9'
         }
         final def log = project.logger
         log.error "========================";
