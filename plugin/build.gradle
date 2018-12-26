@@ -2,11 +2,11 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 
 dependencies {
-    compile gradleApi()//gradle sdk
-    compile localGroovy()//groovy sdk
-    compile 'com.android.tools.build:gradle:2.2.2'
-    compile 'org.javassist:javassist:3.20.0-GA'
-    compile 'org.aspectj:aspectjtools:1.8.1'
+    implementation gradleApi()//gradle sdk
+    implementation localGroovy()//groovy sdk
+    implementation 'com.android.tools.build:gradle:3.2.1'
+    implementation 'org.javassist:javassist:3.24.1-GA'
+    implementation 'org.aspectj:aspectjtools:1.9.2'
 }
 uploadArchives {
     repositories.mavenDeployer {
