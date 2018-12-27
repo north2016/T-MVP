@@ -13,7 +13,7 @@ public class CommentInfo extends RealmObject implements BaseBean {
     public String objectId;
     public ImageInfo article;
     public String content;
-    public _User creater;
+    public User creater;
 
     @Override
     public String getObjectId() {

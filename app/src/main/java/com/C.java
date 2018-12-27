@@ -1,7 +1,7 @@
 package com;
 
 import com.model.MessageInfo;
-import com.model._User;
+import com.model.User;
 
 /**
  * Created by baixiaokang on 16/4/23.
@@ -51,7 +51,7 @@ public class C {
     public static MessageInfo getAdminMsg() {
         MessageInfo mMessageInfo = new MessageInfo();
         mMessageInfo.message = "您好，我是本应用的开发者North，如果您有什么好的建议和反馈，可以在这里和我直接对话，谢谢你的支持哦";
-        _User admin = new _User();
+        User admin = new User();
         admin.username = "North";
         admin.objectId = C.ADMIN_ID;
         admin.face = ADMIN_FACE;

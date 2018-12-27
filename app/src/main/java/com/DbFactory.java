@@ -4,7 +4,7 @@ import com.base.util.helper.RealmHelper;
 import com.model.CommentInfo;
 import com.model.ImageInfo;
 import com.model.MessageInfo;
-import com.model._User;
+import com.model.User;
 
 import java.util.HashMap;
 
@@ -29,7 +29,7 @@ public class DbFactory {
     }
 
     public static Flowable getAllUser(HashMap<String, Object> param) {
-        return Flowable.defer(() -> RealmHelper.getRealmItems(_User.class, null));
+        return Flowable.defer(() -> RealmHelper.getRealmItems(User.class, null));
     }
 
     public static Flowable getUserCommentList(HashMap<String, Object> param) {

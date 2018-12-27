@@ -5,7 +5,7 @@ import com.app.annotation.apt.InstanceFactory;
 import com.apt.ApiFactory;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
-import com.model._User;
+import com.model.User;
 
 /**
  * Created by baixiaokang on 16/4/29.
@@ -28,7 +28,7 @@ public class LoginPresenter extends LoginContract.Presenter {
     @Override
     public void sign(String name, String pass) {
         mCompositeSubscription.add(
-                ApiFactory.createUser(new _User(name, pass))
+                ApiFactory.createUser(new User(name, pass))
                         .subscribe(res -> mView.signSuccess(),
                                 e -> mView.showMsg("注册失败!")));
     }

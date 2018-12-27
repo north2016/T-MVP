@@ -4,7 +4,7 @@ import com.base.BasePresenter;
 import com.base.BaseView;
 import com.base.adapter.AdapterPresenter;
 import com.model.ImageInfo;
-import com.model._User;
+import com.model.User;
 
 
 /**
@@ -19,7 +19,7 @@ public interface ArticleContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void createComment(String content, ImageInfo article, _User user);
+        public abstract void createComment(String content, ImageInfo article, User user);
 
         public abstract void initAdapterPresenter(AdapterPresenter mAdapterPresenter, ImageInfo article);
 

@@ -13,7 +13,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.model.Image;
-import com.model._User;
+import com.model.User;
 
 /**
  * Created by baixiaokang on 17/1/21.
@@ -32,7 +32,7 @@ public class ReleasePresenter extends ReleaseContract.Presenter {
                             mView.showMsg("大哥，你敢放个真图片吗？");
                             return;
                         }
-                        _User user = SpUtil.getUser();
+                        User user = SpUtil.getUser();
                         ApiFactory.createArticle(
                                 new Image(url, content, user.username, title, ApiUtil.getPointer(user)))
                                 .subscribe(

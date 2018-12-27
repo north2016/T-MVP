@@ -21,7 +21,7 @@ import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.helper.FragmentAdapter;
 import com.base.util.helper.PagerChangeListener;
-import com.model._User;
+import com.model.User;
 import com.ui.main.R;
 import com.ui.main.TMVPFragment;
 import com.ui.main.databinding.ActivityMainBinding;
@@ -82,7 +82,7 @@ public class HomeActivity extends BaseActivity<HomePresenter, ActivityMainBindin
     }
 
     @Override
-    public void initUserInfo(_User user) {
+    public void initUserInfo(User user) {
         View mHeaderView = mViewBinding.nvMainNavigation.getHeaderView(0);
         ImageView im_face = (ImageView) mHeaderView.findViewById(R.id.im_face);
         TextView tv_name = (TextView) mHeaderView.findViewById(R.id.tv_name);

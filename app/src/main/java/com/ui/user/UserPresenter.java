@@ -14,7 +14,7 @@ import com.base.entity.Pointer;
 import com.base.event.OkBus;
 import com.base.util.SpUtil;
 import com.google.gson.Gson;
-import com.model._User;
+import com.model.User;
 
 import java.io.File;
 
@@ -40,7 +40,7 @@ public class UserPresenter extends UserContract.Presenter {
 
     @Override
     public void upUserInfo(String face) {
-        _User user = SpUtil.getUser();
+        User user = SpUtil.getUser();
         user.face = face;
         mCompositeSubscription.add(
                 ApiFactory.upUser(
@@ -56,8 +56,8 @@ public class UserPresenter extends UserContract.Presenter {
     }
 
     @Override
-    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, _User user) {
-        String creater = new Gson().toJson(new Pointer(_User.class.getSimpleName(), user.objectId));
+    public void initAdapterPresenter(AdapterPresenter mAdapterPresenter, User user) {
+        String creater = new Gson().toJson(new Pointer(User.class.getSimpleName(), user.objectId));
         mAdapterPresenter.setNetRepository(ApiFactory::getCommentList)
                 .setDbRepository(DbFactory::getUserCommentList)
                 .setParam(C.OBJECT_ID, user.objectId)
@@ -71,7 +71,7 @@ public class UserPresenter extends UserContract.Presenter {
     }
 
     @Bus(EventTags.ON_USER_LOGIN)
-    public void OnLogin(_User user) {
+    public void OnLogin(User user) {
         mView.initUser(user);
     }
 

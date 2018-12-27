@@ -17,7 +17,7 @@ import com.base.BaseActivity;
 import com.base.util.BindingUtils;
 import com.base.util.SpUtil;
 import com.base.util.ToastUtil;
-import com.model._User;
+import com.model.User;
 import com.ui.main.R;
 import com.ui.main.databinding.ActivityUserBinding;
 
@@ -26,7 +26,7 @@ import java.io.File;
 @Router(C.USER_INFO)
 public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBinding> implements UserContract.View {
     @Extra(C.HEAD_DATA)
-    public _User user;
+    public User user;
     @SceneTransition(C.TRANSLATE_VIEW)
     public ImageView image;
 
@@ -64,7 +64,7 @@ public class UserActivity extends BaseActivity<UserPresenter, ActivityUserBindin
     }
 
     @Override
-    public void initUser(_User user) {
+    public void initUser(User user) {
         BindingUtils.loadRoundAndBgImg(mViewBinding.image, user.face, mViewBinding.imHeader);
         setTitle(user.username);
     }

@@ -1,15 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
+        maven{
+            url ("http://maven.aliyun.com/nexus/content/groups/public/")
+        }
+        google()
         jcenter()
         maven{
             url uri('repo')
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'me.tatarka:gradle-retrolambda:3.2.0'
-        classpath 'org.aspectj:aspectjtools:1.8.9'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'org.aspectj:aspectjtools:1.9.2'
         classpath 'com.app.plugin:gradleplugin:1.0.0'
         classpath "io.realm:realm-gradle-plugin:3.4.0"
         // classpath 'com.codingbingo.library:gradletaskrecord:1.0.0'//追踪Gradle 任务耗时
@@ -20,6 +23,10 @@ buildscript {
 
 allprojects {
     repositories {
+        maven{
+            url ("http://maven.aliyun.com/nexus/content/groups/public/")
+        }
+        google()
         jcenter()
     }
 }
@@ -34,9 +41,9 @@ task clean(type: Delete) {
 ext {
 
 
-    rxjava2Version = '2.0.8'
+    rxjava2Version = '2.2.4'
     retrofit2Version = '2.2.0'
-    gsonVersion = '2.6.2'
+    gsonVersion = '2.8.5'
 
 }
 

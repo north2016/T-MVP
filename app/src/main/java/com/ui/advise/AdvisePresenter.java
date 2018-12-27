@@ -9,7 +9,7 @@ import com.base.adapter.AdapterPresenter;
 import com.base.util.ApiUtil;
 import com.base.util.SpUtil;
 import com.model.Message;
-import com.model._User;
+import com.model.User;
 
 /**
  * Created by baixiaokang on 17/1/7.
@@ -19,10 +19,10 @@ public class AdvisePresenter extends AdviseContract.Presenter {
 
     @CheckLogin
     public void createMessage(String msg) {
-        _User user = SpUtil.getUser();
+        User user = SpUtil.getUser();
         ApiFactory.createMessage(
                 new Message(ApiUtil.getPointer(
-                        new _User(C.ADMIN_ID)), msg,
+                        new User(C.ADMIN_ID)), msg,
                         ApiUtil.getPointer(user),
                         user.objectId))
                 .subscribe(
